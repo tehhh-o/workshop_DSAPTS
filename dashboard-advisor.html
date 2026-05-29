@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Advisor Dashboard - UTeM</title>
+<link rel="stylesheet" href="styles.css">
+<style>
+  .stats { display:grid; grid-template-columns: repeat(auto-fit, minmax(180px,1fr)); gap:16px; margin-bottom:24px; }
+  .stat-card { background:#f4eefb; border:1px solid #d6c9e6; border-radius:8px; padding:18px; text-align:center; }
+  .stat-num { font-size:32px; font-weight:bold; color:#1a3a8a; }
+  .stat-label { font-size:13px; color:#555; margin-top:4px; }
+  .panel { border:1px solid #ccc; border-radius:6px; padding:16px; }
+  .panel h3 { margin-bottom:12px; font-size:16px; }
+  .welcome { background:#1a3a8a; color:#fff; padding:20px; border-radius:8px; margin-bottom:20px; }
+  .welcome h2 { margin-bottom:6px; }
+</style>
+</head><body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="logo"><div class="logo-box">UTeM</div><div class="logo-sub">UNIVERSITI TEKNIKAL MALAYSIA MELAKA</div></div>
+    <nav class="nav"><a class="active" href="dashboard-advisor.html"><span class="ico">🏠</span>Dashboard</a><a class="" href="student.html"><span class="ico">🎓</span>My Students</a><a class="" href="#"><span class="ico">📈</span>Progress Reports</a><a class="" href="#"><span class="ico">👤</span>Profile</a></nav>
+    <button class="logout" onclick="location.href='login.html'">Log out</button>
+  </aside>
+  <header class="topbar">
+    <div style="width:120px"></div>
+    <div class="title">Advisor Dashboard</div>
+    <div class="user"><span>Advisor -</span><span class="avatar">👤</span></div>
+  </header>
+  <main class="content">
+    <div class="welcome"><h2>Welcome, Advisor</h2><p>Diploma Student Academic And Progress Tracking System</p></div>
+    <div class="stats"><div class="stat-card"><div class="stat-num">24</div><div class="stat-label">My Students</div></div><div class="stat-card"><div class="stat-num">5</div><div class="stat-label">At Risk</div></div><div class="stat-card"><div class="stat-num">12</div><div class="stat-label">Pending Meetings</div></div><div class="stat-card"><div class="stat-num">3.42</div><div class="stat-label">Avg CGPA</div></div></div>
+    <div class="panel"><h3>Students Needing Attention</h3>
+      <table><thead><tr><th>Matric No</th><th>Name</th><th>CGPA</th><th>Issue</th></tr></thead><tbody><tr><td>B032210001</td><td>Ahmad Bin Ali</td><td>2.15</td><td>Low CGPA</td></tr><tr><td>B032210045</td><td>Siti Nurhaliza</td><td>2.30</td><td>Failed Subject</td></tr><tr><td>B032210078</td><td>Tan Wei Ming</td><td>2.45</td><td>Attendance</td></tr><tr><td>B032210092</td><td>Raj Kumar</td><td>1.95</td><td>Probation</td></tr></tbody></table>
+    </div>
+  </main>
+</div>
+</body></html>
