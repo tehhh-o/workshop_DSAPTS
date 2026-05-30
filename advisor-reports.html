@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Reports - UTeM Advisor</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .rep-controls {
+      display: grid;
+      grid-template-columns: auto auto;
+      gap: 12px 16px;
+      margin-bottom: 18px;
+      max-width: 480px;
+    }
+
+    .rep-controls select,
+    .rep-controls button {
+      padding: 8px 14px;
+      font-size: 14px;
+      border: 1px solid #888;
+      background: #eee;
+      cursor: pointer;
+    }
+
+    .rep-detail {
+      font-size: 14px;
+      margin-bottom: 14px;
+    }
+
+    .chart {
+      display: flex;
+      align-items: flex-end;
+      gap: 18px;
+      height: 280px;
+      border-left: 2px solid #000;
+      border-bottom: 2px solid #000;
+      padding: 0 20px;
+      max-width: 520px;
+      position: relative;
+    }
+
+    .bar {
+      width: 50px;
+      background: #fff;
+      border: 1.5px solid #000;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding-bottom: 4px;
+      font-size: 12px;
+    }
+
+    .chart-label {
+      text-align: center;
+      font-weight: bold;
+      margin-top: 8px;
+      max-width: 520px;
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="logo">
+        <div class="logo-box">UTeM</div>
+        <div class="logo-sub">UNIVERSITI TEKNIKAL MALAYSIA MELAKA</div>
+      </div>
+      <nav class="nav">
+        <a class="" href="dashboard-advisor.html">
+          <span class="ico">🖥️</span>Dashboard
+        </a>
+        <a class="" href="advisor-records.html">
+          <span class="ico">📑</span>Records
+        </a>
+        <a class="" href="advisor-alerts.html">
+          <span class="ico">⚠️</span>Alerts
+        </a>
+        <a class="" href="advisor-students.html">
+          <span class="ico">🎓</span>Students
+        </a>
+        <a class="active" href="advisor-reports.html">
+          <span class="ico">📋</span>Reports
+        </a>
+        <a class="" href="advisor-profile.html">
+          <span class="ico">👤</span>Profile
+        </a>
+      </nav>
+      <button class="logout" onclick="location.href='login.html'">Log out</button>
+    </aside>
+    <header class="topbar">
+      <div style="width: 120px;"></div>
+      <div class="title">Reports</div>
+      <div class="user">
+        <span>Advisor -</span>
+        <span class="avatar">👤</span>
+      </div>
+    </header>
+    <main class="content">
+      <div class="rep-controls">
+        <select>
+          <option>All Student</option>
+          <option>Ahmad Bin Ali</option>
+          <option>Siti Nurhaliza</option>
+        </select>
+        <button>All Student</button>
+        <select>
+          <option>Semester 1</option>
+          <option>Semester 2</option>
+          <option>Semester 3</option>
+        </select>
+        <button>Overall Report</button>
+      </div>
+      <div class="rep-detail">
+        <strong>Detailed Report -</strong> Ahmad Bin Ali, Semester 3
+      </div>
+      <div class="chart">
+        <div class="bar" style="height: 30%;"></div>
+        <div class="bar" style="height: 20%;"></div>
+        <div class="bar" style="height: 50%;"></div>
+        <div class="bar" style="height: 75%;"></div>
+        <div class="bar" style="height: 60%;"></div>
+      </div>
+      <div class="chart-label">bar graph</div>
+    </main>
+  </div>
+</body>
+</html>

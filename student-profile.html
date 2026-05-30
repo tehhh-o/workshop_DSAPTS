@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Profile - UTeM Student</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .profile-head {
+      background: #d9d9d9;
+      border: 1px solid #999;
+      border-radius: 6px;
+      padding: 18px;
+      display: flex;
+      gap: 18px;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+
+    .pf-avatar {
+      width: 70px;
+      height: 70px;
+      border: 2px solid #333;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 36px;
+      background: #fff;
+    }
+
+    .profile-card {
+      background: #d9d9d9;
+      border: 1px solid #999;
+      border-radius: 6px;
+      padding: 22px;
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 24px;
+    }
+
+    .pf-photo {
+      background: #333;
+      color: #fff;
+      height: 200px;
+      border-radius: 6px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 90px;
+    }
+
+    .pf-rows {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 16px;
+    }
+
+    .pf-row {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+      font-size: 14px;
+    }
+
+    .ico-box {
+      width: 36px;
+      height: 28px;
+      background: #fff;
+      border: 1px solid #999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 3px;
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="logo">
+        <div class="logo-box">UTeM</div>
+        <div class="logo-sub">UNIVERSITI TEKNIKAL MALAYSIA MELAKA</div>
+      </div>
+      <nav class="nav">
+        <a class="" href="dashboard-student.html">
+          <span class="ico">🖥️</span>Dashboard
+        </a>
+        <a class="" href="student-records.html">
+          <span class="ico">📑</span>Records
+        </a>
+        <a class="" href="student-alerts.html">
+          <span class="ico">⚠️</span>Alerts
+        </a>
+        <a class="" href="student-reports.html">
+          <span class="ico">📋</span>Reports
+        </a>
+        <a class="active" href="student-profile.html">
+          <span class="ico">👤</span>Profile
+        </a>
+      </nav>
+      <button class="logout" onclick="location.href='login.html'">Log out</button>
+    </aside>
+    <header class="topbar">
+      <div style="width: 120px;"></div>
+      <div class="title">Profile</div>
+      <div class="user">
+        <span>Student -</span>
+        <span class="avatar">👤</span>
+      </div>
+    </header>
+    <main class="content">
+      <div class="profile-head">
+        <div class="pf-avatar">👤</div>
+        <div>
+          <div style="font-size: 24px; font-weight: bold;">Name</div>
+          <div style="font-size: 13px; color: #444;">🎓 Universiti Teknikal Malaysia Melaka</div>
+          <div style="margin-top: 6px; font-size: 14px;">
+            <b>3.85</b> <span style="color: #666;">GPA</span> &nbsp;&nbsp; <b>17</b> <span style="color: #666;">Credits</span>
+          </div>
+        </div>
+      </div>
+      <div class="profile-card">
+        <div class="pf-photo">
+          👤
+          <div style="font-size: 11px; margin-top: 8px;">user image</div>
+        </div>
+        <div class="pf-rows">
+          <div class="pf-row">
+            <span class="ico-box">🪪</span>
+            <div>
+              <div style="font-size: 12px; color: #666;">Full Name</div>
+              <div>Ahmad Bin Ali</div>
+            </div>
+          </div>
+          <div class="pf-row">
+            <span class="ico-box">🪪</span>
+            <div>
+              <div style="font-size: 12px; color: #666;">Student ID</div>
+              <div>D032410123</div>
+            </div>
+          </div>
+          <div class="pf-row">
+            <span class="ico-box">📞</span>
+            <div>
+              <div style="font-size: 12px; color: #666;">Phone</div>
+              <div>+60 12-345 6787</div>
+            </div>
+          </div>
+          <div class="pf-row">
+            <span class="ico-box">✉️</span>
+            <div>
+              <div style="font-size: 12px; color: #666;">Email</div>
+              <div>D032410123@student.utem.edu.my</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="text-align: right; margin-top: 10px; font-size: 14px; text-decoration: underline; cursor: pointer;">
+        Change Password
+      </div>
+    </main>
+  </div>
+</body>
+</html>
