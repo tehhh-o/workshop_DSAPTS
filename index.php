@@ -168,7 +168,7 @@
       if (uid.startsWith('A')) role = 'advisor';
       else if (uid.startsWith('M')) role = 'admin';
       var map = {
-        student: 'student/dashboard-student.html',
+        student: 'student/dashboard-student.php',
         advisor: 'advisor/dashboard-advisor.php',
         admin: 'admin/dashboard-admin.php'
       };
