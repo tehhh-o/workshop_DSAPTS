@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Login - UTeM</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="../style/styles.css">
   <style>
     body {
       background: #fff;
@@ -123,6 +124,7 @@
     }
   </style>
 </head>
+
 <body>
   <div class="login-wrap">
     <form class="login-card" onsubmit="return doLogin(event)">
@@ -166,13 +168,14 @@
       if (uid.startsWith('A')) role = 'advisor';
       else if (uid.startsWith('M')) role = 'admin';
       var map = {
-        student: 'dashboard-student.html',
-        advisor: 'dashboard-advisor.html',
-        admin: 'dashboard-admin.html'
+        student: 'student/dashboard-student.html',
+        advisor: 'advisor/dashboard-advisor.html',
+        admin: 'admin/dashboard-admin.php'
       };
       location.href = map[role];
       return false;
     }
   </script>
 </body>
+
 </html>

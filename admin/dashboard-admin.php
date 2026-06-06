@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Admin Dashboard - UTeM</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="../style/styles.css">
   <style>
     .stats {
       display: grid;
@@ -57,40 +58,19 @@
     }
   </style>
 </head>
+
 <body>
   <div class="app">
-    <aside class="sidebar">
-      <div class="logo">
-        <div class="logo-box">UTeM</div>
-        <div class="logo-sub">UNIVERSITI TEKNIKAL MALAYSIA MELAKA</div>
-      </div>
-      <nav class="nav">
-        <a class="active" href="dashboard-admin.html">
-          <span class="ico">🏠</span>Dashboard
-        </a>
-        <a class="" href="advisor.html">
-          <span class="ico">👨‍💼</span>Advisor
-        </a>
-        <a class="" href="student.html">
-          <span class="ico">🎓</span>Student
-        </a>
-        <a class="" href="admin.html">
-          <span class="ico">⚙️</span>Admin
-        </a>
-        <a class="" href="#">
-          <span class="ico">👤</span>Profile
-        </a>
-      </nav>
-      <button class="logout" onclick="location.href='login.html'">Log out</button>
-    </aside>
-    <header class="topbar">
-      <div style="width: 120px;"></div>
-      <div class="title">Admin Dashboard</div>
-      <div class="user">
-        <span>Admin -</span>
-        <span class="avatar">👤</span>
-      </div>
-    </header>
+    <?php
+    $activePage = 'dashboard';
+    include("components/sidebar-admin.php");
+    ?>
+
+    <?php
+    $pageTitle = 'Admin Dashboard';
+    include("components/topbar-admin.php");
+    ?>
+
     <main class="content">
       <div class="welcome">
         <h2>Welcome, Admin</h2>
@@ -151,4 +131,5 @@
     </main>
   </div>
 </body>
+
 </html>
