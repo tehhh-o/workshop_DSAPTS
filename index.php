@@ -169,7 +169,7 @@
       else if (uid.startsWith('M')) role = 'admin';
       var map = {
         student: 'student/dashboard-student.html',
-        advisor: 'advisor/dashboard-advisor.html',
+        advisor: 'advisor/dashboard-advisor.php',
         admin: 'admin/dashboard-admin.php'
       };
       location.href = map[role];

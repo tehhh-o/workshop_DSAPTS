@@ -21,5 +21,5 @@
             <span class="ico">👤</span>Profile
         </a>
     </nav>
-    <button class="logout" onclick="location.href='../index.html'">Log out</button>
+    <button class="logout" onclick="location.href='../index.php'">Log out</button>
 </aside>

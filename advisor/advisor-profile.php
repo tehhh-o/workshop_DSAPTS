@@ -101,26 +101,26 @@
         <div class="logo-sub">UNIVERSITI TEKNIKAL MALAYSIA MELAKA</div>
       </div>
       <nav class="nav">
-        <a class="" href="dashboard-advisor.html">
+        <a class="" href="dashboard-advisor.php">
           <span class="ico">🖥️</span>Dashboard
         </a>
-        <a class="" href="advisor-records.html">
+        <a class="" href="advisor-records.php">
           <span class="ico">📑</span>Records
         </a>
-        <a class="" href="advisor-alerts.html">
+        <a class="" href="advisor-alerts.php">
           <span class="ico">⚠️</span>Alerts
         </a>
-        <a class="" href="advisor-students.html">
+        <a class="" href="advisor-students.php">
           <span class="ico">🎓</span>Students
         </a>
-        <a class="" href="advisor-reports.html">
+        <a class="" href="advisor-reports.php">
           <span class="ico">📋</span>Reports
         </a>
-        <a class="active" href="advisor-profile.html">
+        <a class="active" href="advisor-profile.php">
           <span class="ico">👤</span>Profile
         </a>
       </nav>
-      <button class="logout" onclick="location.href='../index.html'">Log out</button>
+      <button class="logout" onclick="location.href='../index.php'">Log out</button>
     </aside>
     <header class="topbar">
       <div style="width: 120px;"></div>
