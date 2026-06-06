@@ -10,35 +10,16 @@
 
 <body>
   <div class="app">
-    <aside class="sidebar">
-      <div class="logo">
-        <div class="logo-box">UTeM</div>
-        <div class="logo-sub">UNIVERSITI TEKNIKAL MALAYSIA MELAKA</div>
-      </div>
-      <nav class="nav">
-        <a class="" href="advisor.html">
-          <span class="ico">👨‍💼</span>Advisor
-        </a>
-        <a class="" href="student.html">
-          <span class="ico">🎓</span>Student
-        </a>
-        <a class="active" href="admin.html">
-          <span class="ico">⚙️</span>Admin
-        </a>
-        <a class="" href="#">
-          <span class="ico">👤</span>Profile
-        </a>
-      </nav>
-      <button class="logout" onclick="location.href='dashboard.html'">Log out</button>
-    </aside>
-    <header class="topbar">
-      <div style="width: 120px;"></div>
-      <div class="title">Admin Management</div>
-      <div class="user">
-        <span>Name -</span>
-        <span class="avatar">👤</span>
-      </div>
-    </header>
+    <?php
+    $activePage = 'admin';
+    include("components/sidebar-admin.php");
+    ?>
+
+    <?php
+    $pageTitle = 'Admin Management';
+    include("components/topbar-admin.php");
+    ?>
+
     <main class="content">
       <div class="toolbar">
         <div class="search">
@@ -46,7 +27,7 @@
           <input placeholder="Hinted search text">
           <span>🔍</span>
         </div>
-        <a class="add-btn" href="admin-add.html">
+        <a class="add-btn" href="admin-add.php">
           <span class="ico">👥</span>Admin<span class="plus">+</span>
         </a>
       </div>
@@ -62,7 +43,7 @@
           <tr>
             <td class="name-col">aku</td>
             <td class="action">
-              <a class="icon-btn" href="admin-edit.html">✎</a>
+              <a class="icon-btn" href="admin-edit.php">✎</a>
             </td>
             <td class="action">
               <button class="icon-btn">🗑</button>

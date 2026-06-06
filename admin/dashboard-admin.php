@@ -61,38 +61,16 @@
 
 <body>
   <div class="app">
-    <aside class="sidebar">
-      <div class="logo">
-        <div class="logo-box">UTeM</div>
-        <div class="logo-sub">UNIVERSITI TEKNIKAL MALAYSIA MELAKA</div>
-      </div>
-      <nav class="nav">
-        <a class="active" href="dashboard-admin.html">
-          <span class="ico">🏠</span>Dashboard
-        </a>
-        <a class="" href="advisor.html">
-          <span class="ico">👨‍💼</span>Advisor
-        </a>
-        <a class="" href="student.html">
-          <span class="ico">🎓</span>Student
-        </a>
-        <a class="" href="admin.html">
-          <span class="ico">⚙️</span>Admin
-        </a>
-        <a class="" href="#">
-          <span class="ico">👤</span>Profile
-        </a>
-      </nav>
-      <button class="logout" onclick="location.href='../index.html'">Log out</button>
-    </aside>
-    <header class="topbar">
-      <div style="width: 120px;"></div>
-      <div class="title">Admin Dashboard</div>
-      <div class="user">
-        <span>Admin -</span>
-        <span class="avatar">👤</span>
-      </div>
-    </header>
+    <?php
+    $activePage = 'dashboard';
+    include("components/sidebar-admin.php");
+    ?>
+
+    <?php
+    $pageTitle = 'Admin Dashboard';
+    include("components/topbar-admin.php");
+    ?>
+
     <main class="content">
       <div class="welcome">
         <h2>Welcome, Admin</h2>
