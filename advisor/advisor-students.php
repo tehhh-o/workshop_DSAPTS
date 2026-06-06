@@ -32,41 +32,16 @@
 
 <body>
   <div class="app">
-    <aside class="sidebar">
-      <div class="logo">
-        <div class="logo-box">UTeM</div>
-        <div class="logo-sub">UNIVERSITI TEKNIKAL MALAYSIA MELAKA</div>
-      </div>
-      <nav class="nav">
-        <a class="" href="dashboard-advisor.php">
-          <span class="ico">🖥️</span>Dashboard
-        </a>
-        <a class="" href="advisor-records.php">
-          <span class="ico">📑</span>Records
-        </a>
-        <a class="" href="advisor-alerts.php">
-          <span class="ico">⚠️</span>Alerts
-        </a>
-        <a class="active" href="advisor-students.php">
-          <span class="ico">🎓</span>Students
-        </a>
-        <a class="" href="advisor-reports.php">
-          <span class="ico">📋</span>Reports
-        </a>
-        <a class="" href="advisor-profile.php">
-          <span class="ico">👤</span>Profile
-        </a>
-      </nav>
-      <button class="logout" onclick="location.href='../index.php'">Log out</button>
-    </aside>
-    <header class="topbar">
-      <div style="width: 120px;"></div>
-      <div class="title">Student List</div>
-      <div class="user">
-        <span>Advisor -</span>
-        <span class="avatar">👤</span>
-      </div>
-    </header>
+    <?php
+    $activePage = 'students';
+    include("components/sidebar-advisor.php");
+    ?>
+
+    <?php
+    $pageTitle = 'Student List';
+    include("components/topbar-advisor.php");
+    ?>
+
     <main class="content">
       <div class="stu-toolbar">
         <div class="search">
