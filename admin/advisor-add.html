@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Edit User - UTeM</title>
-  <link rel="stylesheet" href="styles.css">
+  <title>Adding Users - UTeM</title>
+  <link rel="stylesheet" href="../style/styles.css">
 </head>
+
 <body>
   <div class="app">
     <aside class="sidebar">
@@ -27,36 +29,38 @@
           <span class="ico">👤</span>Profile
         </a>
       </nav>
-      <button class="logout" onclick="location.href='login.html'">Log out</button>
+      <button class="logout" onclick="location.href='../index.html'">Log out</button>
     </aside>
     <header class="topbar">
       <div style="width: 120px;"></div>
-      <div class="title">Edit User</div>
+      <div class="title">Adding Users</div>
       <div class="user">
         <span>Name -</span>
         <span class="avatar">👤</span>
       </div>
     </header>
     <main class="content">
-      <div class="edit-list">
-        <div class="edit-row">
-          <span>Name -</span>
-          <button class="icon-btn">✎</button>
+      <form class="form" onsubmit="event.preventDefault(); alert('Added');">
+        <div class="field">
+          <label>Name</label>
+          <input type="text">
         </div>
-        <div class="edit-row">
-          <span>Email -</span>
-          <button class="icon-btn">✎</button>
+        <div class="field">
+          <label>Email</label>
+          <input type="email">
         </div>
-        <div class="edit-row">
-          <span>Phone Number -</span>
-          <button class="icon-btn">✎</button>
+        <div class="field">
+          <label>Phone Number</label>
+          <input type="tel">
         </div>
-        <div class="edit-row">
-          <span>User ID -</span>
-          <button class="icon-btn">✎</button>
+        <div class="field">
+          <label>Advisor ID</label>
+          <input type="text">
         </div>
-      </div>
+        <button class="add-submit" type="submit">Add</button>
+      </form>
     </main>
   </div>
 </body>
+
 </html>
