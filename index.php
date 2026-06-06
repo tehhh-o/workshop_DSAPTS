@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Login - UTeM</title>
-  <link rel="stylesheet" href="../style/styles.css">
+  <link rel="stylesheet" href="style/styles.css">
   <style>
     body {
       background: #fff;
@@ -149,33 +149,13 @@
 
         <div class="login-actions">
           <button class="login-btn" type="submit">➜ Login</button>
-          <a class="forgot" href="#">Forgot Password</a>
+          <a class="forgot" href="auth/forget-password.php">Forgot Password</a>
         </div>
       </div>
     </form>
   </div>
 
-  <script>
-    function togglePwd() {
-      var p = document.getElementById('pwd');
-      p.type = p.type === 'password' ? 'text' : 'password';
-    }
-
-    function doLogin(e) {
-      e.preventDefault();
-      var uid = document.getElementById('uid').value.trim().toUpperCase();
-      var role = 'student';
-      if (uid.startsWith('A')) role = 'advisor';
-      else if (uid.startsWith('M')) role = 'admin';
-      var map = {
-        student: 'student/dashboard-student.php',
-        advisor: 'advisor/dashboard-advisor.php',
-        admin: 'admin/dashboard-admin.php'
-      };
-      location.href = map[role];
-      return false;
-    }
-  </script>
+  <script src="js/index.js"></script>
 </body>
 
 </html>
