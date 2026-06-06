@@ -31,38 +31,16 @@
 
 <body>
   <div class="app">
-    <aside class="sidebar">
-      <div class="logo">
-        <div class="logo-box">UTeM</div>
-        <div class="logo-sub">UNIVERSITI TEKNIKAL MALAYSIA MELAKA</div>
-      </div>
-      <nav class="nav">
-        <a class="" href="dashboard-student.php">
-          <span class="ico">🖥️</span>Dashboard
-        </a>
-        <a class="active" href="student-records.php">
-          <span class="ico">📑</span>Records
-        </a>
-        <a class="" href="student-alerts.php">
-          <span class="ico">⚠️</span>Alerts
-        </a>
-        <a class="" href="student-reports.php">
-          <span class="ico">📋</span>Reports
-        </a>
-        <a class="" href="student-profile.php">
-          <span class="ico">👤</span>Profile
-        </a>
-      </nav>
-      <button class="logout" onclick="location.href='../index.php'">Log out</button>
-    </aside>
-    <header class="topbar">
-      <div style="width: 120px;"></div>
-      <div class="title">Academic Records</div>
-      <div class="user">
-        <span>Student -</span>
-        <span class="avatar">👤</span>
-      </div>
-    </header>
+    <?php
+    $activePage = 'records';
+    include("components/sidebar-student.php");
+    ?>
+
+    <?php
+    $pageTitle = 'Academic Records';
+    include("components/topbar-student.php");
+    ?>
+
     <main class="content">
       <div style="background: #d9d9d9; border: 1px solid #999; border-radius: 6px; padding: 24px;">
         <div style="display: flex; justify-content: space-between; margin-bottom: 12px; font-size: 14px;">
