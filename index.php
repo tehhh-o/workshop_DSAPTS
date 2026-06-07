@@ -9,11 +9,14 @@
   <style>
     body {
       background: #fff;
+      display: flex;
+      flex-direction: column;
+      min-height:100vh;
     }
 
     .login-wrap {
-      min-height: 100vh;
       display: flex;
+      flex: 1;
       align-items: center;
       justify-content: center;
       padding: 20px;
@@ -33,6 +36,7 @@
       padding: 14px 20px;
       gap: 16px;
       border-bottom: 1px solid #888;
+      justify-content: space-between;
     }
 
     .login-head .logo-box {
@@ -135,8 +139,9 @@
       color: white;
       text-align: center;
       padding: 12px 0;
-      font-size: 18px;
+      font-size: 35px;
       font-weight: bold;
+      height: 80px;
     }
   </style>
 </head>
