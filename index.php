@@ -41,6 +41,12 @@
       border: 1px solid #999;
     }
 
+    .utem-logo {
+      width: 100px;
+      height: 100px;
+      object-fit: contain;
+    }
+
     .login-head h1 {
       flex: 1;
       text-align: center;
@@ -122,18 +128,32 @@
       color: #666;
       margin-top: 6px;
     }
+
+    .top-banner {
+      width: 100%;
+      background: #0b57d0;
+      color: white;
+      text-align: center;
+      padding: 12px 0;
+      font-size: 18px;
+      font-weight: bold;
+    }
   </style>
 </head>
 
 <body>
+  <div class="top-banner">
+  Welcome To Diploma Student Academic And Progress Tracking System
+</div>
   <div class="login-wrap">
     <form class="login-card" onsubmit="return doLogin(event)">
       <div class="login-head">
+         <img src="assets/imgs/utem.png" class="utem-logo">
         <div class="logo-box">
           UTeM
           <div class="logo-sub">UNIVERSITI TEKNIKAL MALAYSIA MELAKA</div>
         </div>
-        <h1>Diploma Student Academic And Progress<br>Tracking System</h1>
+        <img src="assets/imgs/dsapts.png" class="utem-logo">
       </div>
       <div class="login-body">
         <label for="uid">User ID</label>

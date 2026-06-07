@@ -1,7 +1,9 @@
 <aside class="sidebar">
     <div class="logo">
-        <div class="logo-box">UTeM</div>
-        <div class="logo-sub">UNIVERSITI TEKNIKAL MALAYSIA MELAKA</div>
+        <div class="logo-box">
+            <img src="../assets/imgs/utem.png" class="topbar-logo">
+        </div>
+        <div class="logo-sub"></div>
     </div>
     <nav class="nav">
         <?php $activePage = $activePage ?? ''; ?>
@@ -17,7 +19,7 @@
         <a class="<?php echo $activePage === 'admin' ? 'active' : ''; ?>" href="admin.php">
             <span class="ico">⚙️</span>Admin
         </a>
-        <a class="<?php echo $activePage === 'profile' ? 'active' : ''; ?>" href="#">
+        <a class="<?php echo $activePage === 'profile' ? 'active' : ''; ?>" href="admin-profile.php">
             <span class="ico">👤</span>Profile
         </a>
     </nav>

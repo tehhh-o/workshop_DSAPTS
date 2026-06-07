@@ -41,7 +41,7 @@
         </thead>
         <tbody>
           <tr>
-            <td class="name-col">aku</td>
+            <td class="name-col">Fen</td>
             <td class="action">
               <a class="icon-btn" href="admin-edit.php">✎</a>
             </td>

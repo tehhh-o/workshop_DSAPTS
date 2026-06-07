@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Profile - UTeM Admin</title>
+  <link rel="stylesheet" href="../style/styles.css">
+  <style>
+    .prof-header {
+      background: #d9d9d9;
+      border: 1px solid #999;
+      padding: 18px 24px;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      margin-bottom: 18px;
+      border-radius: 4px;
+    }
+
+    .prof-header .avatar-lg {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      border: 2px solid #333;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+    }
+
+    .prof-header h2 {
+      font-size: 22px;
+    }
+
+    .prof-header .uni {
+      font-size: 13px;
+      color: #333;
+      margin-top: 4px;
+    }
+
+    .prof-card {
+      background: #d9d9d9;
+      border: 1px solid #999;
+      padding: 24px;
+      border-radius: 4px;
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      gap: 30px;
+    }
+
+    .prof-photo {
+      background: #000;
+      color: #fff;
+      height: 240px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding-bottom: 10px;
+      font-size: 13px;
+    }
+
+    .prof-info .row {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      margin-bottom: 18px;
+      font-size: 14px;
+    }
+
+    .prof-info .row .ico {
+      font-size: 22px;
+      width: 30px;
+    }
+
+    .prof-info .row .lbl {
+      color: #333;
+      font-size: 12px;
+    }
+
+    .prof-info .row .val {
+      font-weight: bold;
+    }
+
+    .change-pw {
+      display: block;
+      text-align: right;
+      margin-top: 14px;
+      color: #1a73e8;
+      text-decoration: underline;
+      font-size: 14px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="app">
+    <?php
+    $activePage = 'profile';
+    include("components/sidebar-admin.php");
+    ?>
+
+    <?php
+    $pageTitle = 'Profile';
+    include("components/topbar-admin.php");
+    ?>
+
+    <main class="content">
+      <div class="prof-header">
+        <span class="avatar-lg">👤</span>
+        <div>
+          <h2>Fen Francois</h2>
+          <div class="uni">🎓 Universiti Teknikal Malaysia Melaka</div>
+        </div>
+      </div>
+      <div class="prof-card">
+        <div class="prof-photo">user image</div>
+        <div class="prof-info">
+          <div class="row">
+            <span class="ico">🪪</span>
+            <div>
+              <div class="lbl">Full Name</div>
+              <div class="val">Fen Francois Francis</div>
+            </div>
+          </div>
+          <div class="row">
+            <span class="ico">🪪</span>
+            <div>
+              <div class="lbl">User ID</div>
+              <div class="val">M032410...</div>
+            </div>
+          </div>
+          <div class="row">
+            <span class="ico">📞</span>
+            <div>
+              <div class="lbl">Phone</div>
+              <div class="val">+60 11-234 5678</div>
+            </div>
+          </div>
+          <div class="row">
+            <span class="ico">✉️</span>
+            <div>
+              <div class="lbl">Email</div>
+              <div class="val">fen.francois@utem.edu.my</div>
+            </div>
+          </div>
+          <a class="change-pw" href="#">Change Password</a>
+        </div>
+      </div>
+    </main>
+  </div>
+</body>
+
+</html>

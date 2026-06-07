@@ -256,3 +256,9 @@ th.action {
   color: #1a3a8a;
   margin-top: 2px;
 }
+
+.topbar-logo {
+  width: 90px;
+  height: auto;
+  object-fit: contain;
+}
