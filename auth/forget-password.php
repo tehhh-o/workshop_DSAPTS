@@ -10,18 +10,10 @@
 </head>
 
 <body class="auth-wrap">
-    <header class="topbar" style="height: 80px;">
-        <div class="logo">
-            <div class="logo-box">UTeM</div>
-            <div class="logo-sub">UNIVERSITI TEKNIKAL MALAYSIA MELAKA</div>
-        </div>
-        <div class="user">
-            <span>Account Recovery</span>
-        </div>
-    </header>
+
     <section class="auth-body">
 
-        <aside class="auth-left">
+        <aside class="auth-left auth-gradient-bg">
             <img src="../assets/imgs/shield.png" alt="" height="200px">
             <h2>Forget Password?</h2>
             <p>Identify your account and reset your password securely.</p>
@@ -29,6 +21,7 @@
 
         <main class="auth-right">
             <form class="auth-card" onsubmit="return requestOTP(event);">
+                <img src="../assets/imgs/dsapts-full.png" alt="" class="auth-logo">
                 <h2>Find your Account</h2>
 
                 <div class="auth-field">

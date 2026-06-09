@@ -6,31 +6,32 @@
     min-height: 100vh;
 }
 
-
 .auth-body {
     display: flex;
     flex: 1;
 }
 
-.auth-topbar {
-    background: #c8c8c8;
-    border-bottom: 1px solid #e2e8f0;
-    padding: 12px 24px;
-    display: flex;
-    align-items: center;
-    gap: 14px;
-}
-
 .auth-left {
     flex: 1;
-    background: linear-gradient(145deg, #003087 0%, #005bbb 100%);
-    color: white;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 36px 28px;
+
+    background-image: url("../assets/imgs/new-bg.jpeg");
+    background-size: cover;
+    background-position: left;
+    background-repeat: no-repeat;
+
+    color: white;
+    padding-right: 2%;
     gap: 20px;
+
+    clip-path: polygon(0px 0px, 100% 0px, 85.15% 100%, 0px 100%);
+}
+
+.auth-gradient-bg {
+    background-image: linear-gradient(135deg, #1c2f55, #2563eb);
 }
 
 .auth-left h2 {
@@ -49,13 +50,33 @@
 }
 
 .auth-right {
-    flex: 1.1;
+    flex: 0.8;
     background: #fff;
     padding: 48px 0;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+.nav-links {
+    position: absolute;
+    top: 16px;
+    right: 0;
+}
+
+.nav-links a {
+    font-size: 16px;
+    color: #003087;
+    text-decoration: none;
+    font-weight: 500;
+    margin-right: 16px;
+}
+
+.auth-logo {
+    max-width: 300px;
+    height: auto;
+    align-self: center;
 }
 
 .auth-card {
@@ -67,12 +88,12 @@
 
 .auth-card h2 {
     font-size: 24px;
-    margin: 0;
+    margin: 3% 0;
     font-weight: 600;
 }
 
 .auth-field {
-    padding: 10% 0;
+    padding: 3% 0 0 0;
 }
 
 .auth-field label {
@@ -92,10 +113,24 @@
     outline: none;
 }
 
+.password-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    height: 60%;
+}
+
 .auth-btn {
     width: 80%;
     padding: 12px;
-    margin-top: auto;
+    margin-top: 5%;
     margin-bottom: 10%;
     background: #003087;
     color: #fff;
