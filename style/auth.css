@@ -1,16 +1,4 @@
 /* ── Start Auth Pages (forget-password.php) ─────────────────────────── */
-.auth-wrap {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    min-height: 100vh;
-}
-
-.auth-body {
-    display: flex;
-    flex: 1;
-}
-
 .auth-left {
     flex: 1;
     display: flex;
