@@ -1,3 +1,20 @@
+<?php
+$otp = "6921";
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $enteredOtp = $_POST["otp"];
+
+    if ($enteredOtp === $otp) {
+        
+        header("Location: forget-password-reset.php");
+        exit();
+    } else {
+       
+        echo "<script>alert('Invalid OTP');</script>";
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -18,13 +35,15 @@
     </aside>
 
     <main class="auth-right">
-        <form class="auth-card" onsubmit="return validateOTP(event);">
+        <form class="auth-card" method="POST" action="forget-password-otp.php">
+
             <img src="../assets/imgs/dsapts-full.png" alt="" class="auth-logo">
             <h2>Find your Account</h2>
 
             <div class="auth-field">
                 <label for="otp">Please enter OTP</label>
-                <input id="otp" required>
+                <input id="otp" name="otp" required>
+
             </div>
 
             <button class="auth-btn" type="submit">Confirm</button>

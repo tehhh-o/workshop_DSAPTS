@@ -1,3 +1,19 @@
+<?php
+include 'login-validation.php'; 
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $uid = $_POST["uid"];
+
+    if (!isset($users[$uid])) {
+        echo "<script>alert('User ID not found');</script>";
+    } else {
+        
+        header("Location: forget-password-otp.php");
+        exit();
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -18,13 +34,15 @@
     </aside>
 
     <main class="auth-right">
-        <form class="auth-card" onsubmit="return requestOTP(event);">
+        <form class="auth-card" method="POST" action="forget-password.php">
+
             <img src="../assets/imgs/dsapts-full.png" alt="" class="auth-logo">
             <h2>Find your Account</h2>
 
             <div class="auth-field">
                 <label for="uid">Email or User ID</label>
-                <input id="uid" required>
+                <input id="uid" name="uid" required>
+
             </div>
 
             <button class="auth-btn" type="submit">Send OTP</button>
