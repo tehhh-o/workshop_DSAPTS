@@ -6,6 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Dashboard - UTeM Student</title>
   <link rel="stylesheet" href="../style/styles.css">
+  <link rel="stylesheet" href="../style/layout.css">
+  <link rel="stylesheet" href="../style/styles.css">
+  
   <style>
     .btn-pill {
       background: #d9d9d9;

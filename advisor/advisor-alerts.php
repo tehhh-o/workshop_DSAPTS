@@ -2,90 +2,40 @@
 <html lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Alerts - UTeM Advisor</title>
-  <link rel="stylesheet" href="../style/styles.css">
-  <style>
-    .alert-card {
-      background: #d9d9d9;
-      border: 1px solid #999;
-      padding: 14px 18px;
-      margin-bottom: 14px;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-
-    .alert-card .alert-title {
-      font-weight: bold;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .alert-card .alert-desc {
-      font-size: 13px;
-      color: #333;
-      margin-top: 6px;
-    }
-
-    .alert-card .chev {
-      font-size: 16px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title> <!-- change this title -->
+    <link rel="stylesheet" href="../style/layout.css">
+    <link rel="stylesheet" href="../style/advisor.css">
+    <link rel="stylesheet" href="../style/styles.css">
 </head>
 
-<body>
-  <div class="app">
+<body class="page-body main-gradient-bg">
     <?php
-    $activePage = 'alerts';
-    include("components/sidebar-advisor.php");
+    $activePage = 'alert';
+    include("components/sidebar-advisor.php")
     ?>
 
-    <?php
-    $pageTitle = 'Alerts';
-    include("components/topbar-advisor.php");
-    ?>
+    <main class="main-content main-rounded">
+        <h1 class="content-title">Alerts</h1>
 
-    <main class="content">
-      <div class="alert-card">
-        <div class="alert-title">
-          <span>⚠️ Warning : Insufficient Credit Hours</span>
-          <span class="chev">▾</span>
+<div class="dashboard-grid">
+  <div class="card-border">
+    <div class="dashboard-card-advisor">
+
+        <div class="student-item">
+            <img src="../assets/icons/user.png" alt="">
+            <span>Hakim</span>
         </div>
-        <div class="alert-desc">
-          Student Ahmad Bin Ali has only registered 12 credit hours this semester (minimum required: 15).
+
+        <div class="student-item">
+            <img src="../assets/icons/user.png" alt="">
+            <span>Halim</span>
         </div>
-      </div>
-      <div class="alert-card">
-        <div class="alert-title">
-          <span>⚠️ Warning : CGPA doesn't meet requirement</span>
-          <span class="chev">▾</span>
-        </div>
-        <div class="alert-desc">
-          3 students currently have CGPA below 2.00 and require academic intervention.
-        </div>
-      </div>
-      <div class="alert-card">
-        <div class="alert-title">
-          <span>⚠️ Warning : Course Grade below recommended amount</span>
-          <span class="chev">▾</span>
-        </div>
-        <div class="alert-desc">
-          Student Tan Wei Ming received D in DITP1113 - retake recommended.
-        </div>
-      </div>
-      <div class="alert-card">
-        <div class="alert-title">
-          <span>⚠️ Warning : MUET status not updated</span>
-          <span class="chev">▾</span>
-        </div>
-        <div class="alert-desc">
-          5 students have not yet submitted their MUET results for the current academic year.
-        </div>
-      </div>
-    </main>
-  </div>
+</div>
+</div>
+
+</div>
 </body>
 
 </html>
