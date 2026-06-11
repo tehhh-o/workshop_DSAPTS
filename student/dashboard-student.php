@@ -74,12 +74,12 @@
         <circle cx="320" cy="113" r="6" fill="#7cd1ff" />
         <circle cx="390" cy="75" r="6" fill="#7cd1ff" />
 
-        <text x="40" y="320" font-size="11" text-anchor="middle">SEM 1</text>
-        <text x="110" y="320" font-size="11" text-anchor="middle">SEM 2</text>
-        <text x="180" y="320" font-size="11" text-anchor="middle">SEM 3</text>
-        <text x="250" y="320" font-size="11" text-anchor="middle">SEM 4</text>
-        <text x="320" y="320" font-size="11" text-anchor="middle">SEM 5</text>
-        <text x="390" y="320" font-size="11" text-anchor="middle">SEM 6</text>
+        <text x="40" y="320" font-size="11" text-anchor="middle">SEM 1/1</text>
+        <text x="110" y="320" font-size="11" text-anchor="middle">SEM 1/2</text>
+        <text x="180" y="320" font-size="11" text-anchor="middle">SEM 2/1</text>
+        <text x="250" y="320" font-size="11" text-anchor="middle">SEM 2/2</text>
+        <text x="320" y="320" font-size="11" text-anchor="middle">SEM 3/1</text>
+        <text x="390" y="320" font-size="11" text-anchor="middle">SEM 3/2</text>
       </svg>
 
           <div style="text-align: center; margin-top: 10px;">
