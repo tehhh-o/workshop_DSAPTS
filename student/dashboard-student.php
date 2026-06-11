@@ -34,40 +34,55 @@
       <div style="display: flex; gap: 16px; align-items: flex-start;">
         <button class="btn-pill">CGPA</button>
         <div style="flex: 1; background: #fff; border: 1px solid #999; padding: 16px; border-radius: 6px;">
-          <svg viewBox="0 0 660 340" width="100%" style="background: #fff;">
-            <line x1="40" y1="20" x2="40" y2="300" stroke="#000" />
-            <line x1="40" y1="300" x2="640" y2="300" stroke="#000" />
-            <text x="20" y="310" font-size="11">0</text>
-            <text x="20" y="280" font-size="11">10</text>
-            <text x="20" y="250" font-size="11">20</text>
-            <text x="20" y="220" font-size="11">30</text>
-            <text x="20" y="190" font-size="11">40</text>
-            <text x="20" y="160" font-size="11">50</text>
-            <text x="20" y="130" font-size="11">60</text>
-            <text x="20" y="100" font-size="11">70</text>
-            <text x="20" y="70" font-size="11">80</text>
-            <text x="20" y="40" font-size="11">90</text>
-            <polyline fill="none" stroke="#111" stroke-width="2"
-              points="40,210 110,140 180,220 250,220 320,190 390,290 460,260 530,170 600,90" />
-            <circle cx="40" cy="210" r="5" fill="#111" />
-            <circle cx="110" cy="140" r="5" fill="#111" />
-            <circle cx="180" cy="220" r="5" fill="#111" />
-            <circle cx="250" cy="220" r="5" fill="#111" />
-            <circle cx="320" cy="190" r="5" fill="#111" />
-            <circle cx="390" cy="290" r="5" fill="#111" />
-            <circle cx="460" cy="260" r="5" fill="#111" />
-            <circle cx="530" cy="170" r="5" fill="#111" />
-            <circle cx="600" cy="90" r="5" fill="#111" />
-            <text x="40" y="320" font-size="11" text-anchor="middle">OCT 2019</text>
-            <text x="110" y="320" font-size="11" text-anchor="middle">NOV</text>
-            <text x="180" y="320" font-size="11" text-anchor="middle">DEC</text>
-            <text x="250" y="320" font-size="11" text-anchor="middle">JAN 2020</text>
-            <text x="320" y="320" font-size="11" text-anchor="middle">FEB</text>
-            <text x="390" y="320" font-size="11" text-anchor="middle">MAR</text>
-            <text x="460" y="320" font-size="11" text-anchor="middle">APR</text>
-            <text x="530" y="320" font-size="11" text-anchor="middle">MAY</text>
-            <text x="600" y="320" font-size="11" text-anchor="middle">JUN</text>
-          </svg>
+       <svg viewBox="0 0 660 340" width="100%" style="background: #fff; font-family: sans-serif;">
+
+        <text x="10" y="20" font-size="14" font-weight="bold">CGPA Chart</text>
+
+  
+        <line x1="40" y1="40" x2="40" y2="300" stroke="#000" stroke-width="4" stroke-linecap="square" />
+        <line x1="40" y1="300" x2="440" y2="300" stroke="#000" stroke-width="4" stroke-linecap="square" />
+
+        <!-- Y-Axis Ticks -->
+        <line x1="35" y1="300" x2="40" y2="300" stroke="#000" stroke-width="3" />
+        <line x1="35" y1="213" x2="40" y2="213" stroke="#000" stroke-width="3" />
+        <line x1="35" y1="126" x2="40" y2="126" stroke="#000" stroke-width="3" />
+        <line x1="35" y1="40" x2="40" y2="40" stroke="#000" stroke-width="3" />
+
+  <!-- X-Axis Ticks -->
+        <line x1="40" y1="300" x2="40" y2="305" stroke="#000" stroke-width="3" />
+        <line x1="110" y1="300" x2="110" y2="305" stroke="#000" stroke-width="3" />
+        <line x1="180" y1="300" x2="180" y2="305" stroke="#000" stroke-width="3" />
+        <line x1="250" y1="300" x2="250" y2="305" stroke="#000" stroke-width="3" />
+        <line x1="320" y1="300" x2="320" y2="305" stroke="#000" stroke-width="3" />
+        <line x1="390" y1="300" x2="390" y2="305" stroke="#000" stroke-width="3" />
+
+  <!-- Y-Axis Labels -->
+        <text x="20" y="304" font-size="14" font-weight="bold" text-anchor="middle">1</text>
+        <text x="20" y="217" font-size="14" font-weight="bold" text-anchor="middle">2</text>
+        <text x="20" y="130" font-size="14" font-weight="bold" text-anchor="middle">3</text>
+        <text x="20" y="44" font-size="14" font-weight="bold" text-anchor="middle">4</text>
+
+  <!-- Trend Line -->
+        <polyline fill="none" stroke="#000" stroke-width="2"
+         points="40,75 110,105 180,105 250,75 320,113 390,75" />
+
+  <!-- Data Points (Sky Blue Circles) -->
+        <circle cx="40" cy="75" r="6" fill="#7cd1ff" />
+        <circle cx="110" cy="105" r="6" fill="#7cd1ff" />
+        <circle cx="180" cy="105" r="6" fill="#7cd1ff" />
+        <circle cx="250" cy="75" r="6" fill="#7cd1ff" />
+        <circle cx="320" cy="113" r="6" fill="#7cd1ff" />
+        <circle cx="390" cy="75" r="6" fill="#7cd1ff" />
+
+        <!-- Unchanged Semester Labels -->
+        <text x="40" y="320" font-size="11" text-anchor="middle">SEM 1</text>
+        <text x="110" y="320" font-size="11" text-anchor="middle">SEM 2</text>
+        <text x="180" y="320" font-size="11" text-anchor="middle">SEM 3</text>
+        <text x="250" y="320" font-size="11" text-anchor="middle">SEM 4</text>
+        <text x="320" y="320" font-size="11" text-anchor="middle">SEM 5</text>
+        <text x="390" y="320" font-size="11" text-anchor="middle">SEM 6</text>
+      </svg>
+
           <div style="text-align: center; margin-top: 10px;">
             <button class="btn-pill">SEMESTER ▾</button>
           </div>
