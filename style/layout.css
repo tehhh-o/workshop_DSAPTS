@@ -33,6 +33,7 @@
     flex: 0.15;
     margin-right: 0;
     align-items: center;
+    padding: 5px;
 }
 
 .sidebar-logo {
@@ -68,9 +69,10 @@
     margin: 0 0 0 16px;
 }
 
+.sidebar-nav:hover,
 .sidebar-nav-active {
     background-color: #99c5ff;
-    border-radius: 8px;
+    transition: 0.2s ease;
 }
 
 .sidebar-logout {

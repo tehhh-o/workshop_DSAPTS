@@ -11,11 +11,11 @@
         <img src="../assets/icons/record.png" alt="">
         <h3>Records</h3>
     </a>
-    <a class="sidebar-nav <?php echo $activePage === 'student' ? 'sidebar-nav-active' : ''; ?>" href="">
+    <a class="sidebar-nav <?php echo $activePage === 'alert' ? 'sidebar-nav-active' : ''; ?>" href="">
         <img src="../assets/icons/alert.png" alt="">
         <h3>Alerts</h3>
     </a>
-    <a class="sidebar-nav <?php echo $activePage === 'admin' ? 'sidebar-nav-active' : ''; ?>" href="">
+    <a class="sidebar-nav <?php echo $activePage === 'student' ? 'sidebar-nav-active' : ''; ?>" href="">
         <img src="../assets/icons/student.png" alt="">
         <h3>Students</h3>
     </a>
@@ -23,7 +23,7 @@
         <img src="../assets/icons/report.png" alt="">
         <h3>Reports</h3>
     </a>
-    <a class="sidebar-nav <?php echo $activePage === 'user' ? 'sidebar-nav-active' : ''; ?>" href="">
+    <a class="sidebar-nav <?php echo $activePage === 'profile' ? 'sidebar-nav-active' : ''; ?>" href="">
         <img src="../assets/icons/user.png" alt="">
         <h3>Profile</h3>
     </a>

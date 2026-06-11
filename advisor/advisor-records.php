@@ -12,7 +12,7 @@
 
 <body class="page-body main-gradient-bg">
     <?php
-    $activePage = 'dashboard';
+    $activePage = 'records';
     include("components/sidebar-advisor.php")
     ?>
 
