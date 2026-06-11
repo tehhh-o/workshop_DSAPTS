@@ -11,7 +11,7 @@
         <img src="../assets/icons/record.png" alt="">
         <h3>Records</h3>
     </a>
-    <a class="sidebar-nav <?php echo $activePage === 'alert' ? 'sidebar-nav-active' : ''; ?>" href="">
+    <a class="sidebar-nav <?php echo $activePage === 'alert' ? 'sidebar-nav-active' : ''; ?>" href="advisor-alerts.php">
         <img src="../assets/icons/alert.png" alt="">
         <h3>Alerts</h3>
     </a>

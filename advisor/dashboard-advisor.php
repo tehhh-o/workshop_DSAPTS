@@ -28,19 +28,13 @@
         <div class="student-item">
             <img src="../assets/icons/user.png" alt="">
             <span>Hakim</span>
+            <img src="../assets/icons/alert.png" class="icon-right" alt="">
         </div>
 
         <div class="student-item">
             <img src="../assets/icons/user.png" alt="">
             <span>Halim</span>
-        </div>
-                <div class="student-item">
-            <img src="../assets/icons/user.png" alt="">
-            <span>Halim</span>
-        </div>
-                <div class="student-item">
-            <img src="../assets/icons/user.png" alt="">
-            <span>Halim</span>
+            <img src="../assets/icons/alert.png" class="icon-right" alt="">
         </div>
     </div>
 </div>
