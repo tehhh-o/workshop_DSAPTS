@@ -1,3 +1,99 @@
 /* all advisor css here, break by section */
+.dashboard-grid {
+    display: flex;
+    
+    gap: 30px;
+    margin-top: 30px;
+    flex: 1;
+    width: 100%;
+
+}
+
+.dashboard-grid>* {
+    flex: 1 1 180px;
+}
+
+.card-border {
+    background: linear-gradient(#1c2f55, #2563eb);
+    border-radius: 32px;
+    padding: 4px;
+    flex: 1;
+}
+
+.dashboard-card-advisor {
+    background: white;
+    border-radius: 28px;
+    padding: 20px;
+    flex: 1;
+    height: 100%;
+}
+
+.dashboard-card-advisor h2 {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+/* Risk Students */
+
+.student-item {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+
+    margin-bottom: 35px;
+}
+
+.student-item img {
+    width: 45px;
+    height: 45px;
+}
+
+.student-item span {
+    font-size: 24px;
+    font-weight: 600;
+}
+
+/* Progress Section */
+
+.student-select {
+    width: 100%;
+
+    padding: 12px;
+
+    border-radius: 10px;
+    border: 2px solid #244ea0;
+
+    font-size: 18px;
+
+    margin-bottom: 30px;
+}
+
+.semester {
+    margin-bottom: 25px;
+}
+
+.semester label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 28px;
+
+    background: white;
+
+    border: 1px solid #333;
+    border-radius: 10px;
+
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: #8db4eb;
+}
+
 /* to exapnd anything after changing disply:grid to display:flex
     add flex-direction: column and width: 100% */
