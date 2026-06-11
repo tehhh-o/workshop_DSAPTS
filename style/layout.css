@@ -25,6 +25,11 @@
     border-radius: 16px;
 }
 
+.chart-container {
+    width: 100%;
+    margin: auto;
+}
+
 /* end global styles */
 
 /*  start sidebar styles */
