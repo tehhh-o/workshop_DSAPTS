@@ -1,7 +1,9 @@
 /* all advisor css here, break by section */
+
+/* advisor dashboard */
 .dashboard-grid {
     display: flex;
-    
+
     gap: 30px;
     margin-top: 30px;
     flex: 1;
@@ -93,6 +95,75 @@
 .progress-fill {
     height: 100%;
     background: #8db4eb;
+}
+/* advisor records */
+/* Search Bar styling */
+.search-container {
+    display: flex;
+    align-items: center;
+    border-radius: 8px;
+    padding: 6px 12px;
+    max-width: 400px;
+    margin-bottom: 15px;
+    background-color: #fff;
+}
+.search-icon {
+    width: 18px;  
+    height: 18px;
+    object-fit: contain;
+}
+.search-input {
+    border: none;
+    outline: none;
+    width: 100%;
+    margin-left: 10px;
+    font-size: 16px;
+}
+
+/* Table Card styling */
+.table-wrapper {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    padding: 20px;
+}
+.record-table-container {
+    width: 100%;
+    max-width: 1100px;
+    background: #fff;
+    border: 2px solid #000;
+}
+
+.student-name-header {
+    border-top: 2px solid #000;
+    border-bottom: 2px solid #000;
+    padding: 12px;
+    font-size: 16px;
+}
+.student-record-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.student-record-table th{
+    font-weight: bold;
+    text-align: left;
+    background-color: #fff;
+    color: #000;
+    border-bottom: 2px solid #000;
+    border-right: 1px solid #000;
+    padding: 12px 16px;
+}
+.student-record-table td {
+    padding: 12px 16px;
+    color: #333;
+    background-color: #fff;
+    border-bottom: 1px solid #e0e0e0; 
+    border-right: 1px solid #000;
+}
+
+.text-right {
+    text-align: right;
 }
 
 /* to exapnd anything after changing disply:grid to display:flex
