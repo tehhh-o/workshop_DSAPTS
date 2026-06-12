@@ -227,5 +227,58 @@
   color: gray;
   line-height: 1.4;
 }
+
+/* advisor report css */
+
+.search-container-report {
+    display: flex;
+    align-items: center;
+    border-radius: 8px;
+    padding: 6px 12px;
+    max-width: 400px;
+    margin-bottom: 15px;
+    background-color: #fff;
+    border: 1px solid black;
+}
+
+.report-table-container {
+    width: 100%;
+    max-width: 1100px;
+    background: #fff;
+    margin: 0 auto;
+}
+
+.report-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 6px;
+    font-size: 14px;
+    border: 1px solid black;
+    margin: 5px;
+    min-width: 150px;
+    max-width: 300px;
+    border-radius: 8px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.report-buttons-container {
+  display: flex;      
+  gap: 12px;            
+}
+
+.dropdown-select {
+  background: transparent;
+  border: none;
+  font-size: 14px;
+  font-weight: 600;
+  color: #374151;
+  padding: 8px 12px;
+  cursor: pointer;
+  outline: none;
+  width: 100%;
+}
 /* to exapnd anything after changing disply:grid to display:flex
     add flex-direction: column and width: 100% */

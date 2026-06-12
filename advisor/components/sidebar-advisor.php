@@ -19,7 +19,7 @@
         <img src="../assets/icons/student.png" alt="">
         <h3>Students</h3>
     </a>
-    <a class="sidebar-nav <?php echo $activePage === 'reports' ? 'sidebar-nav-active' : ''; ?>" href="">
+    <a class="sidebar-nav <?php echo $activePage === 'reports' ? 'sidebar-nav-active' : ''; ?>" href="advisor-reports.php">
         <img src="../assets/icons/report.png" alt="">
         <h3>Reports</h3>
     </a>
