@@ -2,73 +2,135 @@
 <html lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Reports - UTeM Student</title>
-  <link rel="stylesheet" href="../style/styles.css">
-  <style>
-    .sel {
-      padding: 6px 10px;
-      border: 1px solid #999;
-      background: #d9d9d9;
-      border-radius: 4px;
-    }
-
-    .btn-pill {
-      background: #d9d9d9;
-      border: 1px solid #999;
-      padding: 6px 16px;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reports</title> 
+    <link rel="stylesheet" href="../style/layout.css">
+    <link rel="stylesheet" href="../style/student.css">
+    <link rel="stylesheet" href="../style/styles.css">
 </head>
 
+</head>
 <body>
-  <div class="app">
+
+<body class="page-body main-gradient-bg">
     <?php
     $activePage = 'reports';
-    include("components/sidebar-student.php");
+    include("components/sidebar-student.php")
     ?>
 
-    <?php
-    $pageTitle = 'Reports';
-    include("components/topbar-student.php");
-    ?>
+</head>
+<body>
 
+    <main class="main-content main-rounded">
+        <h1 class="content-title">Reports</h1>
+        
     <main class="content">
-      <div style="display: flex; gap: 12px; margin-bottom: 16px;">
-        <select class="sel">
-          <option>Semester 1</option>
-          <option>Semester 2</option>
-        </select>
-        <button class="btn-pill">Overall Report</button>
-      </div>
-      <div style="font-size: 14px; margin-bottom: 12px;">
-        <b>Detailed Report -</b>
-      </div>
-      <div style="background: #fff; border: 1px solid #999; padding: 16px; border-radius: 6px;">
-        <svg viewBox="0 0 540 340" width="100%" style="background: #fff;">
-          <line x1="80" y1="20" x2="80" y2="300" stroke="#000" />
-          <line x1="80" y1="300" x2="520" y2="300" stroke="#000" />
-          <line x1="75" y1="270" x2="85" y2="270" stroke="#000" />
-          <line x1="75" y1="240" x2="85" y2="240" stroke="#000" />
-          <line x1="75" y1="210" x2="85" y2="210" stroke="#000" />
-          <line x1="75" y1="180" x2="85" y2="180" stroke="#000" />
-          <line x1="75" y1="150" x2="85" y2="150" stroke="#000" />
-          <line x1="75" y1="120" x2="85" y2="120" stroke="#000" />
-          <line x1="75" y1="90" x2="85" y2="90" stroke="#000" />
-          <line x1="75" y1="60" x2="85" y2="60" stroke="#000" />
-          <line x1="75" y1="30" x2="85" y2="30" stroke="#000" />
-          <rect x="120" y="120" width="40" height="180" fill="#fff" stroke="#111" />
-          <rect x="180" y="60" width="40" height="240" fill="#fff" stroke="#111" />
-          <rect x="240" y="180" width="40" height="120" fill="#fff" stroke="#111" />
-          <rect x="300" y="100" width="40" height="200" fill="#fff" stroke="#111" />
-          <rect x="360" y="40" width="40" height="260" fill="#fff" stroke="#111" />
-          <rect x="420" y="80" width="40" height="220" fill="#fff" stroke="#111" />
-          <text x="300" y="330" font-size="14" font-weight="bold" text-anchor="middle">bar graph</text>
-        </svg>
-      </div>
+     
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reports Interface</title>
+    <style>
+        * {
+            box-sizing: border-box;
+           
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Top Control Bar Inner Border Container */
+        .controls-wrapper {
+            border: 3px solid #5b92e5;
+            border-radius: 30px;
+            padding: 15px 30px;
+            display: flex;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        /* Dropdown and Button Common Styles */
+        .control-element {
+            background-color: #94c1ff;
+            border: 2px solid #000000;
+            border-radius: 12px;
+            padding: 12px 24px;
+            font-size: 18px;
+            font-weight: 500;
+            color: #000000;
+            cursor: pointer;
+            outline: none;
+            text-align: center;
+        }
+
+        select.control-element {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-repeat: no-repeat;
+            background-position: right 15px center;
+            background-size: 18px;
+            padding-right: 45px;
+            width: 260px;
+        }
+
+        button.control-element {
+            width: 260px;
+            transition: background-color 0.2s;
+        }
+
+        button.control-element:hover {
+            background-color: #76aaff;
+        }
+
+        /* Chart Detailed Report Outer Container */
+        .report-wrapper {
+            border: 4px solid #4a7bc7;
+            border-radius: 35px;
+            padding: 30px;
+            min-height: 400px;
+        }
+
+        .report-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #000000;
+            margin-bottom: 30px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="main-container">
+
+        <div class="controls-wrapper">
+            <select class="control-element">
+                <option>Semester 1</option>
+                <option>Semester 2</option>
+            </select>
+            
+            <button class="control-element">Overall Report</button>
+        </div>
+
+        <div class="report-wrapper">
+            <h2 class="report-title">Detailed Report - Ahmad Bin Ali, Semester 1</h2>
+            
+            <div class="chart-container">
+                <div class="bar bar-1"></div>
+                <div class="bar bar-2"></div>
+                <div class="bar bar-3"></div>
+                <div class="bar bar-4"></div>
+                <div class="bar bar-5"></div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>
     </main>
   </div>
 </body>
