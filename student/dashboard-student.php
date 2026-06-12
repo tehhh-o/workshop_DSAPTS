@@ -70,9 +70,7 @@
         <text x="320" y="320" font-size="11" text-anchor="middle">SEM 3/1</text>
         <text x="390" y="320" font-size="11" text-anchor="middle">SEM 3/2</text>
       </svg>
-
           <div style="text-align: center; margin-top: 10px;">
-            <button class="btn-pill">SEMESTER ▾</button>
           </div>
         </div>
       </div>
