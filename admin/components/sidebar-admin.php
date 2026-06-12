@@ -18,7 +18,7 @@
         <img src="../assets/icons/settings.png" alt="">
         <h3>Admin</h3>
     </a>
-    <a class="sidebar-nav <?php echo $activePage === 'logs' ? 'sidebar-nav-active' : ''; ?>" href="logs.php">
+    <a class="sidebar-nav <?php echo $activePage === 'logs' ? 'sidebar-nav-active' : ''; ?>" href="admin-logs.php">
         <img src="../assets/icons/record.png" alt="">
         <h3>Logs</h3>
     </a>

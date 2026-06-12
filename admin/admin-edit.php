@@ -18,7 +18,6 @@
 
     <main class="main-content main-rounded">
         <h1 class="content-title">Edit Admin</h1>
-
         <div class="content">
       <div class="edit-list">
         <div class="edit-row">
