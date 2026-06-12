@@ -1,154 +1,74 @@
-<!DOCTYPE html>
-<html lang="en">
-
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Profile - UTeM Advisor</title>
-  <link rel="stylesheet" href="../style/styles.css">
-  <style>
-    .prof-header {
-      background: #d9d9d9;
-      border: 1px solid #999;
-      padding: 18px 24px;
-      display: flex;
-      align-items: center;
-      gap: 18px;
-      margin-bottom: 18px;
-      border-radius: 4px;
-    }
-
-    .prof-header .avatar-lg {
-      width: 64px;
-      height: 64px;
-      border-radius: 50%;
-      border: 2px solid #333;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 28px;
-    }
-
-    .prof-header h2 {
-      font-size: 22px;
-    }
-
-    .prof-header .uni {
-      font-size: 13px;
-      color: #333;
-      margin-top: 4px;
-    }
-
-    .prof-card {
-      background: #d9d9d9;
-      border: 1px solid #999;
-      padding: 24px;
-      border-radius: 4px;
-      display: grid;
-      grid-template-columns: 240px 1fr;
-      gap: 30px;
-    }
-
-    .prof-photo {
-      background: #000;
-      color: #fff;
-      height: 240px;
-      display: flex;
-      align-items: flex-end;
-      justify-content: center;
-      padding-bottom: 10px;
-      font-size: 13px;
-    }
-
-    .prof-info .row {
-      display: flex;
-      gap: 14px;
-      align-items: flex-start;
-      margin-bottom: 18px;
-      font-size: 14px;
-    }
-
-    .prof-info .row .ico {
-      font-size: 22px;
-      width: 30px;
-    }
-
-    .prof-info .row .lbl {
-      color: #333;
-      font-size: 12px;
-    }
-
-    .prof-info .row .val {
-      font-weight: bold;
-    }
-
-    .change-pw {
-      display: block;
-      text-align: right;
-      margin-top: 14px;
-      color: #1a73e8;
-      text-decoration: underline;
-      font-size: 14px;
-    }
-  </style>
+    <link rel="stylesheet" href="../style/layout.css">
+    <link rel="stylesheet" href="../style/advisor.css">
+    <link rel="stylesheet" href="../style/styles.css">
+<body class="page-body main-gradient-bg">
+    <?php
+    $activePage = 'profile';
+    include("components/sidebar-advisor.php")
+    ?>
 </head>
 
 <body>
-  <div class="app">
-    <?php
-    $activePage = 'profile';
-    include("components/sidebar-advisor.php");
-    ?>
-
-    <?php
-    $pageTitle = 'Profile';
-    include("components/topbar-advisor.php");
-    ?>
-
-    <main class="content">
-      <div class="prof-header">
-        <span class="avatar-lg">👤</span>
-        <div>
-          <h2>Dr. Ahmad Rahman</h2>
-          <div class="uni">🎓 Universiti Teknikal Malaysia Melaka</div>
-        </div>
-      </div>
-      <div class="prof-card">
-        <div class="prof-photo">user image</div>
-        <div class="prof-info">
-          <div class="row">
-            <span class="ico">🪪</span>
-            <div>
-              <div class="lbl">Full Name</div>
-              <div class="val">Dr. Ahmad Rahman Bin Abdullah</div>
-            </div>
-          </div>
-          <div class="row">
-            <span class="ico">🪪</span>
-            <div>
-              <div class="lbl">User ID</div>
-              <div class="val">A032410...</div>
-            </div>
-          </div>
-          <div class="row">
-            <span class="ico">📞</span>
-            <div>
-              <div class="lbl">Phone</div>
-              <div class="val">+60 11-234 5678</div>
-            </div>
-          </div>
-          <div class="row">
-            <span class="ico">✉️</span>
-            <div>
-              <div class="lbl">Email</div>
-              <div class="val">ahmad.rahman@utem.edu.my</div>
-            </div>
-          </div>
-          <a class="change-pw" href="#">Change Password</a>
-        </div>
-      </div>
-    </main>
-  </div>
+    <main class="main-content main-rounded">
+        <h1 class="content-title">Profile</h1>
 </body>
 
+</html>
+        <div class="profile-card">
+            <div class="avatar-circle">
+
+                <svg viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="100%" height="100%">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+            </div>
+            <div class="profile-summary">
+                <h2>Ali Baba</h2>
+                <div class="institution">Universiti Teknikal Malaysia Melaka</div>
+                <div class="academic-meta">
+                </div>
+            </div>
+        </div>
+
+        <div class="details-box">
+            <div class="details-grid">
+                
+                <div class="info-group">
+                    <span class="label">First Name</span>
+                    <span class="value">Ali</span>
+                </div>
+
+                <div class="info-group">
+                    <span class="label">Last Name</span>
+                    <span class="value">Baba</span>
+                </div>
+
+                <div class="info-group">
+                    <span class="label">Advisor ID</span>
+                    <span class="value">A32155320</span>
+                </div>
+
+                <div class="info-group" style="grid-column: span 2;">
+                    <span class="label">Email</span>
+                    <span class="value">ali@utem.edu.my</span>
+                </div>
+
+                <div class="info-group">
+                    <span class="label">Phone Number</span>
+                    <span class="value">012-3456789</span>
+                </div>
+
+            </div>
+
+
+            <div class="address-container">
+                <span class="label">Address</span>
+                <span class="value">Jalan Hang Tuah Jaya, 76100 Durian Tunggal, Melaka</span>
+            </div>
+        </div>
+
+    </div>
+
+</body>
 </html>

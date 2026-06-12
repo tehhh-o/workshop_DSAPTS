@@ -53,6 +53,52 @@
             </table>
         </main>
     </main>
+    <div class="chart-container">
+                <canvas id="gpaChart"></canvas>
+            </div>
+            <div class="chart-container">
+                <canvas id="barChart"></canvas>
+            </div>
+            <div class="chart-container">
+                <canvas id="pieChart"></canvas>
+            </div>
+            <div class="chart-container">
+                <canvas id="radarChart"></canvas>
+            </div>
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+            <script src="../js/script.js"></script>
+            <script>
+                makeGraph({
+                    id: "gpaChart",
+                    type: "line",
+                    title: "Student GPA Trend",
+                    xLabel: "Semester",
+                    yLabel: "GPA",
+                    xValues: ["Sem 1", "Sem 2", "Sem 3"],
+                    yValues: [3.2, 3.4, 3.6],
+                    label: "GPA"
+                });
+                makeGraph({
+                    id: "barChart",
+                    type: "bar",
+                    title: "Student GPA Trend",
+                    xLabel: "Semester",
+                    yLabel: "GPA",
+                    xValues: ["Sem 1", "Sem 2", "Sem 3"],
+                    yValues: [3.2, 3.4, 3.6],
+                    label: "GPA"
+                });
+                makeGraph({
+                    id: "pieChart",
+                    type: "pie",
+                    title: "Student GPA Trend",
+                    xLabel: "Semester",
+                    yLabel: "GPA",
+                    xValues: ["Sem 1", "Sem 2", "Sem 3"],
+                    yValues: [3.2, 3.4, 3.6],
+                    label: "GPA"
+                });
+            </script>
 </body>
 
 </html>

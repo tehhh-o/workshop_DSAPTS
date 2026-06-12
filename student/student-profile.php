@@ -2,148 +2,190 @@
 <html lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Profile - UTeM Student</title>
-  <link rel="stylesheet" href="../style/styles.css">
-  <style>
-    .profile-head {
-      background: #d9d9d9;
-      border: 1px solid #999;
-      border-radius: 6px;
-      padding: 18px;
-      display: flex;
-      gap: 18px;
-      align-items: center;
-      margin-bottom: 14px;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title> 
+    <link rel="stylesheet" href="../style/layout.css">
+    <link rel="stylesheet" href="../style/student.css">
+    <link rel="stylesheet" href="../style/styles.css">
+</head>
 
-    .pf-avatar {
-      width: 70px;
-      height: 70px;
-      border: 2px solid #333;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 36px;
-      background: #fff;
-    }
+ <style>
 
-    .profile-card {
-      background: #d9d9d9;
-      border: 1px solid #999;
-      border-radius: 6px;
-      padding: 22px;
-      display: grid;
-      grid-template-columns: 200px 1fr;
-      gap: 24px;
-    }
+       
+        .profile-card {
+            border: 3px solid #5b92e5;
+            border-radius: 30px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 20px;
+            flex-direction: row;
+            width: 100%;
+        }
 
-    .pf-photo {
-      background: #333;
-      color: #fff;
-      height: 200px;
-      border-radius: 6px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      font-size: 90px;
-    }
+        
+        .avatar-circle {
+            width: 80px;
+            height: 80px;
+            border: 2px solid #000000;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 5px;
+        }
 
-    .pf-rows {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      gap: 16px;
-    }
+        .profile-summary h2 {
+            font-size: 24px;
+            font-weight: 700;
+            color: #000000;
+            margin-bottom: 4px;
+        }
 
-    .pf-row {
-      display: flex;
-      gap: 14px;
-      align-items: center;
-      font-size: 14px;
-    }
+        .profile-summary .institution {
+            font-size: 16px;
+            color: #111111;
+            margin-bottom: 6px;
+        }
 
-    .ico-box {
-      width: 36px;
-      height: 28px;
-      background: #fff;
-      border: 1px solid #999;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 3px;
-    }
-  </style>
+        .profile-summary .academic-meta {
+            font-size: 14px;
+            color: #333333;
+        }
+
+        .academic-meta span {
+            margin-right: 15px;
+        }
+
+      
+        .details-box {
+            border: 3px solid #5b92e5;
+            border-radius: 30px;
+            padding: 15px 30px;
+            flex-direction: row;
+            width: 100%;
+        }
+
+
+        .details-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            row-gap: 25px;
+            column-gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .info-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .label {
+            font-size: 15px;
+            font-weight: 700;
+            color: #000000;
+            margin-bottom: 5px;
+        }
+
+        .value {
+            font-size: 16px;
+            color: #222222;
+        }
+
+      
+        .address-container {
+            background-color: #94c1ff;
+            border-radius: 20px;
+            padding: 20px 25px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .address-container .label {
+            font-size: 15px;
+            font-weight: 700;
+            color: #000000;
+        }
+
+        .address-container .value {
+            font-size: 16px;
+            color: #000000;
+        }
+    </style>
+
+<body class="page-body main-gradient-bg">
+    <?php
+    $activePage = 'profile';
+    include("components/sidebar-student.php")
+    ?>
+
 </head>
 
 <body>
-  <div class="app">
-    <?php
-    $activePage = 'profile';
-    include("components/sidebar-student.php");
-    ?>
+    <main class="main-content main-rounded">
+        <h1 class="content-title">Profile</h1>
 
-    <?php
-    $pageTitle = 'Profile';
-    include("components/topbar-student.php");
-    ?>
 
-    <main class="content">
-      <div class="profile-head">
-        <div class="pf-avatar">👤</div>
-        <div>
-          <div style="font-size: 24px; font-weight: bold;">Name</div>
-          <div style="font-size: 13px; color: #444;">🎓 Universiti Teknikal Malaysia Melaka</div>
-          <div style="margin-top: 6px; font-size: 14px;">
-            <b>3.85</b> <span style="color: #666;">GPA</span> &nbsp;&nbsp; <b>17</b> <span
-              style="color: #666;">Credits</span>
-          </div>
+        <div class="profile-card">
+            <div class="avatar-circle">
+
+                <svg viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="100%" height="100%">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+            </div>
+            <div class="profile-summary">
+                <h2>Ahmad bin Ali</h2>
+                <div class="institution">Universiti Teknikal Malaysia Melaka</div>
+                <div class="academic-meta">
+                    <span><strong>3.85</strong> CGPA</span>
+                    <span><strong>3.51</strong> GPA</span>
+                    <span><strong>17</strong> Credits</span>
+                </div>
+            </div>
         </div>
-      </div>
-      <div class="profile-card">
-        <div class="pf-photo">
-          👤
-          <div style="font-size: 11px; margin-top: 8px;">user image</div>
+
+        <div class="details-box">
+            <div class="details-grid">
+                
+                <div class="info-group">
+                    <span class="label">First Name</span>
+                    <span class="value">Ahmad</span>
+                </div>
+
+                <div class="info-group">
+                    <span class="label">Last Name</span>
+                    <span class="value">Ali</span>
+                </div>
+
+                <div class="info-group">
+                    <span class="label">Student ID</span>
+                    <span class="value">D032410...</span>
+                </div>
+
+                <div class="info-group" style="grid-column: span 2;">
+                    <span class="label">Email</span>
+                    <span class="value">D032410...@student.utem.edu.my</span>
+                </div>
+
+                <div class="info-group">
+                    <span class="label">Phone Number</span>
+                    <span class="value">012-3456789</span>
+                </div>
+
+            </div>
+
+
+            <div class="address-container">
+                <span class="label">Address</span>
+                <span class="value">Jalan Hang Tuah Jaya, 76100 Durian Tunggal, Melaka</span>
+            </div>
         </div>
-        <div class="pf-rows">
-          <div class="pf-row">
-            <span class="ico-box">🪪</span>
-            <div>
-              <div style="font-size: 12px; color: #666;">Full Name</div>
-              <div>Ahmad Bin Ali</div>
-            </div>
-          </div>
-          <div class="pf-row">
-            <span class="ico-box">🪪</span>
-            <div>
-              <div style="font-size: 12px; color: #666;">Student ID</div>
-              <div>D032410123</div>
-            </div>
-          </div>
-          <div class="pf-row">
-            <span class="ico-box">📞</span>
-            <div>
-              <div style="font-size: 12px; color: #666;">Phone</div>
-              <div>+60 12-345 6787</div>
-            </div>
-          </div>
-          <div class="pf-row">
-            <span class="ico-box">✉️</span>
-            <div>
-              <div style="font-size: 12px; color: #666;">Email</div>
-              <div>D032410123@student.utem.edu.my</div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div style="text-align: right; margin-top: 10px; font-size: 14px; text-decoration: underline; cursor: pointer;">
-        Change Password
-      </div>
-    </main>
-  </div>
+
+    </div>
+
 </body>
-
 </html>
