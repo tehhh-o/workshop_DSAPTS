@@ -24,19 +24,31 @@
             <h3>Semester Settings</h3>
             <div class="input-field">
                 <h4>Max Credit Per Semester</h4>
-                <input type="number">
+                <div class="edit-field">
+                    <input type="number" value="100">
+                    <img src="../assets/icons/edit.png" alt="">
+                </div>
             </div>
             <div class="input-field">
                 <h4>Min Credit Per Semester</h4>
-                <input type="number">
+                <div class="edit-field">
+                    <input type="number" value="90">
+                    <img src="../assets/icons/edit.png" alt="">
+                </div>
             </div>
             <div class="input-field">
                 <h4>Current Academic Year</h4>
-                <input type="number">
+                <div class="edit-field">
+                    <input type="number" value="2">
+                    <img src="../assets/icons/edit.png" alt="">
+                </div>
             </div>
             <div class="input-field">
                 <h4>Current Semester</h4>
-                <input type="number">
+                <div class="edit-field">
+                    <input type="number" value="2">
+                    <img src="../assets/icons/edit.png" alt="">
+                </div>
             </div>
         </div>
 
@@ -44,11 +56,17 @@
             <h3>Graduation Requirements</h3>
             <div class="input-field">
                 <h4>Graduation Credit Requirement</h4>
-                <input type="number">
+                <div class="edit-field">
+                    <input type="number" value="90">
+                    <img src="../assets/icons/edit.png" alt="">
+                </div>
             </div>
             <div class="input-field">
                 <h4>Minimum CGPA for Graduation</h4>
-                <input type="number" step="0.01" min="0" max="4">
+                <div class="edit-field">
+                    <input type="number" value="2.00">
+                    <img src="../assets/icons/edit.png" alt="">
+                </div>
             </div>
         </div>
 
@@ -56,7 +74,10 @@
             <h3>Grading System</h3>
             <div class="input-field">
                 <h4>Passing Grade</h4>
-                <input type="number" min="0" max="4">
+                <div class="edit-field">
+                    <input type="text" value="D">
+                    <img src="../assets/icons/edit.png" alt="">
+                </div>
             </div>
         </div>
     </main>
