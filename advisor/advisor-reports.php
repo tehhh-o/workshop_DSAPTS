@@ -43,7 +43,7 @@
           </div>
         </div>
         <div class="profile-card" style="flex-direction: column;">
-          <h2 class="report-title">Detailed Report - Ahmad Bin Ali, Semester 1</h2>
+          <h2 class="report-title">Detailed Report - Ahmad Bin Ali, Overall Report</h2>
           <div class="chart-container">
             <canvas id="gpaChart"></canvas>
           </div>
