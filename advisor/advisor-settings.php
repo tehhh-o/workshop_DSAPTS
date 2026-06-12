@@ -24,7 +24,6 @@
             <input type="text" value="A32155320" disabled>
         </div>
 
-
         <div class="panel">
             <h3>Personal Info</h3>
             <div class="input-field">
@@ -48,6 +47,13 @@
                     <img src="../assets/icons/edit.png" alt="">
                 </div>
             </div>
+            <div class="auth-links">
+                <p></p>
+                <a href="">Change Password</a>
+            </div>
+        </div>
+        <div class="panel">
+            <h3>Theme</h3>
             <div class="input-field">
                 <h4>Theme Mode</h4>
                 <div class="theme-field">
@@ -60,10 +66,6 @@
                         <h4>Light</h4>
                     </div>
                 </div>
-            </div>
-            <div class="auth-links">
-                <p></p>
-                <a href="">Change Password</a>
             </div>
         </div>
     </main>

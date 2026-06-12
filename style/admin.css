@@ -46,36 +46,6 @@
 
 /* end admin dashboard styles */
 
-
-/* start admin settings styles */
-
-.input-field {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 12px;
-}
-
-.input-field input[type="number"] {
-    appearance: textfield;
-    -moz-appearance: textfield;
-}
-
-.input-field h4 {
-    font-size: 14px;
-    font-weight: 400;
-}
-
-.input-field input {
-    padding: 10px 0 10px 14px;
-    border: 1.5px solid #e2e8f0;
-    border-radius: 8px;
-    background: #f8fafc;
-    min-width: 200px;
-}
-
-/* end admin settings styles */
 /* Advisor Button */
 
 .advisor-btn {
@@ -261,19 +231,6 @@ tbody td {
 .logs-table-wrapper::-webkit-scrollbar-thumb {
     background: #4d7dd8;
     border-radius: 10px;
-}
-
-.page-body {
-    display: flex;
-    min-height: 100vh;
-}
-
-.main-content {
-    flex: 1;
-}
-
-.main-content.main-rounded {
-    align-items: stretch;
 }
 
 .logs-box {

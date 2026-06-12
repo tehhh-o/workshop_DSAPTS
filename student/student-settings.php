@@ -48,6 +48,21 @@
         </div>
       </div>
       <div class="input-field">
+        <h4>Muet Status</h4>
+        <div class="edit-field">
+          <input type="text" value="Band 4.0">
+          <img src="../assets/icons/edit.png" alt="">
+        </div>
+      </div>
+      <div class="auth-links">
+        <p></p>
+        <a href="">Change Password</a>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h3>Theme</h3>
+      <div class="input-field">
         <h4>Theme Mode</h4>
         <div class="theme-field">
           <div class="theme-mode">
@@ -59,17 +74,6 @@
             <h4>Light</h4>
           </div>
         </div>
-      </div>
-      <div class="input-field">
-        <h4>Muet Status</h4>
-        <div class="edit-field">
-          <input type="text" value="Band 4.0">
-          <img src="../assets/icons/edit.png" alt="">
-        </div>
-      </div>
-      <div class="auth-links">
-        <p></p>
-        <a href="">Change Password</a>
       </div>
     </div>
   </main>
