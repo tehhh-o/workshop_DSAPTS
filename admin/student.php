@@ -24,7 +24,7 @@
                 <div class="search">
                     <span>☰</span>
                     <input placeholder="Hinted search text">
-                    <span>🔍</span>
+                    <img src="../assets/icons/search.png" alt="" style="height: 16px;">
                 </div>
                 <a class="student-btn" href="student-add.php">
                     <span class="student-icon">👥</span>

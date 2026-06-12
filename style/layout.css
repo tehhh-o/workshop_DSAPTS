@@ -39,6 +39,25 @@ body {
     margin: auto;
 }
 
+table {
+    /* experimental  till end global*/
+    width: 100%;
+    border-collapse: collapse;
+}
+
+thead th {
+    padding: 10px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+tbody td {
+    padding: 10px;
+    text-align: center;
+    color: #fff;
+}
+
 /* end global styles */
 
 /*  start sidebar styles */
@@ -224,6 +243,7 @@ body {
 }
 
 /* end profile styles */
+
 /* start setting page styles */
 
 .panel {
