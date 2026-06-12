@@ -7,19 +7,56 @@
   <title>Reports - UTeM Student</title>
   <link rel="stylesheet" href="../style/styles.css">
   <style>
-    .sel {
-      padding: 6px 10px;
-      border: 1px solid #999;
-      background: #d9d9d9;
-      border-radius: 4px;
+    .rep-controls {
+      display: grid;
+      grid-template-columns: auto auto;
+      gap: 12px 16px;
+      margin-bottom: 18px;
+      max-width: 480px;
     }
 
-    .btn-pill {
-      background: #d9d9d9;
-      border: 1px solid #999;
-      padding: 6px 16px;
-      border-radius: 4px;
+    .rep-controls select,
+    .rep-controls button {
+      padding: 8px 14px;
+      font-size: 14px;
+      border: 1px solid #888;
+      background: #eee;
       cursor: pointer;
+    }
+
+    .rep-detail {
+      font-size: 14px;
+      margin-bottom: 14px;
+    }
+
+    .chart {
+      display: flex;
+      align-items: flex-end;
+      gap: 18px;
+      height: 280px;
+      border-left: 2px solid #000;
+      border-bottom: 2px solid #000;
+      padding: 0 20px;
+      max-width: 520px;
+      position: relative;
+    }
+
+    .bar {
+      width: 50px;
+      background: #fff;
+      border: 1.5px solid #000;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding-bottom: 4px;
+      font-size: 12px;
+    }
+
+    .chart-label {
+      text-align: center;
+      font-weight: bold;
+      margin-top: 8px;
+      max-width: 520px;
     }
   </style>
 </head>
@@ -31,44 +68,27 @@
     include("components/sidebar-student.php");
     ?>
 
-    <?php
-    $pageTitle = 'Reports';
-    include("components/topbar-student.php");
-    ?>
 
     <main class="content">
-      <div style="display: flex; gap: 12px; margin-bottom: 16px;">
-        <select class="sel">
+      <div class="rep-controls">
+        <select>
           <option>Semester 1</option>
           <option>Semester 2</option>
+          <option>Semester 3</option>
         </select>
-        <button class="btn-pill">Overall Report</button>
+        <button>Overall Report</button>
       </div>
-      <div style="font-size: 14px; margin-bottom: 12px;">
-        <b>Detailed Report -</b>
+      <div class="rep-detail">
+        <strong>Report -</strong> Ahmad Bin Ali, Semester 3
       </div>
-      <div style="background: #fff; border: 1px solid #999; padding: 16px; border-radius: 6px;">
-        <svg viewBox="0 0 540 340" width="100%" style="background: #fff;">
-          <line x1="80" y1="20" x2="80" y2="300" stroke="#000" />
-          <line x1="80" y1="300" x2="520" y2="300" stroke="#000" />
-          <line x1="75" y1="270" x2="85" y2="270" stroke="#000" />
-          <line x1="75" y1="240" x2="85" y2="240" stroke="#000" />
-          <line x1="75" y1="210" x2="85" y2="210" stroke="#000" />
-          <line x1="75" y1="180" x2="85" y2="180" stroke="#000" />
-          <line x1="75" y1="150" x2="85" y2="150" stroke="#000" />
-          <line x1="75" y1="120" x2="85" y2="120" stroke="#000" />
-          <line x1="75" y1="90" x2="85" y2="90" stroke="#000" />
-          <line x1="75" y1="60" x2="85" y2="60" stroke="#000" />
-          <line x1="75" y1="30" x2="85" y2="30" stroke="#000" />
-          <rect x="120" y="120" width="40" height="180" fill="#fff" stroke="#111" />
-          <rect x="180" y="60" width="40" height="240" fill="#fff" stroke="#111" />
-          <rect x="240" y="180" width="40" height="120" fill="#fff" stroke="#111" />
-          <rect x="300" y="100" width="40" height="200" fill="#fff" stroke="#111" />
-          <rect x="360" y="40" width="40" height="260" fill="#fff" stroke="#111" />
-          <rect x="420" y="80" width="40" height="220" fill="#fff" stroke="#111" />
-          <text x="300" y="330" font-size="14" font-weight="bold" text-anchor="middle">bar graph</text>
-        </svg>
+      <div class="chart">
+        <div class="bar" style="height: 30%;"></div>
+        <div class="bar" style="height: 20%;"></div>
+        <div class="bar" style="height: 50%;"></div>
+        <div class="bar" style="height: 75%;"></div>
+        <div class="bar" style="height: 60%;"></div>
       </div>
+      <div class="chart-label">bar graph</div>
     </main>
   </div>
 </body>

@@ -2,40 +2,26 @@
 <html lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Dashboard - UTeM Student</title>
-  <link rel="stylesheet" href="../style/styles.css">
-  <link rel="stylesheet" href="../style/layout.css">
-  <link rel="stylesheet" href="../style/styles.css">
-  
-  <style>
-    .btn-pill {
-      background: #d9d9d9;
-      border: 1px solid #999;
-      padding: 8px 18px;
-      border-radius: 4px;
-      font-size: 14px;
-      cursor: pointer;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title> 
+    <link rel="stylesheet" href="../style/layout.css">
+    <link rel="stylesheet" href="../style/student.css">
+    <link rel="stylesheet" href="../style/styles.css">
 </head>
 
-<body>
-  <div class="app">
+<body class="page-body main-gradient-bg">
     <?php
     $activePage = 'dashboard';
-    include("components/sidebar-student.php");
+    include("components/sidebar-student.php")
     ?>
 
-    <?php
-    $pageTitle = 'Student Dashboard';
-    include("components/topbar-student.php");
-    ?>
+    <main class="main-content main-rounded">
+        <h1 class="content-title">Dashboard</h1>
+        <h3 class="content-welcome">Welcome, Student</h3>
 
     <main class="content">
       <div style="display: flex; gap: 16px; align-items: flex-start;">
-        <button class="btn-pill">CGPA</button>
         <div style="flex: 1; background: #fff; border: 1px solid #999; padding: 16px; border-radius: 6px;">
        <svg viewBox="0 0 660 340" width="100%" style="background: #fff; font-family: sans-serif;">
 

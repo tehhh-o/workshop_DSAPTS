@@ -4,77 +4,91 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Profile - UTeM Student</title>
+  <title>Profile - UTeM Advisor</title>
   <link rel="stylesheet" href="../style/styles.css">
   <style>
-    .profile-head {
+    .prof-header {
       background: #d9d9d9;
       border: 1px solid #999;
-      border-radius: 6px;
-      padding: 18px;
+      padding: 18px 24px;
       display: flex;
+      align-items: center;
       gap: 18px;
-      align-items: center;
-      margin-bottom: 14px;
+      margin-bottom: 18px;
+      border-radius: 4px;
     }
 
-    .pf-avatar {
-      width: 70px;
-      height: 70px;
-      border: 2px solid #333;
+    .prof-header .avatar-lg {
+      width: 64px;
+      height: 64px;
       border-radius: 50%;
-      display: flex;
+      border: 2px solid #333;
+      display: inline-flex;
       align-items: center;
       justify-content: center;
-      font-size: 36px;
-      background: #fff;
+      font-size: 28px;
     }
 
-    .profile-card {
+    .prof-header h2 {
+      font-size: 22px;
+    }
+
+    .prof-header .uni {
+      font-size: 13px;
+      color: #333;
+      margin-top: 4px;
+    }
+
+    .prof-card {
       background: #d9d9d9;
       border: 1px solid #999;
-      border-radius: 6px;
-      padding: 22px;
+      padding: 24px;
+      border-radius: 4px;
       display: grid;
-      grid-template-columns: 200px 1fr;
-      gap: 24px;
+      grid-template-columns: 240px 1fr;
+      gap: 30px;
     }
 
-    .pf-photo {
-      background: #333;
+    .prof-photo {
+      background: #000;
       color: #fff;
-      height: 200px;
-      border-radius: 6px;
+      height: 240px;
       display: flex;
-      flex-direction: column;
-      align-items: center;
+      align-items: flex-end;
       justify-content: center;
-      font-size: 90px;
+      padding-bottom: 10px;
+      font-size: 13px;
     }
 
-    .pf-rows {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      gap: 16px;
-    }
-
-    .pf-row {
+    .prof-info .row {
       display: flex;
       gap: 14px;
-      align-items: center;
+      align-items: flex-start;
+      margin-bottom: 18px;
       font-size: 14px;
     }
 
-    .ico-box {
-      width: 36px;
-      height: 28px;
-      background: #fff;
-      border: 1px solid #999;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 3px;
+    .prof-info .row .ico {
+      font-size: 22px;
+      width: 30px;
+    }
+
+    .prof-info .row .lbl {
+      color: #333;
+      font-size: 12px;
+    }
+
+    .prof-info .row .val {
+      font-weight: bold;
+    }
+
+    .change-pw {
+      display: block;
+      text-align: right;
+      margin-top: 14px;
+      color: #1a73e8;
+      text-decoration: underline;
+      font-size: 14px;
     }
   </style>
 </head>
@@ -86,61 +100,47 @@
     include("components/sidebar-student.php");
     ?>
 
-    <?php
-    $pageTitle = 'Profile';
-    include("components/topbar-student.php");
-    ?>
-
     <main class="content">
-      <div class="profile-head">
-        <div class="pf-avatar">👤</div>
+      <div class="prof-header">
+        <span class="avatar-lg">👤</span>
         <div>
-          <div style="font-size: 24px; font-weight: bold;">Name</div>
-          <div style="font-size: 13px; color: #444;">🎓 Universiti Teknikal Malaysia Melaka</div>
-          <div style="margin-top: 6px; font-size: 14px;">
-            <b>3.85</b> <span style="color: #666;">GPA</span> &nbsp;&nbsp; <b>17</b> <span
-              style="color: #666;">Credits</span>
-          </div>
+          <h2>Ahmad bin Ali</h2>
+          <div class="uni">🎓 Universiti Teknikal Malaysia Melaka</div>
         </div>
       </div>
-      <div class="profile-card">
-        <div class="pf-photo">
-          👤
-          <div style="font-size: 11px; margin-top: 8px;">user image</div>
+      <div class="prof-card">
+        <div class="prof-photo">user image</div>
+        <div class="prof-info">
+          <div class="row">
+            <span class="ico">🪪</span>
+            <div>
+              <div class="lbl">Full Name</div>
+              <div class="val">Ahmad</div>
+            </div>
+          </div>
+          <div class="row">
+            <span class="ico">🪪</span>
+            <div>
+              <div class="lbl">User ID</div>
+              <div class="val">D032410...</div>
+            </div>
+          </div>
+          <div class="row">
+            <span class="ico">📞</span>
+            <div>
+              <div class="lbl">Phone</div>
+              <div class="val">+60 11-234 5678</div>
+            </div>
+          </div>
+          <div class="row">
+            <span class="ico">✉️</span>
+            <div>
+              <div class="lbl">Email</div>
+              <div class="val">Ahmad@student.utem.edu.my</div>
+            </div>
+          </div>
+          <a class="change-pw" href="#">Change Password</a>
         </div>
-        <div class="pf-rows">
-          <div class="pf-row">
-            <span class="ico-box">🪪</span>
-            <div>
-              <div style="font-size: 12px; color: #666;">Full Name</div>
-              <div>Ahmad Bin Ali</div>
-            </div>
-          </div>
-          <div class="pf-row">
-            <span class="ico-box">🪪</span>
-            <div>
-              <div style="font-size: 12px; color: #666;">Student ID</div>
-              <div>D032410123</div>
-            </div>
-          </div>
-          <div class="pf-row">
-            <span class="ico-box">📞</span>
-            <div>
-              <div style="font-size: 12px; color: #666;">Phone</div>
-              <div>+60 12-345 6787</div>
-            </div>
-          </div>
-          <div class="pf-row">
-            <span class="ico-box">✉️</span>
-            <div>
-              <div style="font-size: 12px; color: #666;">Email</div>
-              <div>D032410123@student.utem.edu.my</div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div style="text-align: right; margin-top: 10px; font-size: 14px; text-decoration: underline; cursor: pointer;">
-        Change Password
       </div>
     </main>
   </div>
