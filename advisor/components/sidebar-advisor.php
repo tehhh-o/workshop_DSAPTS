@@ -22,7 +22,7 @@
         <img src="../assets/icons/report.png" alt="">
         <h3>Reports</h3>
     </a>
-    <a class="sidebar-nav <?php echo $activePage === 'profile' ? 'sidebar-nav-active' : ''; ?>" href="">
+    <a class="sidebar-nav <?php echo $activePage === 'profile' ? 'sidebar-nav-active' : ''; ?>" href="advisor-profile.php">
         <img src="../assets/icons/user.png" alt="">
         <h3>Profile</h3>
     </a>
