@@ -1,15 +1,15 @@
 <?php
-include 'auth/login-validation.php'; 
+include 'auth/login-validation.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $uid = $_POST["uid"];
     $pwd = $_POST["pwd"];
 
     if (isset($users[$uid]) && $users[$uid] === $pwd) {
-    
-        if ($uid == "A") {
+
+        if (str_starts_with($uid, 'A')) {
             header("Location: admin/dashboard-admin.php");
-        } elseif ($uid == "M") {
+        } elseif (str_starts_with($uid, 'M')) {
             header("Location: advisor/dashboard-advisor.php");
         } else {
             header("Location: student/dashboard-student.php");
