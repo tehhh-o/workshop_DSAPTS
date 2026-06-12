@@ -23,7 +23,7 @@
         <div class="stats">
             <div class="stat-card">
                 <div class="stat-num">1,248</div>
-                <div class="stat-label">Total Students</div>
+                <div class="stat-label">Students</div>
             </div>
             <div class="stat-card">
                 <div class="stat-num">52</div>
