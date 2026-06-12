@@ -12,7 +12,7 @@
 
 <body class="page-body main-gradient-bg">
     <?php 
-    $activePage = 'admin';
+    $activePage = 'logs';
     include("components/sidebar-admin.php")
      ?>
 
