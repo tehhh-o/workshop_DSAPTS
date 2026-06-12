@@ -76,6 +76,122 @@
 }
 
 /* end admin settings styles */
+/* Advisor Button */
 
-/* to exapnd anything after changing disply:grid to display:flex
+.advisor-btn{
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 22px;
+    background: #000;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.advisor-btn:hover{
+    background: #222;
+}
+
+.advisor-icon{
+    font-size: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.advisor-text{
+    display: flex;
+    align-items: center;
+}
+
+/*edit advisors*/
+
+.edit-list{
+    width:95%;
+    margin:0 auto;
+}
+
+.edit-row{
+    width:100%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:18px 25px;
+    margin-bottom:15px;
+    background:#d9d9d9;
+    border-radius:8px;
+}
+
+/* student button*/
+
+.student-btn{
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 22px;
+    background: #000;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.student-btn:hover{
+    background: #222;
+}
+
+.student-icon{
+    font-size: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.student-text{
+    display: flex;
+    align-items: center;
+}
+
+/* admin button*/
+
+.admin-btn{
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 22px;
+    background: #000;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.admin-btn:hover{
+    background: #222;
+}
+
+.admin-icon{
+    font-size: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.admin-text{
+    display: flex;
+    align-items: center;
+}
+
+/* to expand anything after changing display:grid to display:flex
     add flex-direction: column and width: 100% */

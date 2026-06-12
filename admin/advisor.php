@@ -26,8 +26,9 @@
                     <input placeholder="Hinted search text">
                     <span>🔍</span>
                 </div>
-                <a class="add-btn" href="advisor-add.php">
-                    <span class="ico">👥</span>Advisor<span class="plus">+</span>
+                <a class="advisor-btn" href="advisor-add.php">
+                    <span class="advisor-icon">👥</span>
+                    <span class="advisor-text">ADD</span>
                 </a>
             </div>
             <table>
