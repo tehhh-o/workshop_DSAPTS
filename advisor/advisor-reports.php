@@ -2,98 +2,69 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title> <!-- change this title -->
-    <link rel="stylesheet" href="../style/layout.css">
-    <link rel="stylesheet" href="../style/advisor.css">
-    <link rel="stylesheet" href="../style/styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard</title> <!-- change this title -->
+  <link rel="stylesheet" href="../style/layout.css">
+  <link rel="stylesheet" href="../style/advisor.css">
+  <link rel="stylesheet" href="../style/styles.css">
 </head>
 
 <body class="page-body main-gradient-bg">
-    <?php
-    $activePage = 'reports';
-    include("components/sidebar-advisor.php")
-    ?>
+  <?php
+  $activePage = 'reports';
+  include("components/sidebar-advisor.php")
+  ?>
 
-    <main class="main-content main-rounded">
-        <h1 class="content-title">Reports</h1>
+  <main class="main-content main-rounded">
+    <h1 class="content-title">Reports</h1>
 
-      <div class="table-wrapper">
+    <div class="table-wrapper">
       <div class="report-table-container">
         <div class="search-container-report">
           <img src="../assets/icons/search.png" alt="Search" class="search-icon">
           <input type="text" placeholder="Search Students" class="search-input">
         </div>
         <div class="report-buttons-container">
-        <div class="report-buttons">
-          <select class="dropdown-select">
-          <option>Semester 1</option>
-          <option>Semester 2</option>
-          <option>Semester 3</option>
-          <option>Semester 4</option>
-          <option>Semester 5</option>
-    </select>
+          <div class="report-buttons">
+            <select class="dropdown-select">
+              <option>Semester 1</option>
+              <option>Semester 2</option>
+              <option>Semester 3</option>
+              <option>Semester 4</option>
+              <option>Semester 5</option>
+            </select>
+          </div>
+          <div class="report-buttons">
+            <p>All Students</p>
+          </div>
+          <div class="report-buttons">
+            <p>Overall Report</p>
+          </div>
         </div>
-        <div class="report-buttons">
-          <p>All Students</p>
+        <div class="profile-card" style="flex-direction: column;">
+          <h2 class="report-title">Detailed Report - Ahmad Bin Ali, Semester 1</h2>
+          <div class="chart-container">
+            <canvas id="gpaChart"></canvas>
+          </div>
         </div>
-        <div class="report-buttons">
-          <p>Overall Report</p>
-        </div>
-        </div>
-          <table class="student-record-table">
-                <div style="display: flex; gap: 16px; align-items: flex-start;">
-        <div style="flex: 1; background: #fff; border: 1px solid #999; padding: 16px; border-radius: 6px;">
-          <strong>Student Name: Ahmad bin Ali</strong>
-       <svg viewBox="0 0 660 340" width="100%" style="background: #fff; font-family: sans-serif;">
-        <text x="10" y="20" font-size="14" font-weight="bold">CGPA Chart</text>
-
-  
-        <line x1="40" y1="40" x2="40" y2="300" stroke="#000" stroke-width="4" stroke-linecap="square" />
-        <line x1="40" y1="300" x2="440" y2="300" stroke="#000" stroke-width="4" stroke-linecap="square" />
-
-        
-        <line x1="35" y1="300" x2="40" y2="300" stroke="#000" stroke-width="3" />
-        <line x1="35" y1="213" x2="40" y2="213" stroke="#000" stroke-width="3" />
-        <line x1="35" y1="126" x2="40" y2="126" stroke="#000" stroke-width="3" />
-        <line x1="35" y1="40" x2="40" y2="40" stroke="#000" stroke-width="3" />
-
- 
-        <line x1="40" y1="300" x2="40" y2="305" stroke="#000" stroke-width="3" />
-        <line x1="110" y1="300" x2="110" y2="305" stroke="#000" stroke-width="3" />
-        <line x1="180" y1="300" x2="180" y2="305" stroke="#000" stroke-width="3" />
-        <line x1="250" y1="300" x2="250" y2="305" stroke="#000" stroke-width="3" />
-        <line x1="320" y1="300" x2="320" y2="305" stroke="#000" stroke-width="3" />
-        <line x1="390" y1="300" x2="390" y2="305" stroke="#000" stroke-width="3" />
 
 
-        <text x="20" y="304" font-size="14" font-weight="bold" text-anchor="middle">1</text>
-        <text x="20" y="217" font-size="14" font-weight="bold" text-anchor="middle">2</text>
-        <text x="20" y="130" font-size="14" font-weight="bold" text-anchor="middle">3</text>
-        <text x="20" y="44" font-size="14" font-weight="bold" text-anchor="middle">4</text>
-
-
-        <polyline fill="none" stroke="#000" stroke-width="2"
-         points="40,75 110,105 180,105 250,75 320,113 390,75" />
-
-
-        <circle cx="40" cy="75" r="6" fill="#7cd1ff" />
-        <circle cx="110" cy="105" r="6" fill="#7cd1ff" />
-        <circle cx="180" cy="105" r="6" fill="#7cd1ff" />
-        <circle cx="250" cy="75" r="6" fill="#7cd1ff" />
-        <circle cx="320" cy="113" r="6" fill="#7cd1ff" />
-        <circle cx="390" cy="75" r="6" fill="#7cd1ff" />
-
-        <text x="40" y="320" font-size="11" text-anchor="middle">SEM 1/1</text>
-        <text x="110" y="320" font-size="11" text-anchor="middle">SEM 1/2</text>
-        <text x="180" y="320" font-size="11" text-anchor="middle">SEM 2/1</text>
-        <text x="250" y="320" font-size="11" text-anchor="middle">SEM 2/2</text>
-        <text x="320" y="320" font-size="11" text-anchor="middle">SEM 3/1</text>
-        <text x="390" y="320" font-size="11" text-anchor="middle">SEM 3/2</text>
-      </svg>
-      </div>
-      </div>
-    </main>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="../js/script.js"></script>
+        <script>
+          makeGraph({
+            id: "gpaChart",
+            type: "bar",
+            title: "Student GPA Trend",
+            xLabel: "Semester",
+            yLabel: "GPA",
+            xValues: ["Sem 1/1", "Sem 1/2", "Sem 2/1", "Sem 2/2", "Sem 3/1", "Sem 3/2"],
+            yValues: [3.7, 3.2, 3.4, 3.6, 3.4, 3.95],
+            label: "GPA"
+          });
+        </script>
+  </main>
 </body>
+
 </html>
