@@ -4,14 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reports</title> 
+    <title>Reports</title>
     <link rel="stylesheet" href="../style/layout.css">
     <link rel="stylesheet" href="../style/student.css">
     <link rel="stylesheet" href="../style/styles.css">
 </head>
-
-</head>
-<body>
 
 <body class="page-body main-gradient-bg">
     <?php
@@ -19,120 +16,38 @@
     include("components/sidebar-student.php")
     ?>
 
-</head>
-<body>
-
     <main class="main-content main-rounded">
         <h1 class="content-title">Reports</h1>
-        
-    <main class="content">
-     
-    <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reports Interface</title>
-    <style>
-        * {
-            box-sizing: border-box;
-           
-            margin: 0;
-            padding: 0;
-        }
-
-        /* Top Control Bar Inner Border Container */
-        .controls-wrapper {
-            border: 3px solid #5b92e5;
-            border-radius: 30px;
-            padding: 15px 30px;
-            display: flex;
-            gap: 20px;
-            margin-bottom: 25px;
-        }
-
-        /* Dropdown and Button Common Styles */
-        .control-element {
-            background-color: #94c1ff;
-            border: 2px solid #000000;
-            border-radius: 12px;
-            padding: 12px 24px;
-            font-size: 18px;
-            font-weight: 500;
-            color: #000000;
-            cursor: pointer;
-            outline: none;
-            text-align: center;
-        }
-
-        select.control-element {
-            appearance: none;
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            background-repeat: no-repeat;
-            background-position: right 15px center;
-            background-size: 18px;
-            padding-right: 45px;
-            width: 260px;
-        }
-
-        button.control-element {
-            width: 260px;
-            transition: background-color 0.2s;
-        }
-
-        button.control-element:hover {
-            background-color: #76aaff;
-        }
-
-        /* Chart Detailed Report Outer Container */
-        .report-wrapper {
-            border: 4px solid #4a7bc7;
-            border-radius: 35px;
-            padding: 30px;
-            min-height: 400px;
-        }
-
-        .report-title {
-            font-size: 18px;
-            font-weight: 700;
-            color: #000000;
-            margin-bottom: 30px;
-        }
-
-    </style>
-</head>
-<body>
-
-    <div class="main-container">
-
-        <div class="controls-wrapper">
+        <div class="profile-card">
             <select class="control-element">
                 <option>Semester 1</option>
                 <option>Semester 2</option>
             </select>
-            
             <button class="control-element">Overall Report</button>
         </div>
 
-        <div class="report-wrapper">
+        <div class="profile-card" style="flex-direction: column;">
             <h2 class="report-title">Detailed Report - Ahmad Bin Ali, Semester 1</h2>
-            
             <div class="chart-container">
-                <div class="bar bar-1"></div>
-                <div class="bar bar-2"></div>
-                <div class="bar bar-3"></div>
-                <div class="bar bar-4"></div>
-                <div class="bar bar-5"></div>
+                <canvas id="gpaChart"></canvas>
             </div>
         </div>
 
-    </div>
 
-</body>
-</html>
-    </main>
-  </div>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="../js/script.js"></script>
+        <script>
+            makeGraph({
+                id: "gpaChart",
+                type: "bar",
+                title: "Student GPA Trend",
+                xLabel: "Semester",
+                yLabel: "GPA",
+                xValues: ["Sem 1/1", "Sem 1/2", "Sem 2/1", "Sem 2/2", "Sem 3/1", "Sem 3/2"],
+                yValues: [3.7, 3.2, 3.4, 3.6, 3.4, 3.95],
+                label: "GPA"
+            });
+        </script>
 </body>
 
 </html>

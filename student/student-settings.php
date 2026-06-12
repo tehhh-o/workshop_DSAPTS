@@ -36,7 +36,7 @@
       <div class="input-field">
         <h4>Email</h4>
         <div class="edit-field">
-          <input type="text" value="ahmad.rahman@utem.edu.my">
+          <input type="text" value="ahmad.ali@utem.edu.my">
           <img src="../assets/icons/edit.png" alt="">
         </div>
       </div>

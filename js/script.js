@@ -22,10 +22,10 @@ function makeGraph({
             labels: xValues,
             datasets: [{
                 label: label,
-                data: yValues,
-                borderWidth: 2,
-                tension: 0.3,
-                fill: false
+                data: xValues.map((x, i) => ({
+                    x: x,
+                    y: yValues[i]
+                }))
             }]
         },
         options: {
@@ -44,6 +44,12 @@ function makeGraph({
                     }
                 },
                 y: {
+                    type: 'linear',
+                    min: 0,
+                    max: 4,
+                    ticks: {
+                        stepSize: 0.5
+                    },
                     title: {
                         display: true,
                         text: yLabel
