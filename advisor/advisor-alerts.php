@@ -18,24 +18,36 @@
 
     <main class="main-content main-rounded">
         <h1 class="content-title">Alerts</h1>
+<div class="table-container">
+  <!-- THE HEADER -->
+  <div class="grid-row table-header">
+    <div class="column-name">Student Name</div>
+    <div class="column-type">Alert Type</div>
+    <div class="column-date">Date</div>
+  </div>
 
-<div class="dashboard-grid">
-  <div class="card-border">
-    <div class="dashboard-card-advisor">
+  <!-- DATA ROW 1 -->
+  <div class="grid-row table-row">
+    <div class="column-name">
+        <span>Hakim</span>
+        <span class="description">Failed Subject ..... actions needed.</span>
+    </div>
+    <div class="column-type">Failed subject</div>
+    <div class="column-date">Semester 3,May 07 2026</div>
+  </div>
 
-        <div class="student-item">
-            <img src="../assets/icons/user.png" alt="">
-            <span>Hakim</span>
-        </div>
-
-        <div class="student-item">
-            <img src="../assets/icons/user.png" alt="">
-            <span>Halim</span>
-        </div>
+  <!-- DATA ROW 2 -->
+  <div class="grid-row table-row">
+    <div class="column-name">
+        <span>Halim</span>
+        <span class="description">Muet Status not updated ... actions needed.</span>
+    </div>
+    <div class="column-type">Muet Status</div>
+    <div class="column-date">Semester 4,June 20 2026</div>
+  </div>
+  
 </div>
-</div>
-
-</div>
+    </main>
 </body>
 
 </html>
