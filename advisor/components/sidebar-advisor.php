@@ -1,4 +1,3 @@
-
 <aside class="main-sidebar main-rounded">
     <img src="../assets/imgs/dsapts-full.png" class="sidebar-logo" alt="">
     <h3 class="sidebar-title">Diploma Student Academic & Progress Tracking System</h3>
@@ -19,21 +18,21 @@
         <img src="../assets/icons/student.png" alt="">
         <h3>Students</h3>
     </a>
-    <a class="sidebar-nav <?php echo $activePage === 'reports' ? 'sidebar-nav-active' : ''; ?>" href="">
+    <a class="sidebar-nav <?php echo $activePage === 'reports' ? 'sidebar-nav-active' : ''; ?>" href="advisor-reports.php">
         <img src="../assets/icons/report.png" alt="">
         <h3>Reports</h3>
     </a>
-    <a class="sidebar-nav <?php echo $activePage === 'profile' ? 'sidebar-nav-active' : ''; ?>" href="">
+    <a class="sidebar-nav <?php echo $activePage === 'profile' ? 'sidebar-nav-active' : ''; ?>" href="advisor-profile.php">
         <img src="../assets/icons/user.png" alt="">
         <h3>Profile</h3>
     </a>
-    <a class="sidebar-nav <?php echo $activePage === 'settings' ? 'sidebar-nav-active' : ''; ?>" href="">
+    <a class="sidebar-nav <?php echo $activePage === 'settings' ? 'sidebar-nav-active' : ''; ?>" href="advisor-settings.php">
         <img src="../assets/icons/settings.png" alt="">
         <h3>Settings</h3>
     </a>
 
     <a class="sidebar-nav sidebar-logout" href="../">
-    <img src="../assets/icons/exit.png" alt="" style="transform: scaleX(-1);">
+        <img src="../assets/icons/exit.png" alt="" style="transform: scaleX(-1);">
         <h3>Logout</h3>
     </a>
 </aside>
