@@ -15,7 +15,7 @@
         <img src="../assets/icons/alert.png" alt="">
         <h3>Alerts</h3>
     </a>
-    <a class="sidebar-nav <?php echo $activePage === 'student' ? 'sidebar-nav-active' : ''; ?>" href="">
+    <a class="sidebar-nav <?php echo $activePage === 'students' ? 'sidebar-nav-active' : ''; ?>" href="advisor-students.php">
         <img src="../assets/icons/student.png" alt="">
         <h3>Students</h3>
     </a>
