@@ -26,7 +26,7 @@
           <input type="text" placeholder="Search Courses" class="search-input">
         </div>
         <div class="student-name-header">
-          <strong>Student Name: Ahmad bin Ali</strong>
+          <strong>Name: Ahmad bin Ali</strong>
         </div>
           <table class="student-record-table">
             <thead>
