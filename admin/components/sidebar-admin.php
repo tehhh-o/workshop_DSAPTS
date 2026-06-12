@@ -26,7 +26,7 @@
         <img src="../assets/icons/user.png" alt="">
         <h3>Profile</h3>
     </a>
-    <a class="sidebar-nav <?php echo $activePage === 'settings' ? 'sidebar-nav-active' : ''; ?>" href="settings.php">
+    <a class="sidebar-nav <?php echo $activePage === 'settings' ? 'sidebar-nav-active' : ''; ?>" href="admin-settings.php">
         <img src="../assets/icons/settings.png" alt="">
         <h3>Settings</h3>
     </a>

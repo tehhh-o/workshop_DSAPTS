@@ -36,6 +36,7 @@
     display: flex;
     flex-direction: column;
     width: 100%;
+    margin-bottom: 12px;
 }
 
 .panel h3 {
@@ -44,6 +45,37 @@
 }
 
 /* end admin dashboard styles */
+
+
+/* start admin settings styles */
+
+.input-field {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.input-field input[type="number"] {
+    appearance: textfield;
+    -moz-appearance: textfield;
+}
+
+.input-field h4 {
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.input-field input {
+    padding: 10px 0 10px 14px;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 8px;
+    background: #f8fafc;
+    min-width: 200px;
+}
+
+/* end admin settings styles */
 
 /* to exapnd anything after changing disply:grid to display:flex
     add flex-direction: column and width: 100% */
