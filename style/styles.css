@@ -162,15 +162,7 @@ body {
   justify-content: center;
 }
 
-table {
-  width: 100%;
-  border-collapse: collapse;
-  background-color: #688fc2;
-  border-radius: 8px;
-  border-style: hidden;
-}
-
-th,
+/* th,
 td {
   padding: 12px 16px;
   text-align: left;
@@ -187,7 +179,7 @@ td {
 th {
   text-align: center;
   font-weight: bold;
-}
+} */
 
 th.name-col,
 td.name-col {
