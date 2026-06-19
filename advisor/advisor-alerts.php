@@ -13,37 +13,51 @@
 <body class="page-body main-gradient-bg">
     <?php
     $activePage = 'alert';
-    include("components/sidebar-advisor.php")
+    include("components/sidebar-advisor.php");
+    include("../models/functions.php");
+    $query = "
+    SELECT alert.*, user.name
+    FROM alert
+    JOIN user ON alert.user_id = user.user_id
+    ORDER BY alert.date_sent DESC
+    ";
+
+    $logs = mysqli_query($conn, $query);
     ?>
 
     <main class="main-content main-rounded">
         <h1 class="content-title">Alerts</h1>
 <div class="table-container">
 
-  <div class="grid-row table-header">
+<div class="grid-row table-header">
     <div class="column-name">Student Name</div>
     <div class="column-type">Alert Type</div>
     <div class="column-date">Date</div>
-  </div>
+</div>
 
-  <div class="grid-row table-row">
+<?php while($row = mysqli_fetch_assoc($logs)): ?>
+
+<div class="grid-row table-row">
+
     <div class="column-name">
-        <span>Hakim</span>
-        <span class="description">Failed Subject ..... actions needed.</span>
+        <span><?php echo $row['name']; ?></span>
+        <span class="description">
+            <?php echo $row['message']; ?>
+        </span>
     </div>
-    <div class="column-type">Failed subject</div>
-    <div class="column-date">Semester 3,May 07 2026</div>
-  </div>
-  
-  <div class="grid-row table-row">
-    <div class="column-name">
-        <span>Halim</span>
-        <span class="description">Muet Status not updated ... actions needed.</span>
+
+    <div class="column-type">
+        <?php echo $row['alert_type']; ?>
     </div>
-    <div class="column-type">Muet Status</div>
-    <div class="column-date">Semester 4,June 20 2026</div>
-  </div>
-  
+
+    <div class="column-date">
+        <?php echo date("F d Y", strtotime($row['date_sent'])); ?>
+    </div>
+
+</div>
+
+<?php endwhile; ?>
+
 </div>
     </main>
 </body>
