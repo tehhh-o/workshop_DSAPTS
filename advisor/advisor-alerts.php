@@ -8,58 +8,54 @@
     <link rel="stylesheet" href="../style/layout.css">
     <link rel="stylesheet" href="../style/advisor.css">
     <link rel="stylesheet" href="../style/styles.css">
+    <link rel="stylesheet" href="../style/admin.css">
 </head>
 
 <body class="page-body main-gradient-bg">
     <?php
-    $activePage = 'alert';
+    $activePage = 'alerts';
     include("components/sidebar-advisor.php");
     include("../models/functions.php");
-    $query = "
-    SELECT alert.*, user.name
-    FROM alert
-    JOIN user ON alert.user_id = user.user_id
-    ORDER BY alert.date_sent DESC
-    ";
-
-    $logs = mysqli_query($conn, $query);
     ?>
 
-    <main class="main-content main-rounded">
-        <h1 class="content-title">Alerts</h1>
-<div class="table-container">
+<?php
+    $logs = getAllAlerts($conn);
+?>
 
-<div class="grid-row table-header">
-    <div class="column-name">Student Name</div>
-    <div class="column-type">Alert Type</div>
-    <div class="column-date">Date</div>
-</div>
+<main class="main-content main-rounded">
+    <h1 class="content-title">Alerts</h1>
 
-<?php while($row = mysqli_fetch_assoc($logs)): ?>
+    <main class="content">
 
-<div class="grid-row table-row">
+        <table>
+            <thead>
+                <tr>
+                    <th class="name-col">Student Name</th>
+                    <th>Alert Type</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
 
-    <div class="column-name">
-        <span><?php echo $row['name']; ?></span>
-        <span class="description">
-            <?php echo $row['message']; ?>
-        </span>
-    </div>
+            <tbody>
+            <?php foreach ($logs as $log): ?>
+            <tr>
+                <td class="name-col">
+                    <?= $log['name'] ?>
+                    <br>
+                    <small><?= $log['message'] ?></small>
+                </td>
 
-    <div class="column-type">
-        <?php echo $row['alert_type']; ?>
-    </div>
+                <td>
+                    <?= $log['alert_type'] ?>
+                </td>
 
-    <div class="column-date">
-        <?php echo date("F d Y", strtotime($row['date_sent'])); ?>
-    </div>
-
-</div>
-
-<?php endwhile; ?>
-
-</div>
+                <td>
+                    <?= date("F d Y", strtotime($log['date_sent'])) ?>
+                </td>
+            </tr>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
     </main>
-</body>
-
+</main>
 </html>

@@ -12,6 +12,8 @@ include("../database/connection.php");
 // - getStudentSubjects($conn, $userId)                    // get all subject for a student for all sem
 // - getStudentSubjectsBySemester($conn, $userId, $semId)  // get all subject for a student for a specific sem
 // - calculateGPA($subjects)                               // to calculate the gpa for a sem or cgpa for all sem, pass $subjects based on type of getStudentSubject called
+// - getAllAlerts($conn)                    //
+// - searchAlertByName($conn, $keyword)                    //
 
 
 // Incomplete Functions
@@ -196,4 +198,41 @@ function calculateGPA($subjects)  // to calculate the gpa for a sem or cgpa for 
     }
 
     return round($totalPoints / $totalCredits, 2);
+}
+
+function getAllAlerts($conn) // get all alerts with student name
+{
+    $sql = "
+        SELECT alert.*, user.name
+        FROM alert
+        INNER JOIN user ON alert.user_id = user.user_id
+    ";
+
+    $result = $conn->query($sql);
+    $data = [];
+
+    while ($row = $result->fetch_assoc()) {
+        $data[] = $row;
+    }
+
+    return $data;
+}
+
+function searchAlertByName($conn, $keyword) // search alerts by student name
+{
+    $sql = "
+        SELECT alert.*, user.name
+        FROM alert
+        INNER JOIN user ON alert.user_id = user.user_id
+        WHERE user.name LIKE '%$keyword%'
+    ";
+
+    $result = $conn->query($sql);
+    $data = [];
+
+    while ($row = $result->fetch_assoc()) {
+        $data[] = $row;
+    }
+
+    return $data;
 }
