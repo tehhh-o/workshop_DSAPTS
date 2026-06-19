@@ -1,3 +1,21 @@
+<?php
+// session_start();
+
+// if (isset($_SESSION['uid'])) {
+//     echo "Logged in as: " . $_SESSION['uid'];
+// } else {
+//     echo "Not logged in";
+// }
+
+// session_start();
+
+// // remove all session variables
+// session_unset();
+
+// // destroy the session
+// session_destroy();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 

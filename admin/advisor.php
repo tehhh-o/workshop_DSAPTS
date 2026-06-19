@@ -13,7 +13,19 @@
 <body class="page-body main-gradient-bg">
     <?php
     $activePage = 'advisor';
-    include("components/sidebar-admin.php")
+    include("components/sidebar-admin.php");
+    include("../models/functions.php");
+    ?>
+
+    <?php
+    $keyword = "";
+
+    if (isset($_GET['search'])) {
+        $keyword = $_GET['search'];
+        $advisors = searchUserByName($conn, "advisor", $keyword);
+    } else {
+        $advisors = getAllUser($conn, "advisor");
+    }
     ?>
 
     <main class="main-content main-rounded">
@@ -21,11 +33,25 @@
 
         <main class="content">
             <div class="toolbar">
-                <div class="search">
+                <!-- <div class="search">
                     <span>☰</span>
                     <input placeholder="Hinted search text">
                     <span>🔍</span>
-                </div>
+                </div> -->
+                <form class="search" method="GET" action="">
+                    <span>☰</span>
+
+                    <input
+                        type="text"
+                        name="search"
+                        placeholder="Search advisor name"
+                        value="<?= $keyword ?>">
+
+                    <button type="submit" style="background:none;border:none;cursor:pointer;">
+                        🔍
+                    </button>
+                </form>
+
                 <a class="advisor-btn" href="advisor-add.php">
                     <span class="advisor-icon">👥</span>
                     <span class="advisor-text">ADD</span>
@@ -40,7 +66,20 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
+                    <?php foreach ($advisors as $a): ?>
+                        <tr>
+                            <td class="name-col"><?= $a['name'] ?></td>
+
+                            <td class="action">
+                                <a class="icon-btn" href="advisor-edit.php?id=<?= $a['user_id'] ?>">✎</a>
+                            </td>
+
+                            <td class="action">
+                                <a class="icon-btn" href="advisor-delete.php?id=<?= $a['user_id'] ?>">🗑</a>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                    <!-- <tr>
                         <td class="name-col">Ali</td>
                         <td class="action">
                             <a class="icon-btn" href="advisor-edit.php">✎</a>
@@ -48,7 +87,7 @@
                         <td class="action">
                             <button class="icon-btn">🗑</button>
                         </td>
-                    </tr>
+                    </tr> -->
                 </tbody>
             </table>
         </main>

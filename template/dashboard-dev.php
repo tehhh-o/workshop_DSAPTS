@@ -13,7 +13,13 @@
 <body class="page-body main-gradient-bg">
     <?php
     $activePage = 'dashboard';
-    include("sidebar-dev.php")
+    include("sidebar-dev.php");
+    include("../models/functions.php");
+
+    $studentCount = getCount($conn, "student");
+    $adminCount = getCount($conn, "admin");
+    $advisorCount = getCount($conn, "advisor");
+    $programCount = getCount($conn, "program");
     ?>
 
     <main class="main-content main-rounded">
@@ -22,19 +28,19 @@
 
         <div class="stats">
             <div class="stat-card">
-                <div class="stat-num">1,248</div>
+                <div class="stat-num"><?php echo ($studentCount); ?></div>
                 <div class="stat-label">Total Students</div>
             </div>
             <div class="stat-card">
-                <div class="stat-num">52</div>
+                <div class="stat-num"><?php echo ($advisorCount); ?></div>
                 <div class="stat-label">Advisors</div>
             </div>
             <div class="stat-card">
-                <div class="stat-num">8</div>
+                <div class="stat-num"><?php echo ($adminCount); ?></div>
                 <div class="stat-label">Admins</div>
             </div>
             <div class="stat-card">
-                <div class="stat-num">14</div>
+                <div class="stat-num"><?php echo ($programCount); ?></div>
                 <div class="stat-label">Programs</div>
             </div>
         </div>

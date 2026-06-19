@@ -1,12 +1,42 @@
 <?php
-include 'auth/login-validation.php';
+session_start();
+include("database/connection.php");
 
+// if ($_SERVER["REQUEST_METHOD"] == "POST") {
+//     $uid = $_POST["uid"];
+//     $pwd = $_POST["pwd"];
+
+//     if (isset($users[$uid]) && $users[$uid] === $pwd) {
+
+//         if (str_starts_with($uid, 'A')) {
+//             header("Location: admin/dashboard-admin.php");
+//         } elseif (str_starts_with($uid, 'M')) {
+//             header("Location: advisor/dashboard-advisor.php");
+//         } else {
+//             header("Location: student/dashboard-student.php");
+//         }
+//         exit();
+//     } else {
+//         echo "<script>alert('Wrong user ID or password');</script>";
+//     }
+// }
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
     $uid = $_POST["uid"];
     $pwd = $_POST["pwd"];
 
-    if (isset($users[$uid]) && $users[$uid] === $pwd) {
+    $sql = "SELECT * FROM user WHERE login_id='$uid' AND password='$pwd'";
+    $result = $conn->query($sql);
 
+    if ($result && $result->num_rows > 0) {
+
+        $user = $result->fetch_assoc();
+
+        // store session
+        $_SESSION['uid'] = $user['login_id'];
+        $_SESSION['name'] = $user['name'];
+
+        // redirect by role
         if (str_starts_with($uid, 'A')) {
             header("Location: admin/dashboard-admin.php");
         } elseif (str_starts_with($uid, 'M')) {
