@@ -19,8 +19,10 @@
 
     <main class="main-content main-rounded">
       <h1 class="content-title">Add Advisors</h1>
+      
       <form class="form" onsubmit="event.preventDefault(); alert('Added');">
-        <div class="content">
+        <div class="edit-box">
+           <div class="edit-wrapper">
           <div class="edit-list">
             <div class="edit-row">
               <span>Name -</span>
@@ -40,6 +42,7 @@
             </div>
           </div>
         </div>
+</div>
         <button class="add-submit" type="submit">Add</button>
       </form>
     </main>

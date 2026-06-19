@@ -228,6 +228,7 @@ th.action {
   border: 1px solid #555;
   background: #f2f2f2;
   cursor: pointer;
+  border-radius: 10px;
 }
 
 .edit-list {
