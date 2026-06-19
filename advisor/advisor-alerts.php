@@ -22,40 +22,39 @@
     $logs = getAllAlerts($conn);
 ?>
 
-<main class="main-content main-rounded">
-    <h1 class="content-title">Alerts</h1>
+    <main class="main-content main-rounded">
+        <h1 class="content-title">Alert</h1>
 
-    <main class="content">
+        <main class="content">
+                </form>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th class="name-col">Student Name</th>
+                        <th class="action">Alert Type</th>
+                        <th class="action">Alert Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($logs as $log): ?>
+                        <tr>
+                            <td class="name-col"><?= $log['name'] ?>
+                          <br> <small><?= $log['message'] ?></small>
+                          </td>
 
-        <table>
-            <thead>
-                <tr>
-                    <th class="name-col">Student Name</th>
-                    <th>Alert Type</th>
-                    <th>Date</th>
-                </tr>
-            </thead>
+                            <td>
+                                <?= $log['alert_type'] ?>
+                            </td>
 
-            <tbody>
-            <?php foreach ($logs as $log): ?>
-            <tr>
-                <td class="name-col">
-                    <?= $log['name'] ?>
-                    <br>
-                    <small><?= $log['message'] ?></small>
-                </td>
-
-                <td>
-                    <?= $log['alert_type'] ?>
-                </td>
-
-                <td>
-                    <?= date("F d Y", strtotime($log['date_sent'])) ?>
-                </td>
-            </tr>
-            <?php endforeach; ?>
-            </tbody>
-        </table>
+                            <td>
+                                <?= date("F d Y", strtotime($log['date_sent'])) ?>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </main>
     </main>
-</main>
+</body>
 </html>
