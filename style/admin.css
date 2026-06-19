@@ -201,24 +201,6 @@
     padding: 10px;
 }
 
-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-thead th {
-    padding: 10px;
-    text-align: center;
-    font-size: 14px;
-    font-weight: bold;
-}
-
-tbody td {
-    padding: 10px;
-    text-align: center;
-    color: #fff;
-}
-
 .logs-table-wrapper::-webkit-scrollbar {
     width: 10px;
 }
