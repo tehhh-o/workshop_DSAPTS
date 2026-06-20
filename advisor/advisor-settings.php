@@ -40,7 +40,7 @@
       $field = $_POST['field']  ?? '';
       $value = $_POST['value']  ?? '';
 
-      $allowedFields = ['phone', 'email', 'address', 'muet_status'];
+      $allowedFields = ['phone', 'email', 'address'];
 
       if (in_array($field, $allowedFields) && $value !== '') {
           
@@ -77,7 +77,7 @@
       <h3>Personal Info</h3>
 
       <!-- Phone -->
-      <form method="POST" action="student-settings.php">
+      <form method="POST" action="advisor-settings.php">
         <input type="hidden" name="field" value="phone">
         <div class="input-field">
           <h4>Phone Number</h4>
@@ -91,7 +91,7 @@
       </form>
 
       <!-- Email -->
-      <form method="POST" action="student-settings.php">
+      <form method="POST" action="advisor-settings.php">
         <input type="hidden" name="field" value="email">
         <div class="input-field">
           <h4>Email</h4>
