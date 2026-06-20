@@ -14,6 +14,17 @@
     <?php
     $activePage = 'settings';
     include("components/sidebar-admin.php");
+
+
+
+    // include '../models/mail.php';
+    // sendMail(
+    //     "elvintehh@gmail.com",
+    //     "Account Created",
+    //     "Welcome to DSAPTS. Test Mail."
+    // );
+
+
     ?>
 
     <main class="main-content main-rounded">
