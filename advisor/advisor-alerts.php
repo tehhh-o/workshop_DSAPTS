@@ -13,14 +13,13 @@
 
 <body class="page-body main-gradient-bg">
     <?php
-    session_start();
     $activePage = 'alerts';
     include("components/sidebar-advisor.php");
     include("../models/functions.php");
     ?>
 
 <?php
-  $alert = getAdvisorAlerts($conn, $_SESSION['user_id']);
+    $logs = getAllAlerts($conn);
 ?>
 
     <main class="main-content main-rounded">
@@ -38,18 +37,18 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($alert as $a): ?>
+                    <?php foreach ($logs as $log): ?>
                         <tr>
-                            <td class="name-col"><?= $a['name'] ?>
-                          <br> <small><?= $a['message'] ?></small>
+                            <td class="name-col"><?= $log['name'] ?>
+                          <br> <small><?= $log['message'] ?></small>
                           </td>
 
                             <td>
-                                <?= $a['alert_type'] ?>
+                                <?= $log['alert_type'] ?>
                             </td>
 
                             <td>
-                                <?= date("F d Y", strtotime($a['date_sent'])) ?>
+                                <?= date("F d Y", strtotime($log['date_sent'])) ?>
                             </td>
                         </tr>
                     <?php endforeach; ?>
