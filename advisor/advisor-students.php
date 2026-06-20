@@ -12,13 +12,14 @@
 
 <body class="page-body main-gradient-bg">
     <?php
+    session_start();
     $activePage = 'alerts';
     include("components/sidebar-advisor.php");
     include("../models/functions.php");
     ?>
 
 <?php
-    $students = getAllUser($conn, 'student');
+    $students = getAdvisorStudents($conn, $_SESSION['user_id']);
 ?>
 
 <main class="main-content main-rounded">

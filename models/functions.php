@@ -12,8 +12,9 @@ include("../database/connection.php");
 // - getStudentSubjects($conn, $userId)                    // get all subject for a student for all sem
 // - getStudentSubjectsBySemester($conn, $userId, $semId)  // get all subject for a student for a specific sem
 // - calculateGPA($subjects)                               // to calculate the gpa for a sem or cgpa for all sem, pass $subjects based on type of getStudentSubject called
-// - getAdvisorAlerts($conn)                    //
-// - searchAlertByName($conn, $keyword)                    //
+// - getAdvisorAlerts($conn , $advisorid)                    //
+// - getAdvisorStudents($conn, $advisorid)                    //
+// - searchAdvisorStudents($conn, $advisorId, $keyword)                   //
 
 
 // Incomplete Functions
@@ -126,7 +127,7 @@ function getStudentSubjects($conn, $userId) // get all subject for a student for
         SELECT student_subject.*, subject.*, semester.*
         FROM student_subject
         INNER JOIN subject ON student_subject.subject_id = subject.subject_id
-        INNER JOIN semester ON student_subject.sem_id = semester.sem_id
+        INNER JOIN semester ON student_subject.semester_id = semester.semester_id
         WHERE student_subject.user_id = '$userId'
     ";
 
@@ -146,9 +147,9 @@ function getStudentSubjectsBySemester($conn, $userId, $semId) // get all subject
         SELECT student_subject.*, subject.*, semester.*
         FROM student_subject
         INNER JOIN subject ON student_subject.subject_id = subject.subject_id
-        INNER JOIN semester ON student_subject.sem_id = semester.sem_id
+        INNER JOIN semester ON student_subject.semester_id = semester.semester_id
         WHERE student_subject.user_id = '$userId'
-        AND student_subject.sem_id = '$semId'
+        AND student_subject.semester_id = '$semId'
     ";
 
     $result = $conn->query($sql);
@@ -223,13 +224,19 @@ function getAdvisorAlerts($conn, $advisorId)
     return $data;
 }
 
-function searchAlertByName($conn, $keyword) // search alerts by student name
+
+function getAdvisorStudents($conn, $advisorId)
 {
     $sql = "
-        SELECT alert.*, user.name
-        FROM alert
-        INNER JOIN user ON alert.user_id = user.user_id
-        WHERE user.name LIKE '%$keyword%'
+        SELECT
+            student.*,
+            user.name,
+            user.login_id,
+            user.email
+        FROM student
+        INNER JOIN user ON student.user_id = user.user_id
+        WHERE student.advisor_id = '$advisorId'
+        ORDER BY user.name
     ";
 
     $result = $conn->query($sql);
@@ -241,3 +248,26 @@ function searchAlertByName($conn, $keyword) // search alerts by student name
 
     return $data;
 }
+
+function searchAdvisorStudents($conn, $advisorId, $keyword)
+{
+    $sql = "
+        SELECT student.*, user.*
+        FROM student
+        INNER JOIN user ON student.user_id = user.user_id
+        WHERE student.advisor_id = '$advisorId'
+        AND user.name LIKE '%$keyword%'
+    ";
+
+    $result = $conn->query($sql);
+    $data = [];
+
+    if ($result) {
+        while ($row = $result->fetch_assoc()) {
+            $data[] = $row;
+        }
+    }
+
+    return $data;
+}
+
