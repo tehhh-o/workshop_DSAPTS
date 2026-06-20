@@ -236,3 +236,73 @@ function searchAlertByName($conn, $keyword) // search alerts by student name
 
     return $data;
 }
+
+function getAdvisorAlerts($conn, $advisorId)
+{
+    $sql = "
+        SELECT
+            alert.*,
+            user.name AS name
+        FROM alert
+        INNER JOIN student ON alert.user_id = student.user_id
+        INNER JOIN user ON student.user_id = user.user_id
+        WHERE student.advisor_id = '$advisorId'
+        ORDER BY alert.date_sent DESC
+    ";
+
+    $result = $conn->query($sql);
+    $data = [];
+
+    while ($row = $result->fetch_assoc()) {
+        $data[] = $row;
+    }
+
+    return $data;
+}
+
+
+function getAdvisorStudents($conn, $advisorId)
+{
+    $sql = "
+        SELECT
+            student.*,
+            user.name,
+            user.login_id,
+            user.email
+        FROM student
+        INNER JOIN user ON student.user_id = user.user_id
+        WHERE student.advisor_id = '$advisorId'
+        ORDER BY user.name
+    ";
+
+    $result = $conn->query($sql);
+    $data = [];
+
+    while ($row = $result->fetch_assoc()) {
+        $data[] = $row;
+    }
+
+    return $data;
+}
+
+function searchAdvisorStudents($conn, $advisorId, $keyword)
+{
+    $sql = "
+        SELECT student.*, user.*
+        FROM student
+        INNER JOIN user ON student.user_id = user.user_id
+        WHERE student.advisor_id = '$advisorId'
+        AND user.name LIKE '%$keyword%'
+    ";
+
+    $result = $conn->query($sql);
+    $data = [];
+
+    if ($result) {
+        while ($row = $result->fetch_assoc()) {
+            $data[] = $row;
+        }
+    }
+
+    return $data;
+}
