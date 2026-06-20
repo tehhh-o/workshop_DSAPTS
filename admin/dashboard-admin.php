@@ -32,6 +32,14 @@
     <?php
     $activePage = 'dashboard';
     include("components/sidebar-admin.php");
+    include("../models/functions.php");
+
+    $studentCount = getCount($conn, "student");
+    $adminCount = getCount($conn, "admin");
+    $advisorCount = getCount($conn, "advisor");
+    $alertCount = getCount($conn, "alert");
+
+    $recentAlerts = getRecentAlerts($conn);
     ?>
 
     <main class="main-content main-rounded">
@@ -40,49 +48,49 @@
 
         <div class="stats">
             <div class="stat-card">
-                <div class="stat-num">1,248</div>
-                <div class="stat-label">Students</div>
+                <div class="stat-num"><?php echo ($studentCount); ?></div>
+                <div class="stat-label">Total Students</div>
             </div>
             <div class="stat-card">
-                <div class="stat-num">52</div>
-                <div class="stat-label">Advisors</div>
+                <div class="stat-num"><?php echo ($advisorCount); ?></div>
+                <div class="stat-label">Total Advisors</div>
             </div>
             <div class="stat-card">
-                <div class="stat-num">8</div>
-                <div class="stat-label">Admins</div>
+                <div class="stat-num"><?php echo ($adminCount); ?></div>
+                <div class="stat-label">Total Admins</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-num"><?php echo ($alertCount); ?></div>
+                <div class="stat-label">Total Alerts</div>
             </div>
         </div>
+        </div>
         <div class="panel">
-            <h3>Recent System Activity</h3>
+            <h3>Recent Alerts Activity</h3>
             <table>
                 <thead>
                     <tr>
                         <th>Date</th>
-                        <th>Action</th>
-                        <th>Detail</th>
+                        <th>Alert Type</th>
+                        <th>Student</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>2026-05-29</td>
-                        <td>New student registered</td>
-                        <td>S. Aminah added</td>
-                    </tr>
-                    <tr>
-                        <td>2026-05-29</td>
-                        <td>Advisor assigned</td>
-                        <td>Dr. Lee → 5 students</td>
-                    </tr>
-                    <tr>
-                        <td>2026-05-28</td>
-                        <td>Grades published</td>
-                        <td>Sem 2 2025/26</td>
-                    </tr>
-                    <tr>
-                        <td>2026-05-28</td>
-                        <td>Account updated</td>
-                        <td>Admin profile</td>
-                    </tr>
+                    <?php foreach ($recentAlerts as $a): ?>
+                        <tr>
+                            <td>
+                                <?= date("F d Y", strtotime($a['date_sent'])) ?>
+                            </td>
+
+                            <td>
+                                <?= $a['alert_type'] ?>
+                            </td>
+
+                            <td>
+                                <?= $a['name'] ?>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
                 </tbody>
             </table>
         </div>

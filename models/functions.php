@@ -360,3 +360,26 @@ function updateUserProfile($conn, $userId, $phone, $email, $address)
 
     return $conn->query($sql);
 }
+
+
+function getRecentAlerts($conn)
+{
+    $sql = "
+        SELECT alert.*, user.name
+        FROM alert
+        INNER JOIN user ON alert.user_id = user.user_id
+        ORDER BY alert_id DESC
+        LIMIT 3
+    ";
+
+    $result = $conn->query($sql);
+    $data = [];
+
+    if ($result) {
+        while ($row = $result->fetch_assoc()) {
+            $data[] = $row;
+        }
+    }
+
+    return $data;
+}
