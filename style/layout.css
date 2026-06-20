@@ -39,6 +39,10 @@ body {
     margin: auto;
 }
 
+canvas {
+    max-width: auto;
+}
+
 table {
     /* experimental  till end global*/
     width: 100%;

@@ -28,7 +28,7 @@ include("../database/connection.php");
 
 
 function getCount($conn, $table)  // for admin dashboard count
-{ 
+{
     $result = $conn->query("SELECT COUNT(*) AS total FROM $table");
     $row = $result->fetch_assoc();
 
@@ -163,40 +163,20 @@ function getStudentSubjectsBySemester($conn, $userId, $semId) // get all subject
 
 function calculateGPA($subjects)  // to calculate the gpa for a sem or cgpa for all sem, pass $subjects based on type of getStudentSubject called
 {
-    $gradePoints = [
-        'A'  => 4.0,
-        'A-' => 3.7,
-        'B+' => 3.3,
-        'B'  => 3.0,
-        'B-' => 2.7,
-        'C+' => 2.3,
-        'C'  => 2.0,
-        'C-' => 1.7,
-        'D+' => 1.3,
-        'D'  => 1.0,
-        'E'  => 0.0
-    ];
-
     $totalPoints = 0;
     $totalCredits = 0;
-
     foreach ($subjects as $subject) {
-
-        $grade = strtoupper(trim($subject['grade']));
-
-        if (!isset($gradePoints[$grade])) {
+        $point = gradeToPoint($subject['grade']);
+        if ($point === null) {
             continue;
         }
-
         $credits = $subject['credit_hours'];
-        $totalPoints += $gradePoints[$grade] * $credits;
+        $totalPoints += $point * $credits;
         $totalCredits += $credits;
     }
-
     if ($totalCredits == 0) {
         return 0;
     }
-
     return round($totalPoints / $totalCredits, 2);
 }
 
@@ -211,6 +191,33 @@ function getAllAlerts($conn) // get all alerts with student name
     $result = $conn->query($sql);
     $data = [];
 
+    if ($result) {
+        while ($row = $result->fetch_assoc()) {
+            $data[] = $row;
+        }
+    }
+
+    return $data;
+}
+
+function getStudentByLoginId($conn, $login_id) // get student full profile by session login_id
+{
+    $result = $conn->query("
+        SELECT student.*, user.*
+        FROM student
+        INNER JOIN user ON student.user_id = user.user_id
+        WHERE user.login_id = '$login_id'
+        LIMIT 1
+    ");
+    return $result ? $result->fetch_assoc() : null;
+}
+
+
+function getAllSemesters($conn) // get all semesters for dropdown
+{
+    $result = $conn->query("SELECT * FROM semester ORDER BY semester_id ASC");
+    $data = [];
+ 
     while ($row = $result->fetch_assoc()) {
         $data[] = $row;
     }
@@ -229,9 +236,11 @@ function searchAlertByName($conn, $keyword) // search alerts by student name
 
     $result = $conn->query($sql);
     $data = [];
-
-    while ($row = $result->fetch_assoc()) {
-        $data[] = $row;
+ 
+    if ($result) {
+        while ($row = $result->fetch_assoc()) {
+            $data[] = $row;
+        }
     }
 
     return $data;
@@ -305,4 +314,23 @@ function searchAdvisorStudents($conn, $advisorId, $keyword)
     }
 
     return $data;
+}
+
+function gradeToPoint($grade)
+{
+    $gradePoints = [
+        'A'  => 4.0,
+        'A-' => 3.7,
+        'B+' => 3.3,
+        'B'  => 3.0,
+        'B-' => 2.7,
+        'C+' => 2.3,
+        'C'  => 2.0,
+        'C-' => 1.7,
+        'D+' => 1.3,
+        'D'  => 1.0,
+        'E'  => 0.0
+    ];
+    $grade = strtoupper(trim($grade));
+    return $gradePoints[$grade] ?? null;
 }

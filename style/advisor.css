@@ -219,6 +219,7 @@
 .report-buttons-container {
     display: flex;
     gap: 12px;
+    margin-bottom: 12px;
 }
 
 .dropdown-select {
@@ -235,7 +236,8 @@
 
 .search-wrapper {
     position: relative;
-    width: 300px; /* adjust if needed */
+    width: 300px;
+    /* adjust if needed */
 }
 
 .search {
