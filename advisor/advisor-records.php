@@ -111,7 +111,7 @@
             <?php else: ?>
                 <?php foreach ($subjects as $s): ?>
                     <tr>
-                        <td><?= $s['subject_code'] ?></td>
+                        <td><?= $s['subject_id'] ?></td>
                         <td><?= $s['subject_name'] ?></td>
                         <td><?= $s['credit_hours'] ?></td>
                         <td><?= $s['grade'] ?></td>
