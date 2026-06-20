@@ -2,84 +2,91 @@
     <link rel="stylesheet" href="../style/layout.css">
     <link rel="stylesheet" href="../style/advisor.css">
     <link rel="stylesheet" href="../style/styles.css">
+
 <body class="page-body main-gradient-bg">
     <?php
+    session_start();
     $activePage = 'profile';
     include("components/sidebar-advisor.php");
     include("../models/functions.php");
-    $user = getUserById($conn, "admin", "login_id", "A03241012");
+    $user = getUserById($conn, "advisor", "login_id", $_SESSION['uid']);
 
     $nameParts = explode(' ', trim($user['name']));
     $firstName = $nameParts[0];
     $lastName = implode(' ', array_slice($nameParts, 1));
     ?>
-</head>
-        <?php
-        session_start();
-        include("../models/functions.php");          
-        $userId = $_SESSION['user_id'] ?? null;
+    </head>
+    <?php
+    $userId = $_SESSION['user_id'] ?? null;
 
-        $advisor = null;
+    $advisor = null;
 
-        if ($userId) {
-            $advisor = getUserById($conn, "advisor", "advisor.user_id", $userId);
-        }
-        ?>
-<body>
-    <main class="main-content main-rounded">
-        <h1 class="content-title">Profile</h1>
-</body>
+    if ($userId) {
+        $advisor = getUserById($conn, "advisor", "advisor.user_id", $userId);
+    }
+    ?>
 
-</html>
-        <div class="profile-card">
-            <div class="avatar-circle">
+    <body>
+        <main class="main-content main-rounded">
+            <h1 class="content-title">Profile</h1>
+    </body>
 
-                <svg viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="100%" height="100%">
-                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                    <circle cx="12" cy="7" r="4"></circle>
-                </svg>
-            </div>
-            <div class="profile-summary">
-                <h2><?= $advisor['name'] ?></h2>
-                <div class="institution">Universiti Teknikal Malaysia Melaka</div>
-                <div class="academic-meta">
-                </div>
+    </html>
+    <div class="profile-card">
+        <div class="avatar-circle">
+
+            <svg viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="100%" height="100%">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+        </div>
+        <div class="profile-summary">
+            <h2><?= $advisor['name'] ?></h2>
+            <div class="institution">Universiti Teknikal Malaysia Melaka</div>
+            <div class="academic-meta">
             </div>
         </div>
+    </div>
 
-        <div class="details-box">
-            <div class="details-grid" >
-                
-                <div class="info-group" style="grid-column: span 2;">
-                    <span class="label">Name</span>
-                    <span class="value"><?= $advisor['name'] ?></span>
-                </div>
+    <div class="details-box">
+        <div class="details-grid">
 
-                <div class="info-group">
-                    <span class="label">Advisor ID</span>
-                    <span class="value"><?= $advisor['login_id'] ?></span>
-                </div>
-
-                <div class="info-group" style="grid-column: span 2;">
-                    <span class="label">Email</span>
-                    <span class="value"><?= $advisor['email'] ?></span>
-                </div>
-
-                <div class="info-group">
-                    <span class="label">Phone Number</span>
-                    <span class="value"><?= $advisor['phone'] ?></span>
-                </div>
-
+            <div class="info-group">
+                <span class="label">First Name</span>
+                <span class="value"><?php echo $firstName; ?></span>
             </div>
 
-
-            <div class="address-container">
-                <span class="label">Address</span>
-                <span class="value"><?= $advisor['address'] ?></span>
+            <div class="info-group">
+                <span class="label">Last Name</span>
+                <span class="value"><?php echo $lastName; ?></span>
             </div>
+
+            <div class="info-group">
+                <span class="label">Advisor ID</span>
+                <span class="value"><?= $advisor['login_id'] ?></span>
+            </div>
+
+            <div class="info-group" style="grid-column: span 2;">
+                <span class="label">Email</span>
+                <span class="value"><?= $advisor['email'] ?></span>
+            </div>
+
+            <div class="info-group">
+                <span class="label">Phone Number</span>
+                <span class="value"><?= $advisor['phone_number'] ?></span>
+            </div>
+
         </div>
+
+
+        <div class="address-container">
+            <span class="label">Address</span>
+            <span class="value"><?= $advisor['address'] ?></span>
+        </div>
+    </div>
 
     </div>
 
 </body>
+
 </html>
