@@ -333,3 +333,16 @@ function searchAdvisorStudents($conn, $advisorId, $keyword)
 
     return $data;
 }
+
+function updateUserProfile($conn, $userId, $phone, $email, $address)
+{
+    $sql = "
+        UPDATE user
+        SET phone = '$phone',
+            email = '$email',
+            address = '$address'
+        WHERE user_id = '$userId'
+    ";
+
+    return $conn->query($sql);
+}

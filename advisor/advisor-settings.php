@@ -15,6 +15,21 @@
     <?php
     $activePage = 'settings';
     include("components/sidebar-advisor.php");
+
+    include("../models/functions.php");
+
+    $userId = $_SESSION['user_id'] ?? null;
+
+    if ($_SERVER["REQUEST_METHOD"] == "POST" && $userId) {
+
+        updateUserProfile(
+            $conn,
+            $userId,
+            $_POST['phone'],
+            $_POST['email'],
+            $_POST['address']
+        );
+    }
     ?>
 
     <main class="main-content main-rounded">
