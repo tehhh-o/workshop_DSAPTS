@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,13 +13,49 @@
 
 <body class="page-body main-gradient-bg">
   <?php
+  session_start();
+  if (!isset($_SESSION['uid'])) {
+      header("Location: ../index.php");
+      exit();
+  }
   $activePage = 'dashboard';
-  include("components/sidebar-student.php")
+  include("components/sidebar-student.php");
+  include("../models/functions.php");
+
+  $loginId = $_SESSION['uid'];
+  $student = getStudentByLoginId($conn, $loginId);
+
+  if (!$student) {
+      echo "<p style='color:red;'>Student record not found.</p>";
+      exit();
+  }
+
+  $userId  = $student['user_id'];
+
+  
+  $allSubjects = getStudentSubjects($conn, $userId);
+
+  
+  $subjectsBySem = [];
+  foreach ($allSubjects as $subj) {
+    $semName = $subj['semester_name'];
+    $subjectsBySem[$semName][] = $subj;
+  }
+
+  $semLabels = [];
+  $semGPAs   = [];
+  foreach ($subjectsBySem as $semName => $subjects) {
+    $semLabels[] = $semName;
+    $semGPAs[]   = calculateGPA($subjects);
+  }
+
+  $semLabelsJson = json_encode($semLabels);
+  $semGPAsJson   = json_encode($semGPAs);
   ?>
 
   <main class="main-content main-rounded">
     <h1 class="content-title">Dashboard</h1>
-    <h3 class="content-welcome">Welcome, Ahmad Bin Ali</h3>
+    <h3 class="content-welcome">Welcome, <?php echo htmlspecialchars($student['name']); ?></h3>
 
     <div class="chart-container">
       <canvas id="gpaChart"></canvas>
@@ -32,8 +69,8 @@
         title: "Student GPA Trend",
         xLabel: "Semester",
         yLabel: "GPA",
-        xValues: ["Sem 1/1", "Sem 1/2", "Sem 2/1", "Sem 2/2", "Sem 3/1", "Sem 3/2"],
-        yValues: [3.7, 3.2, 3.4, 3.6, 3.4, 3.95],
+        xValues: <?php echo $semLabelsJson; ?>,
+        yValues: <?php echo $semGPAsJson; ?>,
         label: "GPA"
       });
     </script>
