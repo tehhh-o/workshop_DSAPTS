@@ -5,12 +5,12 @@ include("../database/connection.php");
 // - getCount($conn, $table)                               // for admin dashboard count
 // - getAll($conn, $table)                                 // to get all data from a table except user(admin,advisor,student) and student_subject as these require JOIN
 // - getUserById($conn, $table, $idColumn, $user_id)       // for user profile 
-// - updateUserField($conn, $userId, $field, $value)       // to update a single user profile detail (phone,address,email)
+// - updateUserField($conn, $user_Id, $field, $value)       // to update a single user profile detail (phone,address,email)
 // - deleteUser($conn, $table, $user_id)                   // to delete a user(admin,advisor,student)
 // - searchUserByName($conn, $table, $keyword)             // to search user (admin, advisor, student)
 // - getAllUser($conn, $table)                             // to get all personal detail for all user
-// - getStudentSubjects($conn, $userId)                    // get all subject for a student for all sem
-// - getStudentSubjectsBySemester($conn, $userId, $semId)  // get all subject for a student for a specific sem
+// - getStudentSubjects($conn, $user_Id)                    // get all subject for a student for all sem
+// - getStudentSubjectsBySemester($conn, $user_Id, $semId)  // get all subject for a student for a specific sem
 // - calculateGPA($subjects)                               // to calculate the gpa for a sem or cgpa for all sem, pass $subjects based on type of getStudentSubject called
 // - getAdvisorAlerts($conn , $advisorid)                    //
 // - getAdvisorStudents($conn, $advisorid)                    //
@@ -200,74 +200,3 @@ function calculateGPA($subjects)  // to calculate the gpa for a sem or cgpa for 
 
     return round($totalPoints / $totalCredits, 2);
 }
-
-function getAdvisorAlerts($conn, $advisorId)
-{
-    $sql = "
-        SELECT
-            alert.*,
-            user.name AS name
-        FROM alert
-        INNER JOIN student ON alert.user_id = student.user_id
-        INNER JOIN user ON student.user_id = user.user_id
-        WHERE student.advisor_id = '$advisorId'
-        ORDER BY alert.date_sent DESC
-    ";
-
-    $result = $conn->query($sql);
-    $data = [];
-
-    while ($row = $result->fetch_assoc()) {
-        $data[] = $row;
-    }
-
-    return $data;
-}
-
-
-function getAdvisorStudents($conn, $advisorId)
-{
-    $sql = "
-        SELECT
-            student.*,
-            user.name,
-            user.login_id,
-            user.email
-        FROM student
-        INNER JOIN user ON student.user_id = user.user_id
-        WHERE student.advisor_id = '$advisorId'
-        ORDER BY user.name
-    ";
-
-    $result = $conn->query($sql);
-    $data = [];
-
-    while ($row = $result->fetch_assoc()) {
-        $data[] = $row;
-    }
-
-    return $data;
-}
-
-function searchAdvisorStudents($conn, $advisorId, $keyword)
-{
-    $sql = "
-        SELECT student.*, user.*
-        FROM student
-        INNER JOIN user ON student.user_id = user.user_id
-        WHERE student.advisor_id = '$advisorId'
-        AND user.name LIKE '%$keyword%'
-    ";
-
-    $result = $conn->query($sql);
-    $data = [];
-
-    if ($result) {
-        while ($row = $result->fetch_assoc()) {
-            $data[] = $row;
-        }
-    }
-
-    return $data;
-}
-
