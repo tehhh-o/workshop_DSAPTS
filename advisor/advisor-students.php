@@ -41,7 +41,8 @@
             <?php foreach ($students as $s): ?>
             <tr>
                 <td class="name-col">
-                    <?= $s['name'] ?>
+                    <a href="advisor-records.php?user_id=<?= $s['user_id'] ?>">
+                <?= ($s['name']) ?>
                 </td>
 
                 <td>
