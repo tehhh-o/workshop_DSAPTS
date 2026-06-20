@@ -1,15 +1,43 @@
 <?php
-include 'login-validation.php'; 
+session_start(); 
+include __DIR__ . '/../database/connection.php';
+include __DIR__ . '/../models/mail.php'; 
+
+function generateOTP() {
+    return str_pad(random_int(0, 999999), 6, '0', STR_PAD_LEFT);
+}
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $uid = $_POST["uid"];
+    $uid = mysqli_real_escape_string($conn, $_POST["uid"]);
 
-    if (!isset($users[$uid])) {
-        echo "<script>alert('User ID not found');</script>";
+    $sql = "SELECT * FROM user WHERE login_id='$uid' OR email='$uid' OR user_id='$uid'";
+    $result = mysqli_query($conn, $sql);
+
+    if (mysqli_num_rows($result) == 0) {
+        echo "<script>alert('User ID or Email not found');</script>";
     } else {
-        
-        header("Location: forget-password-otp.php");
-        exit();
+        $row = mysqli_fetch_assoc($result);
+        $user_email = $row['email'];
+        $login_id = $row['login_id'];
+
+        $otp = generateOTP();
+
+        $_SESSION['system_otp'] = $otp;
+        $_SESSION['reset_login_id'] = $login_id;
+        $_SESSION['reset_email'] = $user_email;
+
+        $subject = "DSAPTS - Password Reset OTP";
+        $message = "Hello " . $row['name'] . ",<br><br>Kod OTP anda untuk menetapkan semula kata laluan ialah: <b>" . $otp . "</b>.<br><br>Sila jangan kongsi kod ini dengan sesiapa.";
+
+        if (sendMail($user_email, $subject, $message)) {
+            echo "<script>
+                alert('OTP successfully sent to " . $user_email . "');
+                window.location.href = 'forget-password-otp.php';
+            </script>";
+            exit();
+        } else {
+            echo "<script>alert('Failed to send OTP. Please check your SMTP settings.');</script>";
+        }
     }
 }
 ?>

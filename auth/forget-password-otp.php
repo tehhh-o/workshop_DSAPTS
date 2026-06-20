@@ -1,15 +1,20 @@
 <?php
-$otp = "6921";
+session_start();
+include __DIR__ . '/../database/connection.php';
+
+// Tendang balik ke page pertama kalau tiada data session aktif
+if (!isset($_SESSION['system_otp'])) {
+    header("Location: forget-password.php");
+    exit();
+}
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $enteredOtp = $_POST["otp"];
 
-    if ($enteredOtp === $otp) {
-        
+    if ($enteredOtp === $_SESSION['system_otp']) {
         header("Location: forget-password-reset.php");
         exit();
     } else {
-       
         echo "<script>alert('Invalid OTP');</script>";
     }
 }
