@@ -8,17 +8,7 @@
     include("components/sidebar-advisor.php")
     ?>
 </head>
-        <?php
-        session_start();
-        include("../models/functions.php");          
-        $userId = $_SESSION['user_id'] ?? null;
 
-        $advisor = null;
-
-        if ($userId) {
-            $advisor = getUserById($conn, "advisor", "advisor.user_id", $userId);
-        }
-        ?>
 <body>
     <main class="main-content main-rounded">
         <h1 class="content-title">Profile</h1>
@@ -34,7 +24,7 @@
                 </svg>
             </div>
             <div class="profile-summary">
-                <h2><?= $advisor['name'] ?></h2>
+                <h2>Ali Baba</h2>
                 <div class="institution">Universiti Teknikal Malaysia Melaka</div>
                 <div class="academic-meta">
                 </div>
@@ -42,26 +32,31 @@
         </div>
 
         <div class="details-box">
-            <div class="details-grid" >
+            <div class="details-grid">
                 
-                <div class="info-group" style="grid-column: span 2;">
-                    <span class="label">Name</span>
-                    <span class="value"><?= $advisor['name'] ?></span>
+                <div class="info-group">
+                    <span class="label">First Name</span>
+                    <span class="value">Ali</span>
+                </div>
+
+                <div class="info-group">
+                    <span class="label">Last Name</span>
+                    <span class="value">Baba</span>
                 </div>
 
                 <div class="info-group">
                     <span class="label">Advisor ID</span>
-                    <span class="value"><?= $advisor['login_id'] ?></span>
+                    <span class="value">A32155320</span>
                 </div>
 
                 <div class="info-group" style="grid-column: span 2;">
                     <span class="label">Email</span>
-                    <span class="value"><?= $advisor['email'] ?></span>
+                    <span class="value">ali@utem.edu.my</span>
                 </div>
 
                 <div class="info-group">
                     <span class="label">Phone Number</span>
-                    <span class="value"><?= $advisor['phone'] ?></span>
+                    <span class="value">012-3456789</span>
                 </div>
 
             </div>
@@ -69,7 +64,7 @@
 
             <div class="address-container">
                 <span class="label">Address</span>
-                <span class="value"><?= $advisor['address'] ?></span>
+                <span class="value">Jalan Hang Tuah Jaya, 76100 Durian Tunggal, Melaka</span>
             </div>
         </div>
 
