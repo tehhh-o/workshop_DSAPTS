@@ -16,7 +16,6 @@
 </head>
         <?php
         session_start();
-        include("../models/functions.php");          
         $userId = $_SESSION['user_id'] ?? null;
 
         $advisor = null;

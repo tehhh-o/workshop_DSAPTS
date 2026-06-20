@@ -51,7 +51,7 @@
           }
           $successMsg = $updated ? 'Saved successfully.' : 'Save failed.';
           
-          $student = getStudentByLoginId($conn, $loginId);
+        $advisor = getAdvisorByLoginId($conn, $loginId);
       } else {
           $errorMsg = 'Invalid field or empty value.';
       }
@@ -70,7 +70,7 @@
 
     <div class="input-field" style="margin-top: 12px;">
       <h3 style="margin-right: 24px;">Student ID</h3>
-      <input type="text" value="<?php echo htmlspecialchars($student['login_id']); ?>" disabled>
+      <input type="text" value="<?php echo htmlspecialchars($advisor['login_id']); ?>" disabled>
     </div>
 
     <div class="panel">
@@ -82,7 +82,7 @@
         <div class="input-field">
           <h4>Phone Number</h4>
           <div class="edit-field">
-            <input type="text" name="value" value="<?php echo htmlspecialchars($student['phone'] ?? ''); ?>">
+            <input type="text" name="value" value="<?php echo htmlspecialchars($advisor['phone'] ?? ''); ?>">
             <button type="submit" style="background:none;border:none;cursor:pointer;padding:0;">
               <img src="../assets/icons/edit.png" alt="Save">
             </button>
@@ -96,7 +96,7 @@
         <div class="input-field">
           <h4>Email</h4>
           <div class="edit-field">
-            <input type="text" name="value" value="<?php echo htmlspecialchars($student['email'] ?? ''); ?>">
+            <input type="text" name="value" value="<?php echo htmlspecialchars($advisor['email'] ?? ''); ?>">
             <button type="submit" style="background:none;border:none;cursor:pointer;padding:0;">
               <img src="../assets/icons/edit.png" alt="Save">
             </button>
@@ -110,7 +110,7 @@
         <div class="input-field">
           <h4>Address</h4>
           <div class="edit-field">
-            <input type="text" name="value" value="<?php echo htmlspecialchars($student['address'] ?? ''); ?>">
+            <input type="text" name="value" value="<?php echo htmlspecialchars($advisor['address'] ?? ''); ?>">
             <button type="submit" style="background:none;border:none;cursor:pointer;padding:0;">
               <img src="../assets/icons/edit.png" alt="Save">
             </button>
