@@ -5,7 +5,13 @@
 <body class="page-body main-gradient-bg">
     <?php
     $activePage = 'profile';
-    include("components/sidebar-advisor.php")
+    include("components/sidebar-advisor.php");
+    include("../models/functions.php");
+    $user = getUserById($conn, "admin", "login_id", "A03241012");
+
+    $nameParts = explode(' ', trim($user['name']));
+    $firstName = $nameParts[0];
+    $lastName = implode(' ', array_slice($nameParts, 1));
     ?>
 </head>
         <?php

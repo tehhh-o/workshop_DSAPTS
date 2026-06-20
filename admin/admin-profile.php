@@ -13,7 +13,13 @@
 <body class="page-body main-gradient-bg">
     <?php
     $activePage = 'profile';
-    include("components/sidebar-admin.php")
+    include("components/sidebar-admin.php");
+    include("../models/functions.php");
+    $user = getUserById($conn, "admin", "login_id", "A03241012");
+
+    $nameParts = explode(' ', trim($user['name']));
+    $firstName = $nameParts[0];
+    $lastName = implode(' ', array_slice($nameParts, 1));
     ?>
 
     <main class="main-content main-rounded">
@@ -26,7 +32,7 @@
                 </svg>
             </div>
             <div class="profile-summary">
-                <h2>Fen Francois</h2>
+                <h2><?php echo $user['name']; ?></h2>
                 <div class="institution">Universiti Teknikal Malaysia Melaka</div>
                 <div class="academic-meta">
                 </div>
@@ -38,27 +44,27 @@
 
                 <div class="info-group">
                     <span class="label">First Name</span>
-                    <span class="value">Fen</span>
+                    <span class="value"><?php echo $firstName; ?></span>
                 </div>
 
                 <div class="info-group">
                     <span class="label">Last Name</span>
-                    <span class="value">Francois</span>
+                    <span class="value"><?php echo $lastName; ?></span>
                 </div>
 
                 <div class="info-group">
                     <span class="label">Admin ID</span>
-                    <span class="value">M032410245</span>
+                    <span class="value"><?php echo $user['login_id']; ?></span>
                 </div>
 
                 <div class="info-group" style="grid-column: span 2;">
                     <span class="label">Email</span>
-                    <span class="value">fen.francois@utem.edu.my</span>
+                    <span class="value"><?php echo $user['email']; ?></span>
                 </div>
 
                 <div class="info-group">
                     <span class="label">Phone Number</span>
-                    <span class="value">+60 11-234 5678</span>
+                    <span class="value"><?php echo $user['phone_number']; ?></span>
                 </div>
 
             </div>
@@ -66,7 +72,7 @@
 
             <div class="address-container">
                 <span class="label">Address</span>
-                <span class="value">Jalan Hang Tuah Jaya, 76100 Durian Tunggal, Melaka</span>
+                <span class="value"><?php echo $user['address']; ?></span>
             </div>
         </div>
 
