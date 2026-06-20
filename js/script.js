@@ -11,10 +11,11 @@ function makeGraph({
     label
 }) {
     const ctx = document.getElementById(id);
-
     if (charts[id]) {
         charts[id].destroy();
     }
+
+    const isPieLike = ['pie', 'doughnut', 'polarArea'].includes(type);
 
     charts[id] = new Chart(ctx, {
         type: type,
@@ -22,10 +23,9 @@ function makeGraph({
             labels: xValues,
             datasets: [{
                 label: label,
-                data: xValues.map((x, i) => ({
-                    x: x,
-                    y: yValues[i]
-                }))
+                data: isPieLike
+                    ? yValues
+                    : xValues.map((x, i) => ({ x: x, y: yValues[i] }))
             }]
         },
         options: {
@@ -36,7 +36,7 @@ function makeGraph({
                     text: title
                 }
             },
-            scales: {
+            scales: isPieLike ? {} : {
                 x: {
                     title: {
                         display: true,

@@ -15,7 +15,7 @@
 <body class="page-body main-gradient-bg">
     <?php
     session_start();
-    $activePage = 'alerts';
+    $activePage = 'students';
     include("components/sidebar-advisor.php");
     include("../models/functions.php");
     ?>

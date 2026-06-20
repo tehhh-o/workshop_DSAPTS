@@ -19,10 +19,9 @@
     <main class="main-content main-rounded">
         <h1 class="content-title">Edit Advisors</h1>
 
-        <div class="edit-box">
-           <div class="edit-wrapper">
-          <div class="edit-list">
-            <div class="edit-row">
+        <div class="content">
+      <div class="edit-list">
+        <div class="edit-row">
           <span>Name -</span>
           <button class="icon-btn">✎</button>
         </div>
@@ -40,7 +39,6 @@
         </div>
       </div>
     </div>
-</div>
     </main>
 </body>
 

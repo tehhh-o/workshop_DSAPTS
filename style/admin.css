@@ -223,32 +223,5 @@
     width: 100%;
 }
 
-.edit-box {
-    background: #8fb3e8;
-    border-radius: 22px;
-    padding: 20px;
-    width: 100%;
-    margin-top: 20px;
-}
-
-.edit-wrapper {
-    background: #6f93c2;
-    border-radius: 10px;
-    padding: 20px;
-}
-
-.table-box {
-    background: #8fb3e8;
-    border-radius: 22px;
-    padding: 20px;
-    width: 100%;
-    margin-top: 20px;
-}
-
-.table-wrapper {
-    background: #6f93c2;
-    border-radius: 10px;
-    padding: 20px;
-}
 /* to expand anything after changing display:grid to display:flex
     add flex-direction: column and width: 100% */
