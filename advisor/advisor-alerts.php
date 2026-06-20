@@ -14,20 +14,20 @@
 <body class="page-body main-gradient-bg">
     <?php
     session_start();
-    $activePage = 'alerts';
+    $activePage = 'alert';
     include("components/sidebar-advisor.php");
     include("../models/functions.php");
     ?>
 
-<?php
-  $alert = getAdvisorAlerts($conn, $_SESSION['user_id']);
-?>
+    <?php
+    $alert = getAdvisorAlerts($conn, $_SESSION['user_id']);
+    ?>
 
     <main class="main-content main-rounded">
         <h1 class="content-title">Alert</h1>
 
         <main class="content">
-                </form>
+            </form>
             </div>
             <table>
                 <thead>
@@ -41,8 +41,8 @@
                     <?php foreach ($alert as $a): ?>
                         <tr>
                             <td class="name-col"><?= $a['name'] ?>
-                          <br> <small><?= $a['message'] ?></small>
-                          </td>
+                                <br> <small><?= $a['message'] ?></small>
+                            </td>
 
                             <td>
                                 <?= $a['alert_type'] ?>
@@ -58,4 +58,5 @@
         </main>
     </main>
 </body>
+
 </html>

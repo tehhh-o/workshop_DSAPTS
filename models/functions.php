@@ -126,7 +126,7 @@ function getStudentSubjects($conn, $userId) // get all subject for a student for
         SELECT student_subject.*, subject.*, semester.*
         FROM student_subject
         INNER JOIN subject ON student_subject.subject_id = subject.subject_id
-        INNER JOIN semester ON student_subject.sem_id = semester.sem_id
+        INNER JOIN semester ON student_subject.semester_id = semester.semester_id
         WHERE student_subject.user_id = '$userId'
     ";
 
@@ -146,9 +146,9 @@ function getStudentSubjectsBySemester($conn, $userId, $semId) // get all subject
         SELECT student_subject.*, subject.*, semester.*
         FROM student_subject
         INNER JOIN subject ON student_subject.subject_id = subject.subject_id
-        INNER JOIN semester ON student_subject.sem_id = semester.sem_id
+        INNER JOIN semester ON student_subject.semester_id = semester.semester_id
         WHERE student_subject.user_id = '$userId'
-        AND student_subject.sem_id = '$semId'
+        AND student_subject.semester_id = '$semId'
     ";
 
     $result = $conn->query($sql);
@@ -230,7 +230,7 @@ function getAllSemesters($conn) // get all semesters for dropdown
 {
     $result = $conn->query("SELECT * FROM semester ORDER BY semester_id ASC");
     $data = [];
- 
+
     while ($row = $result->fetch_assoc()) {
         $data[] = $row;
     }
@@ -249,7 +249,7 @@ function searchAlertByName($conn, $keyword) // search alerts by student name
 
     $result = $conn->query($sql);
     $data = [];
- 
+
     if ($result) {
         while ($row = $result->fetch_assoc()) {
             $data[] = $row;
@@ -352,7 +352,7 @@ function updateUserProfile($conn, $userId, $phone, $email, $address)
 {
     $sql = "
         UPDATE user
-        SET phone = '$phone',
+        SET phone_number = '$phone',
             email = '$email',
             address = '$address'
         WHERE user_id = '$userId'

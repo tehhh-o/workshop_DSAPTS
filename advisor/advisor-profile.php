@@ -5,19 +5,19 @@
 
 <body class="page-body main-gradient-bg">
     <?php
+    session_start();
     $activePage = 'profile';
     include("components/sidebar-advisor.php");
     include("../models/functions.php");
-    $user = getUserById($conn, "admin", "login_id", "A03241012");
+    $user = getUserById($conn, "advisor", "login_id", $_SESSION['uid']);
 
     $nameParts = explode(' ', trim($user['name']));
     $firstName = $nameParts[0];
     $lastName = implode(' ', array_slice($nameParts, 1));
     ?>
-</head>
-        <?php
-        session_start();
-        $userId = $_SESSION['user_id'] ?? null;
+    </head>
+    <?php
+    $userId = $_SESSION['user_id'] ?? null;
 
     $advisor = null;
 
@@ -51,9 +51,14 @@
     <div class="details-box">
         <div class="details-grid">
 
-            <div class="info-group" style="grid-column: span 2;">
-                <span class="label">Name</span>
-                <span class="value"><?= $advisor['name'] ?></span>
+            <div class="info-group">
+                <span class="label">First Name</span>
+                <span class="value"><?php echo $firstName; ?></span>
+            </div>
+
+            <div class="info-group">
+                <span class="label">Last Name</span>
+                <span class="value"><?php echo $lastName; ?></span>
             </div>
 
             <div class="info-group">
@@ -68,7 +73,7 @@
 
             <div class="info-group">
                 <span class="label">Phone Number</span>
-                <span class="value"><?= $advisor['phone'] ?></span>
+                <span class="value"><?= $advisor['phone_number'] ?></span>
             </div>
 
         </div>
