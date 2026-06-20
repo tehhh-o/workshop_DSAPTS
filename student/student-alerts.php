@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,25 +12,8 @@
 
 <body class="page-body main-gradient-bg">
   <?php
-  session_start();
-  if (!isset($_SESSION['uid'])) {
-      header("Location: ../index.php");
-      exit();
-  }
   $activePage = 'alerts';
-  include("components/sidebar-student.php");
-  include("../models/functions.php");
-
-  $loginId = $_SESSION['uid'];
-  $student = getStudentByLoginId($conn, $loginId);
-
-  if (!$student) {
-      echo "<p style='color:red;'>Student record not found.</p>";
-      exit();
-  }
-
-  $userId = $student['user_id'];
-  $alerts = getAlertsByUser($conn, $userId);
+  include("components/sidebar-student.php")
   ?>
 
   <main class="main-content main-rounded">
@@ -44,21 +26,22 @@
         <div class="column-date">Date</div>
       </div>
 
-      <?php if (empty($alerts)): ?>
-        <div class="grid-row table-row">
-          <div class="column-name" style="grid-column: span 3; text-align: center;">No alerts found.</div>
+      <div class="grid-row table-row">
+        <div class="column-name">
+          <span class="description">Failed Subject ..... actions needed.</span>
         </div>
-      <?php else: ?>
-        <?php foreach ($alerts as $alert): ?>
-          <div class="grid-row table-row">
-            <div class="column-name">
-              <span class="description"><?php echo htmlspecialchars($alert['message']); ?></span>
-            </div>
-            <div class="column-type"><?php echo htmlspecialchars($alert['alert_type']); ?></div>
-            <div class="column-date"><?php echo htmlspecialchars($alert['date_sent']); ?></div>
-          </div>
-        <?php endforeach; ?>
-      <?php endif; ?>
+        <div class="column-type">Failed subject</div>
+        <div class="column-date">Semester 3,May 07 2026</div>
+      </div>
+
+      <div class="grid-row table-row">
+        <div class="column-name">
+
+          <span class="description">Muet Status not updated ... actions needed.</span>
+        </div>
+        <div class="column-type">Muet Status</div>
+        <div class="column-date">Semester 4,June 20 2026</div>
+      </div>
 
     </div>
   </main>

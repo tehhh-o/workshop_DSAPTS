@@ -31,8 +31,6 @@
                     <span class="student-text">ADD</span>
                 </a>
             </div>
-            <div class="table-box">
-                <div class="table-wrapper">
             <table>
                 <thead>
                     <tr>
@@ -53,8 +51,6 @@
                     </tr>
                 </tbody>
             </table>
-            </div>
-            </div>
         </main>
     </main>
 </body>
