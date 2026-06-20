@@ -288,5 +288,41 @@
     width: 100%;
 }
 
+.search-wrapper {
+    position: relative;
+    width: 300px; /* adjust if needed */
+}
+
+.search {
+    width: 100%;
+}
+
+.search-results {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: white;
+    border-top: none;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 999;
+}
+
+.search-results ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.search-results li {
+    padding: 8px;
+    cursor: pointer;
+}
+
+.search-results li:hover {
+    background: #f2f2f2;
+}
+
 /* to exapnd anything after changing disply:grid to display:flex
     add flex-direction: column and width: 100% */

@@ -1,3 +1,5 @@
+</html>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,37 +14,43 @@
 
 <body class="page-body main-gradient-bg">
     <?php
-    $activePage = 'students';
-    include("components/sidebar-advisor.php")
+    session_start();
+    $activePage = 'alerts';
+    include("components/sidebar-advisor.php");
+    include("../models/functions.php");
     ?>
 
-    <main class="main-content main-rounded">
-        <h1 class="content-title">Student List</h1>
-<div class="table-container">
-  <!-- THE HEADER -->
-  <div class="grid-row table-header">
-    <div class="column-name">Student Name</div>
-    <div class="column-type">Muet Status</div>
-  </div>
+<?php
+    $students = getAdvisorStudents($conn, $_SESSION['user_id']);
+?>
 
-  <!-- DATA ROW 1 -->
-  <div class="grid-row table-row">
-    <div class="column-name">
-        <span>Hakim</span>
-    </div>
-    <div class="column-type">Completed.</div>
-  </div>
+<main class="main-content main-rounded">
+    <h1 class="content-title">Student List</h1>
 
-  <!-- DATA ROW 2 -->
-  <div class="grid-row table-row">
-    <div class="column-name">
-        <span>Halim</span>
-    </div>
-    <div class="column-type">Uncomplete.</div>
-  </div>
-  
-</div>
+    <main class="content">
+
+        <table>
+            <thead>
+                <tr>
+                    <th class="name-col">Student Name</th>
+                    <th>Muet Status</th>
+                </tr>
+            </thead>
+
+            <tbody>
+            <?php foreach ($students as $s): ?>
+            <tr>
+                <td class="name-col">
+                    <?= $s['name'] ?>
+                </td>
+
+                <td>
+                    <?= $s['muet_status'] ?>
+                </td>
+            </tr>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
     </main>
-</body>
-
+</main>
 </html>

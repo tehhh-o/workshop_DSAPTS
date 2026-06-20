@@ -8,44 +8,54 @@
     <link rel="stylesheet" href="../style/layout.css">
     <link rel="stylesheet" href="../style/advisor.css">
     <link rel="stylesheet" href="../style/styles.css">
+    <link rel="stylesheet" href="../style/admin.css">
 </head>
 
 <body class="page-body main-gradient-bg">
     <?php
-    $activePage = 'alert';
-    include("components/sidebar-advisor.php")
+    session_start();
+    $activePage = 'alerts';
+    include("components/sidebar-advisor.php");
+    include("../models/functions.php");
     ?>
 
+<?php
+  $alert = getAdvisorAlerts($conn, $_SESSION['user_id']);
+?>
+
     <main class="main-content main-rounded">
-        <h1 class="content-title">Alerts</h1>
-<div class="table-container">
+        <h1 class="content-title">Alert</h1>
 
-  <div class="grid-row table-header">
-    <div class="column-name">Student Name</div>
-    <div class="column-type">Alert Type</div>
-    <div class="column-date">Date</div>
-  </div>
+        <main class="content">
+                </form>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th class="name-col">Student Name</th>
+                        <th class="action">Alert Type</th>
+                        <th class="action">Alert Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($alert as $a): ?>
+                        <tr>
+                            <td class="name-col"><?= $a['name'] ?>
+                          <br> <small><?= $a['message'] ?></small>
+                          </td>
 
-  <div class="grid-row table-row">
-    <div class="column-name">
-        <span>Hakim</span>
-        <span class="description">Failed Subject ..... actions needed.</span>
-    </div>
-    <div class="column-type">Failed subject</div>
-    <div class="column-date">Semester 3,May 07 2026</div>
-  </div>
-  
-  <div class="grid-row table-row">
-    <div class="column-name">
-        <span>Halim</span>
-        <span class="description">Muet Status not updated ... actions needed.</span>
-    </div>
-    <div class="column-type">Muet Status</div>
-    <div class="column-date">Semester 4,June 20 2026</div>
-  </div>
-  
-</div>
+                            <td>
+                                <?= $a['alert_type'] ?>
+                            </td>
+
+                            <td>
+                                <?= date("F d Y", strtotime($a['date_sent'])) ?>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </main>
     </main>
 </body>
-
 </html>
