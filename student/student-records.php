@@ -32,7 +32,7 @@
 
   $userId = $student['user_id'];
 
-  // Search or load all subjects for this student
+ 
   $keyword  = '';
   $subjects = [];
 

@@ -31,11 +31,11 @@
 
     $userId = $student['user_id'];
 
-    // Calculate CGPA and latest semester GPA from subjects
+    
     $allSubjects = getStudentSubjects($conn, $userId);
     $cgpa        = calculateGPA($allSubjects);
 
-    // Get latest semester subjects for current GPA
+    
     $latestSemId      = null;
     $totalCreditTaken = 0;
     foreach ($allSubjects as $subj) {
@@ -47,7 +47,7 @@
     $latestSubjects = $latestSemId ? getStudentSubjectsBySemester($conn, $userId, $latestSemId) : [];
     $latestGpa      = calculateGPA($latestSubjects);
 
-    // Split name into first / last
+    
     $nameParts = explode(' ', $student['name'], 2);
     $firstName = $nameParts[0];
     $lastName  = isset($nameParts[1]) ? $nameParts[1] : '';

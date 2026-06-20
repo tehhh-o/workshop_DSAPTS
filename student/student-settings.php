@@ -32,7 +32,7 @@
 
   $userId = $student['user_id'];
 
-  // Handle save (phone, email, address, muet_status)
+  
   $successMsg = '';
   $errorMsg   = '';
 
@@ -43,14 +43,14 @@
       $allowedFields = ['phone', 'email', 'address', 'muet_status'];
 
       if (in_array($field, $allowedFields) && $value !== '') {
-          // muet_status lives in student table, others in user table
+          
           if ($field === 'muet_status') {
               $updated = $conn->query("UPDATE student SET muet_status = '$value' WHERE user_id = '$userId'");
           } else {
               $updated = updateUserField($conn, $userId, $field, $value);
           }
           $successMsg = $updated ? 'Saved successfully.' : 'Save failed.';
-          // Reload student data after update
+          
           $student = getStudentByLoginId($conn, $loginId);
       } else {
           $errorMsg = 'Invalid field or empty value.';

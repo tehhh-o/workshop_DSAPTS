@@ -32,10 +32,10 @@
 
   $userId  = $student['user_id'];
 
-  // Get all subjects across all semesters for GPA trend
+  
   $allSubjects = getStudentSubjects($conn, $userId);
 
-  // Group subjects by semester to calculate per-semester GPA
+  
   $subjectsBySem = [];
   foreach ($allSubjects as $subj) {
     $semName = $subj['semester_name'];

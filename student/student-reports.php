@@ -31,18 +31,18 @@
 
     $userId = $student['user_id'];
 
-    // Get all semesters for dropdown
+
     $semesters = getAllSemesters($conn);
 
-    // Selected semester (default to first)
+
     $selectedSemId = isset($_GET['sem_id']) ? (int)$_GET['sem_id'] : ($semesters[0]['semester_id'] ?? 1);
     $isOverall     = isset($_GET['overall']);
 
-    // Get subjects
+  
     $allSubjects = getStudentSubjects($conn, $userId);
     $semSubjects = getStudentSubjectsBySemester($conn, $userId, $selectedSemId);
 
-    // Build per-semester GPA trend for overall chart
+
     $subjectsBySem = [];
     foreach ($allSubjects as $subj) {
         $subjectsBySem[$subj['semester_name']][] = $subj;
@@ -54,7 +54,7 @@
         $semGPAs[]   = calculateGPA($subjects);
     }
 
-    // For selected semester report
+   
     $selectedSemName = '';
     foreach ($semesters as $s) {
         if ($s['semester_id'] == $selectedSemId) {
@@ -88,7 +88,7 @@
         </div>
 
         <?php if ($isOverall): ?>
-            <!-- Overall GPA trend chart -->
+            
             <div class="profile-card" style="flex-direction: column;">
                 <h2 class="report-title">Overall Report - <?php echo htmlspecialchars($student['name']); ?></h2>
                 <p>CGPA: <strong><?php echo number_format($cgpa, 2); ?></strong></p>
@@ -97,7 +97,7 @@
                 </div>
             </div>
         <?php else: ?>
-            <!-- Semester-specific report -->
+            
             <div class="profile-card" style="flex-direction: column;">
                 <h2 class="report-title">
                     Detailed Report - <?php echo htmlspecialchars($student['name']); ?>,
