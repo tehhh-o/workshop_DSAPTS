@@ -12,7 +12,7 @@ include("../database/connection.php");
 // - getStudentSubjects($conn, $userId)                    // get all subject for a student for all sem
 // - getStudentSubjectsBySemester($conn, $userId, $semId)  // get all subject for a student for a specific sem
 // - calculateGPA($subjects)                               // to calculate the gpa for a sem or cgpa for all sem, pass $subjects based on type of getStudentSubject called
-// - getAllAlerts($conn)                    //
+// - getAdvisorAlerts($conn)                    //
 // - searchAlertByName($conn, $keyword)                    //
 
 
@@ -200,12 +200,17 @@ function calculateGPA($subjects)  // to calculate the gpa for a sem or cgpa for 
     return round($totalPoints / $totalCredits, 2);
 }
 
-function getAllAlerts($conn) // get all alerts with student name
+function getAdvisorAlerts($conn, $advisorId)
 {
     $sql = "
-        SELECT alert.*, user.name
+        SELECT
+            alert.*,
+            user.name AS name
         FROM alert
-        INNER JOIN user ON alert.user_id = user.user_id
+        INNER JOIN student ON alert.user_id = student.user_id
+        INNER JOIN user ON student.user_id = user.user_id
+        WHERE student.advisor_id = '$advisorId'
+        ORDER BY alert.date_sent DESC
     ";
 
     $result = $conn->query($sql);
