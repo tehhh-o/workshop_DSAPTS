@@ -26,6 +26,7 @@
         $userId  = $_POST['send_user_id'];
         $name    = $_POST['send_name'];
         $message = $_POST['send_message'];
+        $alertType = $_POST['send_alert_type'];
 
         $student = getUserById($conn, "student", "student.user_id", $userId);
 
@@ -33,7 +34,7 @@
             include '../models/mail.php';
             $sent = sendMail(
                 $student['email'],
-                "Alert: " . $name,
+                $alertType . " : " . $name,
                 $message
             );
 
@@ -92,6 +93,7 @@
                             <td>
                                 <form method="POST" style="display:inline;">
                                     <input type="hidden" name="send_alert_id" value="<?= $a['alert_id'] ?>">
+                                    <input type="hidden" name="send_alert_type" value="<?= $a['alert_type'] ?>">
                                     <input type="hidden" name="send_user_id" value="<?= $a['user_id'] ?>">
                                     <input type="hidden" name="send_name" value="<?= htmlspecialchars($a['name']) ?>">
                                     <input type="hidden" name="send_message" value="<?= htmlspecialchars($a['message']) ?>">
