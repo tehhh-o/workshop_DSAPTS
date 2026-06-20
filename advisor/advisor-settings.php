@@ -19,18 +19,18 @@
       exit();
   }
   $activePage = 'settings';
-  include("components/sidebar-student.php");
+  include("components/sidebar-advisor.php");
   include("../models/functions.php");
 
   $loginId = $_SESSION['uid'];
-  $student = getStudentByLoginId($conn, $loginId);
+  $advisor = getAdvisorByLoginId($conn, $loginId);
 
-  if (!$student) {
-      echo "<p style='color:red;'>Student record not found.</p>";
+  if (!$advisor) {
+      echo "<p style='color:red;'>Advisor record not found.</p>";
       exit();
   }
 
-  $userId = $student['user_id'];
+  $userId = $advisor['user_id'];
 
   
   $successMsg = '';

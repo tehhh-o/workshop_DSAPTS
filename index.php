@@ -33,6 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $user = $result->fetch_assoc();
 
         // store session
+        $_SESSION['user_id'] = $user['user_id'];
         $_SESSION['uid'] = $user['login_id'];
         $_SESSION['name'] = $user['name'];
 

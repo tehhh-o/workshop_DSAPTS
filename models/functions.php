@@ -231,6 +231,19 @@ function getStudentByLoginId($conn, $login_id) // get student full profile by se
     return $result ? $result->fetch_assoc() : null;
 }
 
+function getAdvisorByLoginId($conn, $login_id)
+{
+    $result = $conn->query("
+        SELECT advisor.*, user.*
+        FROM advisor
+        INNER JOIN user ON advisor.user_id = user.user_id
+        WHERE user.login_id = '$login_id'
+        LIMIT 1
+    ");
+
+    return $result ? $result->fetch_assoc() : null;
+}
+
 
 function getAllSemesters($conn) // get all semesters for dropdown
 {
