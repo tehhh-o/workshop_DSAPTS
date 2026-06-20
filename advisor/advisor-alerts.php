@@ -17,6 +17,36 @@
     $activePage = 'alert';
     include("components/sidebar-advisor.php");
     include("../models/functions.php");
+
+    $successMsg = '';
+    $errorMsg = '';
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['send_alert_id'])) {
+        $alertId = $_POST['send_alert_id'];
+        $userId  = $_POST['send_user_id'];
+        $name    = $_POST['send_name'];
+        $message = $_POST['send_message'];
+
+        $student = getUserById($conn, "student", "student.user_id", $userId);
+
+        if ($student && !empty($student['email'])) {
+            include '../models/mail.php';
+            $sent = sendMail(
+                $student['email'],
+                "Alert: " . $name,
+                $message
+            );
+
+            if ($sent) {
+                $successMsg = "Email sent to " . $student['email'] . " successfully.";
+            } else {
+                $errorMsg = "Failed to send email.";
+            }
+        } else {
+            $errorMsg = "Could not find a valid email for this user.";
+        }
+    }
+
     ?>
 
     <?php
@@ -27,6 +57,12 @@
         <h1 class="content-title">Alert</h1>
 
         <main class="content">
+            <?php if ($successMsg): ?>
+                <p style="color: green; margin-bottom: 8px;"><?php echo $successMsg; ?></p>
+            <?php endif; ?>
+            <?php if ($errorMsg): ?>
+                <p style="color: red; margin-bottom: 8px;"><?php echo $errorMsg; ?></p>
+            <?php endif; ?>
             </form>
             </div>
             <table>
@@ -35,6 +71,7 @@
                         <th class="name-col">Student Name</th>
                         <th class="action">Alert Type</th>
                         <th class="action">Alert Date</th>
+                        <th class="action">Send Alert</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -50,6 +87,18 @@
 
                             <td>
                                 <?= date("F d Y", strtotime($a['date_sent'])) ?>
+                            </td>
+
+                            <td>
+                                <form method="POST" style="display:inline;">
+                                    <input type="hidden" name="send_alert_id" value="<?= $a['alert_id'] ?>">
+                                    <input type="hidden" name="send_user_id" value="<?= $a['user_id'] ?>">
+                                    <input type="hidden" name="send_name" value="<?= htmlspecialchars($a['name']) ?>">
+                                    <input type="hidden" name="send_message" value="<?= htmlspecialchars($a['message']) ?>">
+                                    <button type="submit" style="background:none;border:none;cursor:pointer;padding:0;">
+                                        <img src="../assets/icons/send.png" alt="Send Alert">
+                                    </button>
+                                </form>
                             </td>
                         </tr>
                     <?php endforeach; ?>
