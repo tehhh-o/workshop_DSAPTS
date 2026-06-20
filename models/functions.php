@@ -383,3 +383,24 @@ function getRecentAlerts($conn)
 
     return $data;
 }
+
+function searchsubject($conn, $table, $keyword) // to search subject using subject name or id (student)
+{
+    $sql = "
+        SELECT $table.*, subject.*
+        FROM $table
+        INNER JOIN subject ON $table.subject_id = subject.subject_id
+        WHERE subject.subject_name LIKE '%$keyword%'
+        OR subject.subject_id LIKE '%$keyword%'
+    ";
+    $result = $conn->query($sql);
+    $data = [];
+
+    if ($result) {
+        while ($row = $result->fetch_assoc()) {
+            $data[] = $row;
+        }
+    }
+
+    return $data;
+}

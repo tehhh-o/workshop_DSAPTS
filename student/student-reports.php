@@ -31,18 +31,18 @@
 
     $userId = $student['user_id'];
 
-
+    // Get all semesters for dropdown
     $semesters = getAllSemesters($conn);
 
-
+    // Selected semester (default to first)
     $selectedSemId = isset($_GET['sem_id']) ? (int)$_GET['sem_id'] : ($semesters[0]['semester_id'] ?? 1);
     $isOverall     = isset($_GET['overall']);
 
-  
+    // Get subjects
     $allSubjects = getStudentSubjects($conn, $userId);
     $semSubjects = getStudentSubjectsBySemester($conn, $userId, $selectedSemId);
 
-
+    // --- Overall chart: per-semester GPA trend ---
     $subjectsBySem = [];
     foreach ($allSubjects as $subj) {
         $subjectsBySem[$subj['semester_name']][] = $subj;
@@ -54,7 +54,22 @@
         $semGPAs[]   = calculateGPA($subjects);
     }
 
-   
+    // --- Semester chart: per-course grade points ---
+    $gradePoints = [
+        'A'  => 4.0, 'A-' => 3.7,
+        'B+' => 3.3, 'B'  => 3.0, 'B-' => 2.7,
+        'C+' => 2.3, 'C'  => 2.0, 'C-' => 1.7,
+        'D+' => 1.3, 'D'  => 1.0, 'E'  => 0.0
+    ];
+    $courseLabels = [];
+    $courseGPs    = [];
+    foreach ($semSubjects as $subj) {
+        $courseLabels[] = $subj['subject_name'];
+        $grade = strtoupper(trim($subj['grade']));
+        $courseGPs[] = $gradePoints[$grade] ?? 0.0;
+    }
+
+    // For selected semester name + GPA
     $selectedSemName = '';
     foreach ($semesters as $s) {
         if ($s['semester_id'] == $selectedSemId) {
@@ -65,8 +80,10 @@
     $selectedGPA = calculateGPA($semSubjects);
     $cgpa        = calculateGPA($allSubjects);
 
-    $semLabelsJson = json_encode($semLabels);
-    $semGPAsJson   = json_encode($semGPAs);
+    $semLabelsJson   = json_encode($semLabels);
+    $semGPAsJson     = json_encode($semGPAs);
+    $courseLabelsJson = json_encode($courseLabels);
+    $courseGPsJson    = json_encode($courseGPs);
     ?>
 
     <main class="main-content main-rounded">
@@ -88,7 +105,7 @@
         </div>
 
         <?php if ($isOverall): ?>
-            
+            <!-- Overall: semester GPA trend bar chart -->
             <div class="profile-card" style="flex-direction: column;">
                 <h2 class="report-title">Overall Report - <?php echo htmlspecialchars($student['name']); ?></h2>
                 <p>CGPA: <strong><?php echo number_format($cgpa, 2); ?></strong></p>
@@ -96,8 +113,23 @@
                     <canvas id="gpaChart"></canvas>
                 </div>
             </div>
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+            <script src="../js/script.js"></script>
+            <script>
+                makeGraph({
+                    id: "gpaChart",
+                    type: "bar",
+                    title: "GPA Trend by Semester",
+                    xLabel: "Semester",
+                    yLabel: "GPA",
+                    xValues: <?php echo $semLabelsJson; ?>,
+                    yValues: <?php echo $semGPAsJson; ?>,
+                    label: "GPA"
+                });
+            </script>
+
         <?php else: ?>
-            
+            <!-- Semester-specific: course grade points chart -->
             <div class="profile-card" style="flex-direction: column;">
                 <h2 class="report-title">
                     Detailed Report - <?php echo htmlspecialchars($student['name']); ?>,
@@ -128,26 +160,28 @@
                     </tbody>
                 </table>
 
+                <?php if (!empty($semSubjects)): ?>
                 <div class="chart-container" style="margin-top: 24px;">
-                    <canvas id="gpaChart"></canvas>
+                    <canvas id="courseChart"></canvas>
                 </div>
+                <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                <script src="../js/script.js"></script>
+                <script>
+                    makeGraph({
+                        id: "courseChart",
+                        type: "bar",
+                        title: "Grade Points by Course - <?php echo addslashes($selectedSemName); ?>",
+                        xLabel: "Course",
+                        yLabel: "Grade Points",
+                        xValues: <?php echo $courseLabelsJson; ?>,
+                        yValues: <?php echo $courseGPsJson; ?>,
+                        label: "Grade Points"
+                    });
+                </script>
+                <?php endif; ?>
             </div>
         <?php endif; ?>
 
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-        <script src="../js/script.js"></script>
-        <script>
-            makeGraph({
-                id: "gpaChart",
-                type: "bar",
-                title: "GPA Trend",
-                xLabel: "Semester",
-                yLabel: "GPA",
-                xValues: <?php echo $semLabelsJson; ?>,
-                yValues: <?php echo $semGPAsJson; ?>,
-                label: "GPA"
-            });
-        </script>
     </main>
 </body>
 
