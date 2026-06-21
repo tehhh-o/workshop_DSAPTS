@@ -66,7 +66,7 @@
             <?php endif; ?>
             </form>
             </div>
-            <table>
+            <table class="table-student">
                 <thead>
                     <tr>
                         <th class="name-col">Student Name</th>

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title> <!-- change this title -->
+    <title>Advisor Dashboard</title> 
     <link rel="stylesheet" href="../style/layout.css">
     <link rel="stylesheet" href="../style/advisor.css">
     <link rel="stylesheet" href="../style/styles.css">
@@ -12,79 +12,57 @@
 
 <body class="page-body main-gradient-bg">
     <?php
-    $activePage = 'dashboard';
-    include("components/sidebar-advisor.php")
+    session_start();
+    $activePage = 'dashboard'; // Make sure this matches your active link state
+    include("components/sidebar-advisor.php");
+    include("../models/functions.php");
+
+    // Fetch the full student list belonging to this advisor session
+    $students = getAdvisorStudents($conn, $_SESSION['user_id']);
+
+    // --- CALCULATE SUMMARY STATS DYNAMICALLY ---
+    $totalSupervised = count($students);
+    $highRiskCount = 0;
+    $deansListCount = 0;
+
+    foreach ($students as $s) {
+        $current_cgpa = isset($s['CGPA']) ? (float)$s['CGPA'] : 0.00;
+        
+        // Count High Risk (Probation: < 2.00)
+        if ($current_cgpa < 2.00) {
+            $highRiskCount++;
+        }
+        
+        // Count Academic Excellence (Dean's List: >= 3.50)
+        if ($current_cgpa >= 3.50) {
+            $deansListCount++;
+        }
+    }
     ?>
 
     <main class="main-content main-rounded">
         <h1 class="content-title">Dashboard</h1>
-        <h3 class="content-welcome">Welcome, Advisor</h3>
+        <h3 class="content-welcome" style="margin-bottom: 25px;">Welcome, Advisor</h3>
 
-<div class="dashboard-grid">
-  <div class="card-border">
-    <div class="dashboard-card-advisor">
-        <h2>High-Risk Student</h2>
-
-        <div class="student-item">
-            <img src="../assets/icons/user.png" alt="">
-            <span>Hakim</span>
-            <img src="../assets/icons/alert.png" class="icon-right" alt="">
-        </div>
-
-        <div class="student-item">
-            <img src="../assets/icons/user.png" alt="">
-            <span>Halim</span>
-            <img src="../assets/icons/alert.png" class="icon-right" alt="">
-        </div>
-    </div>
-</div>
-
-  <div class="card-border">
-    <div class="dashboard-card-advisor">
-        <h2>Semester Progress</h2>
-
-        <select class="student-select">
-            <option>Ahmad bin Ali</option>
-        </select>
-
-        <div class="semester">
-            <label>Semester 1</label>
-            <div class="progress-bar">
-                <div class="progress-fill" style="width:100%"></div>
+        <div class="dashboard-summary-cards" style="display: flex; gap: 20px; margin-bottom: 35px;">
+            
+            <div class="stat-card" style="flex: 1; padding: 20px; background: #fff; border-radius: 8px; border-left: 5px solid #007bff; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
+                <div style="font-size: 14px; color: #6c757d; font-weight: 600; text-transform: uppercase;">Total Supervised</div>
+                <div style="font-size: 28px; font-weight: bold; color: #212529; margin-top: 5px;"><?= $totalSupervised ?></div>
             </div>
-        </div>
 
-        <div class="semester">
-            <label>Semester 2</label>
-            <div class="progress-bar">
-                <div class="progress-fill" style="width:100%"></div>
+            <div class="stat-card" style="flex: 1; padding: 20px; background: #fff; border-radius: 8px; border-left: 5px solid #dc3545; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
+                <div style="font-size: 14px; color: #6c757d; font-weight: 600; text-transform: uppercase;">High Risk (CGPA &lt; 2.00)</div>
+                <div style="font-size: 28px; font-weight: bold; color: #dc3545; margin-top: 5px;"><?= $highRiskCount ?></div>
             </div>
-        </div>
 
-        <div class="semester">
-            <label>Semester 3</label>
-            <div class="progress-bar">
-                <div class="progress-fill" style="width:100%"></div>
+            <div class="stat-card" style="flex: 1; padding: 20px; background: #fff; border-radius: 8px; border-left: 5px solid #28a745; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
+                <div style="font-size: 14px; color: #6c757d; font-weight: 600; text-transform: uppercase;">Dean's List (CGPA &ge; 3.50)</div>
+                <div style="font-size: 28px; font-weight: bold; color: #28a745; margin-top: 5px;"><?= $deansListCount ?></div>
             </div>
-        </div>
 
-        <div class="semester">
-            <label>Semester 4</label>
-            <div class="progress-bar">
-                <div class="progress-fill" style="width:75%"></div>
-            </div>
         </div>
-
-        <div class="semester">
-            <label>Semester 5</label>
-            <div class="progress-bar">
-                <div class="progress-fill" style="width:0%"></div>
-            </div>
-        </div>
-    </div>
-</div>
-
-</div>
+    </main>
 </body>
 
 </html>
