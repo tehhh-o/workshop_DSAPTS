@@ -54,8 +54,7 @@
     <main class="main-content main-rounded">
     <h1 class="content-title">Dashboard</h1>
     <h3 class="content-welcome">Welcome, <?php echo htmlspecialchars($student['name']); ?></h3>
-     <div class="dashboard-summary-cards">
-            
+    <div class="dashboard-summary-cards">
             <div class="stat-card" style="border-left: 5px solid #007bff;">
                 <div class="card-text-head">Current CGPA</div>
                 <div class="card-text-body"  style="color: #212529;"><?= number_format($student['CGPA'], 2) ?></div>

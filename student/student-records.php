@@ -85,7 +85,7 @@
               <td><?php echo htmlspecialchars($subj['subject_name']); ?></td>
               <td><?php echo htmlspecialchars($subj['credit_hours']); ?></td>
               <td><?php echo htmlspecialchars($subj['grade']); ?></td>
-              <td><?php echo htmlspecialchars($subj['semester_name']); ?></td>
+              <td><?php echo htmlspecialchars($subj['semester_id']); ?></td>
             </tr>
           <?php endforeach; ?>
         <?php endif; ?>
