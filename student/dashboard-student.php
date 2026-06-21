@@ -31,24 +31,19 @@
   }
 
   $userId  = $student['user_id'];
-
-  
   $allSubjects = getStudentSubjects($conn, $userId);
-
-  
   $subjectsBySem = [];
+  
   foreach ($allSubjects as $subj) {
     $semName = $subj['semester_name'];
     $subjectsBySem[$semName][] = $subj;
   }
-
   $semLabels = [];
   $semGPAs   = [];
   foreach ($subjectsBySem as $semName => $subjects) {
     $semLabels[] = $semName;
     $semGPAs[]   = calculateGPA($subjects);
   }
-
   $semLabelsJson = json_encode($semLabels);
   $semGPAsJson   = json_encode($semGPAs);
   ?>
@@ -56,12 +51,12 @@
   <main class="main-content main-rounded">
     <h1 class="content-title">Dashboard</h1>
     <h3 class="content-welcome">Welcome, <?php echo htmlspecialchars($student['name']); ?></h3>
-
     <div class="chart-container">
       <canvas id="gpaChart"></canvas>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="../js/script.js"></script>
+
     <script>
       makeGraph({
         id: "gpaChart",

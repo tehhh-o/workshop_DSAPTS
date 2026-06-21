@@ -31,15 +31,12 @@
   }
 
   $userId = $student['user_id'];
-
- 
   $keyword  = '';
   $subjects = [];
 
   if (isset($_GET['search']) && $_GET['search'] !== '') {
     $keyword  = $_GET['search'];
     $subjects = searchsubject($conn, 'student_subject', $keyword);
-    // Filter to only this student's records
     $subjects = array_filter($subjects, fn($s) => $s['user_id'] == $userId);
   } else {
     $subjects = getStudentSubjects($conn, $userId);

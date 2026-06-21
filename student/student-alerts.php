@@ -13,6 +13,7 @@
 </head>
 
 <body class="page-body main-gradient-bg">
+  
   <?php
   session_start();
   if (!isset($_SESSION['uid'])) {
