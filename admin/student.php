@@ -13,7 +13,19 @@
 <body class="page-body main-gradient-bg">
     <?php
     $activePage = 'student';
-    include("components/sidebar-admin.php")
+    include("components/sidebar-admin.php");
+    include("../models/functions.php");
+    ?>
+
+    <?php
+    $keyword = "";
+
+    if (isset($_GET['search'])) {
+        $keyword = $_GET['search'];
+        $students = searchUserByName($conn, "student", $keyword);
+    } else {
+        $students = getAllUser($conn, "student");
+    }
     ?>
 
     <main class="main-content main-rounded">
@@ -21,11 +33,25 @@
 
         <main class="content">
             <div class="toolbar">
-                <div class="search">
+                <!-- <div class="search">
                     <span>☰</span>
                     <input placeholder="Hinted search text">
-                    <img src="../assets/icons/search.png" alt="" style="height: 16px;">
-                </div>
+                    <span>🔍</span>
+                </div> -->
+                <form class="search" method="GET" action="">
+                    <span>☰</span>
+
+                    <input
+                        type="text"
+                        name="search"
+                        placeholder="Search student name"
+                        value="<?= $keyword ?>">
+
+                    <button type="submit" style="background:none;border:none;cursor:pointer;">
+                        🔍
+                    </button>
+                </form>
+
                 <a class="student-btn" href="student-add.php">
                     <span class="student-icon">👥</span>
                     <span class="student-text">ADD</span>
@@ -42,15 +68,28 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td class="name-col">Albu</td>
+                    <?php foreach ($students as $a): ?>
+                        <tr>
+                            <td class="name-col"><?= $a['name'] ?></td>
+
+                            <td class="action">
+                                <a class="icon-btn" href="student-edit.php?id=<?= $a['user_id'] ?>">✎</a>
+                            </td>
+
+                            <td class="action">
+                                <a class="icon-btn" href="student-delete.php?id=<?= $a['user_id'] ?>">🗑</a>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                    <!-- <tr>
+                        <td class="name-col">Ali</td>
                         <td class="action">
-                            <a class="icon-btn" href="student-edit.php">✎</a>
+                            <a class="icon-btn" href="advisor-edit.php">✎</a>
                         </td>
                         <td class="action">
                             <button class="icon-btn">🗑</button>
                         </td>
-                    </tr>
+                    </tr> -->
                 </tbody>
             </table>
             </div>

@@ -250,5 +250,54 @@
     border-radius: 10px;
     padding: 20px;
 }
+
+/* student-edit */
+
+.edit-columns {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 24px;
+    width: 100%;
+}
+
+.edit-columns>.edit-box {
+    width: 100%;
+}
+
+.edit-box-title {
+    color: #fff;
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0 0 14px 4px;
+}
+
+.edit-row-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.empty-state {
+    color: #fff;
+    text-align: center;
+    padding: 18px 0;
+    margin: 0 0 15px;
+}
+
+/* search function */
+
+.search-results {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: white;
+    border-top: none;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 999;
+}
+
 /* to expand anything after changing display:grid to display:flex
     add flex-direction: column and width: 100% */
