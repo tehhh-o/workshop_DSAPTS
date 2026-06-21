@@ -4,40 +4,6 @@
 }
 
 /* advisor dashboard */
-.dashboard-grid {
-    display: flex;
-
-    gap: 30px;
-    margin-top: 15px;
-    flex: 1;
-    width: 100%;
-}
-
-.dashboard-grid>* {
-    flex: 1 1 180px;
-}
-
-.card-border {
-    background: linear-gradient(#1c2f55, #2563eb);
-    border-radius: 32px;
-    padding: 4px;
-    margin-left: 20px;
-    margin-right: 20px;
-    flex: 1;
-}
-
-.dashboard-card-advisor {
-    background: white;
-    border-radius: 28px;
-    padding: 20px;
-    flex: 1;
-    height: 100%;
-}
-
-.dashboard-card-advisor h2 {
-    text-align: center;
-    margin-bottom: 40px;
-}
 
 /* Risk Students */
 
@@ -281,6 +247,32 @@
 .studenthead {
      background-color: #f8f9fa; 
      background-color: 2px solid #dee2e6;
+}
+
+/* Student dashboard */
+.stat-card {
+    flex: 1; 
+    padding: 20px; 
+    background: #fff; 
+    border-radius: 8px; 
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+.dashboard-summary-cards {
+    display: flex; 
+    gap: 20px; 
+    margin-bottom: 35px;
+}
+.card-text-head {
+    font-size: 14px; 
+    color: #6c757d; 
+    font-weight: 600; 
+    text-transform: uppercase;
+}
+
+.card-text-body{
+    font-size: 28px; 
+    font-weight: bold; 
+    margin-top: 5px;
 }
 /* to exapnd anything after changing disply:grid to display:flex
     add flex-direction: column and width: 100% */
