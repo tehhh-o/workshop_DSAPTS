@@ -68,7 +68,6 @@
     $subjectsBySem[$subj['semester_name']][] = $subj;
   }
 
-
   if ($isOverall) {
     $semLabels = [];
     $semGPAs   = [];
@@ -91,7 +90,6 @@
       'Pass' => 0,
       'Not Taken' => 0,
     ];
-
 
     foreach ($students as $student) {
       $cgpa = (float) $student['CGPA'];

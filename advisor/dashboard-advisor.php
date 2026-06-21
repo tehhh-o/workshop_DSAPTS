@@ -68,8 +68,8 @@
                 <div class="card-text-head">Muet Passed</div>
                 <div class="card-text-body"  style="color: #212529;"><?=  $muetPassedCount ?></div>
             </div>
-
         </div>
+    </table>
     </main>
 </body>
 

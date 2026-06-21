@@ -66,7 +66,7 @@
                 <ul>
                     <?php foreach ($students as $s): ?>
                         <li>
-                            <a href="?user_id=<?= $s['user_id'] ?>">
+                        <a href="?user_id=<?= $s['user_id'] ?>" style="text-decoration: none;">
                                 <?= $s['name'] ?>
                             </a>
                         </li>

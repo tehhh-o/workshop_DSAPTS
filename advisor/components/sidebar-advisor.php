@@ -6,17 +6,17 @@
         <img src="../assets/icons/dashboard.png" alt="">
         <h3>Dashboard</h3>
     </a>
-    <a class="sidebar-nav <?php echo $activePage === 'records' ? 'sidebar-nav-active' : ''; ?>" href="advisor-records.php">
-        <img src="../assets/icons/record.png" alt="">
-        <h3>Records</h3>
+    <a class="sidebar-nav <?php echo $activePage === 'students' ? 'sidebar-nav-active' : ''; ?>" href="advisor-students.php">
+        <img src="../assets/icons/student.png" alt="">
+        <h3>Students</h3>
     </a>
     <a class="sidebar-nav <?php echo $activePage === 'alert' ? 'sidebar-nav-active' : ''; ?>" href="advisor-alerts.php">
         <img src="../assets/icons/alert.png" alt="">
         <h3>Alerts</h3>
     </a>
-    <a class="sidebar-nav <?php echo $activePage === 'students' ? 'sidebar-nav-active' : ''; ?>" href="advisor-students.php">
-        <img src="../assets/icons/student.png" alt="">
-        <h3>Students</h3>
+    <a class="sidebar-nav <?php echo $activePage === 'records' ? 'sidebar-nav-active' : ''; ?>" href="advisor-records.php">
+        <img src="../assets/icons/record.png" alt="">
+        <h3>Records</h3>
     </a>
     <a class="sidebar-nav <?php echo $activePage === 'reports' ? 'sidebar-nav-active' : ''; ?>" href="advisor-reports.php">
         <img src="../assets/icons/report.png" alt="">
