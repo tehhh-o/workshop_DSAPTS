@@ -21,6 +21,7 @@
     $totalSupervised = count($students);
     $highRiskCount = 0;
     $deansListCount = 0;
+    $muetPassedCount = 0;
 
     foreach ($students as $s) {
         $current_cgpa = isset($s['CGPA']) ? (float)$s['CGPA'] : 0.00;
@@ -32,6 +33,9 @@
         if ($current_cgpa >= 3.50) {
             $deansListCount++;
         }
+        if ($s['muet_status'] == "Pass") {
+            $muetPassedCount++;
+        }
     }
     ?>
 
@@ -39,21 +43,26 @@
         <h1 class="content-title">Dashboard</h1>
         <h3 class="content-welcome" style="margin-bottom: 25px;">Welcome, Advisor</h3>
 
-        <div class="dashboard-summary-cards" style="display: flex; gap: 20px; margin-bottom: 35px;">
+        <div class="dashboard-summary-cards">
             
-            <div class="stat-card" style="flex: 1; padding: 20px; background: #fff; border-radius: 8px; border-left: 5px solid #007bff; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
-                <div style="font-size: 14px; color: #6c757d; font-weight: 600; text-transform: uppercase;">Total Supervised</div>
-                <div style="font-size: 28px; font-weight: bold; color: #212529; margin-top: 5px;"><?= $totalSupervised ?></div>
+            <div class="stat-card" style="border-left: 5px solid #007bff;">
+                <div class="card-text-head">Total Supervised</div>
+                <div class="card-text-body"  style="color: #212529;"><?= $totalSupervised ?></div>
             </div>
 
-            <div class="stat-card" style="flex: 1; padding: 20px; background: #fff; border-radius: 8px; border-left: 5px solid #dc3545; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
-                <div style="font-size: 14px; color: #6c757d; font-weight: 600; text-transform: uppercase;">High Risk (CGPA &lt; 2.00)</div>
-                <div style="font-size: 28px; font-weight: bold; color: #dc3545; margin-top: 5px;"><?= $highRiskCount ?></div>
+            <div class="stat-card" style="border-left: 5px solid #dc3545;">
+                <div class="card-text-head">High Risk (CGPA &lt; 2.00)</div>
+                <div class="card-text-body" style="color: #dc3545;"><?= $highRiskCount ?></div>
             </div>
 
-            <div class="stat-card" style="flex: 1; padding: 20px; background: #fff; border-radius: 8px; border-left: 5px solid #28a745; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
-                <div style="font-size: 14px; color: #6c757d; font-weight: 600; text-transform: uppercase;">Dean's List (CGPA &ge; 3.50)</div>
-                <div style="font-size: 28px; font-weight: bold; color: #28a745; margin-top: 5px;"><?= $deansListCount ?></div>
+            <div class="stat-card" style="border-left: 5px solid #28a745;">
+                <div class="card-text-head">Dean's List (CGPA &ge; 3.50)</div>
+                <div class="card-text-body" style="color: #28a745;"><?= $deansListCount ?></div>
+            </div>
+
+            <div class="stat-card" style="border-left: 5px solid #7b00ff;">
+                <div class="card-text-head">Muet Passed</div>
+                <div class="card-text-body"  style="color: #212529;"><?=  $muetPassedCount ?></div>
             </div>
 
         </div>

@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="../style/layout.css">
   <link rel="stylesheet" href="../style/student.css">
   <link rel="stylesheet" href="../style/styles.css">
+  <link rel="stylesheet" href="../style/advisor.css">
 </head>
 
 <body class="page-body main-gradient-bg">
@@ -22,6 +23,8 @@
   include("components/sidebar-student.php");
   include("../models/functions.php");
 
+  $students = getAdvisorStudents($conn, $_SESSION['user_id']);
+  $totalSupervised = count($students);
   $loginId = $_SESSION['uid'];
   $student = getStudentByLoginId($conn, $loginId);
 
@@ -48,9 +51,23 @@
   $semGPAsJson   = json_encode($semGPAs);
   ?>
 
-  <main class="main-content main-rounded">
+    <main class="main-content main-rounded">
     <h1 class="content-title">Dashboard</h1>
     <h3 class="content-welcome">Welcome, <?php echo htmlspecialchars($student['name']); ?></h3>
+     <div class="dashboard-summary-cards">
+            
+            <div class="stat-card" style="border-left: 5px solid #007bff;">
+                <div class="card-text-head">Current CGPA</div>
+                <div class="card-text-body"  style="color: #212529;"><?= number_format($student['CGPA'], 2) ?></div>
+            </div>
+
+            <div class="stat-card" style="border-left: 5px solid #7b00ff;">
+                <div class="card-text-head">Muet Status</div>
+                <div class="card-text-body"  style="color: #212529;"><?=  $student['muet_status'] ?></div>
+            </div>
+
+        </div>
+    
     <div class="chart-container">
       <canvas id="gpaChart"></canvas>
     </div>

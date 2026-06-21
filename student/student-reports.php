@@ -46,6 +46,10 @@
   }
   $selectedGPA = calculateGPA($semSubjects);
   $cgpa        = calculateGPA($allSubjects);
+  $semLabelsJson    = json_encode([]);
+  $semGPAsJson      = json_encode([]);
+  $subjectCodesJson = json_encode([]);
+  $subjectGPAsJson  = json_encode([]);
 
   if ($isOverall) {
 
