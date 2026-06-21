@@ -19,8 +19,11 @@
 
     <main class="main-content main-rounded">
       <h1 class="content-title">Add Student</h1>
-      <form class="form" onsubmit="event.preventDefault(); alert('Added');">
-        <div class="content">
+
+      <div class="content">
+      <form onsubmit="event.preventDefault(); alert('Added');">
+        <div class="edit-box">
+          <div class="edit-wrapper">
           <div class="edit-list">
             <div class="edit-row">
               <span>Name -</span>
@@ -38,9 +41,10 @@
               <span>Student ID -</span>
               <button class="icon-btn">✎</button>
             </div>
+            <button class="add-submit" type="submit">Add</button>
           </div>
         </div>
-        <button class="add-submit" type="submit">Add</button>
+</div>
       </form>
     </main>
   </div>
