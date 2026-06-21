@@ -26,12 +26,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION['reset_login_id'] = $login_id;
         $_SESSION['reset_email'] = $user_email;
 
-        $subject = "DSAPTS - Password Reset OTP";
-        $message = "Hello " . $row['name'] . ",<br><br>Kod OTP anda untuk menetapkan semula kata laluan ialah: <b>" . $otp . "</b>.<br><br>Sila jangan kongsi kod ini dengan sesiapa.";
+        $subject = "DSAPTS - Password Reset Request";
+        $message = "Hello " . $row['name'] . ",<br><br>We received a request to reset the password for your account. Your 6-digit One-Time Password (OTP) is: <b>" . 
+        $otp . "</b>.<br><br>Please do not share this code with anyone. If you did not request this change, you can safely ignore this email.";
 
-        if (sendMail($user_email, $subject, $message)) {
+       if (sendMail($user_email, $subject, $message)) {
+            $em = explode("@", $user_email);
+            $name = $em[0];
+            $domain = $em[1];
+            $length = strlen($name);
+
+            if ($length <= 4) {
+                $masked_name = substr($name, 0, 1) . str_repeat('*', $length - 1);
+            } else {
+                $masked_name = substr($name, 0, 3) . str_repeat('*', $length - 5) . substr($name, -2);
+            }
+            $masked_email = $masked_name . "@" . $domain;
+    
             echo "<script>
-                alert('OTP successfully sent to " . $user_email . "');
+                alert('OTP successfully sent to " . $masked_email . "');
                 window.location.href = 'forget-password-otp.php';
             </script>";
             exit();
