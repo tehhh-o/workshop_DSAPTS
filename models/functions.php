@@ -404,3 +404,5 @@ function searchsubject($conn, $table, $keyword) // to search subject using subje
 
     return $data;
 }
+
+

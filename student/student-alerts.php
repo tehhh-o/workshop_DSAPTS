@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,6 +7,8 @@
   <title>Alerts</title>
   <link rel="stylesheet" href="../style/layout.css">
   <link rel="stylesheet" href="../style/student.css">
+  <link rel="stylesheet" href="../style/advisor.css">
+  <link rel="stylesheet" href="../style/admin.css">
   <link rel="stylesheet" href="../style/styles.css">
 </head>
 
@@ -15,8 +16,8 @@
   <?php
   session_start();
   if (!isset($_SESSION['uid'])) {
-      header("Location: ../index.php");
-      exit();
+    header("Location: ../index.php");
+    exit();
   }
   $activePage = 'alerts';
   include("components/sidebar-student.php");
@@ -26,41 +27,59 @@
   $student = getStudentByLoginId($conn, $loginId);
 
   if (!$student) {
-      echo "<p style='color:red;'>Student record not found.</p>";
-      exit();
+    echo "<p style='color:red;'>Student record not found.</p>";
+    exit();
   }
 
   $userId = $student['user_id'];
-  $alerts = getAlertsByUser($conn, $userId);
+
+  $result = $conn->query("
+    SELECT alert.*
+    FROM alert
+    WHERE alert.user_id = '$userId'
+    ORDER BY alert.date_sent DESC
+  ");
+  $alerts = [];
+  if ($result) {
+    while ($row = $result->fetch_assoc()) {
+      $alerts[] = $row;
+    }
+  }
   ?>
 
   <main class="main-content main-rounded">
-    <h1 class="content-title">Alerts</h1>
-    <div class="table-container">
+    <h1 class="content-title">Alert</h1>
 
-      <div class="grid-row table-header">
-        <div class="column-description">Description</div>
-        <div class="column-type">Alert Type</div>
-        <div class="column-date">Date</div>
-      </div>
+    <main class="content">
+      <table>
+        <thead>
+          <tr>
+            <th class="name-col">Description</th>
+            <th class="action">Alert Type</th>
+            <th class="action">Alert Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php if (empty($alerts)): ?>
+            <tr>
+              <td colspan="3" style="text-align:center;">No alerts found.</td>
+            </tr>
+          <?php else: ?>
+            <?php foreach ($alerts as $a): ?>
+              <tr>
+                <td class="name-col">
+                  <?php echo htmlspecialchars($student['name']); ?>
+                  <br><small><?php echo htmlspecialchars($a['message']); ?></small>
+                </td>
+                <td><?php echo htmlspecialchars($a['alert_type']); ?></td>
+                <td><?php echo date("F d Y", strtotime($a['date_sent'])); ?></td>
+              </tr>
+            <?php endforeach; ?>
+          <?php endif; ?>
+        </tbody>
+      </table>
+    </main>
 
-      <?php if (empty($alerts)): ?>
-        <div class="grid-row table-row">
-          <div class="column-name" style="grid-column: span 3; text-align: center;">No alerts found.</div>
-        </div>
-      <?php else: ?>
-        <?php foreach ($alerts as $alert): ?>
-          <div class="grid-row table-row">
-            <div class="column-name">
-              <span class="description"><?php echo htmlspecialchars($alert['message']); ?></span>
-            </div>
-            <div class="column-type"><?php echo htmlspecialchars($alert['alert_type']); ?></div>
-            <div class="column-date"><?php echo htmlspecialchars($alert['date_sent']); ?></div>
-          </div>
-        <?php endforeach; ?>
-      <?php endif; ?>
-
-    </div>
   </main>
 </body>
 

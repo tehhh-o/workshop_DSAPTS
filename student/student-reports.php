@@ -2,187 +2,188 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reports</title>
-    <link rel="stylesheet" href="../style/layout.css">
-    <link rel="stylesheet" href="../style/student.css">
-    <link rel="stylesheet" href="../style/styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reports</title>
+  <link rel="stylesheet" href="../style/layout.css">
+  <link rel="stylesheet" href="../style/student.css">
+  <link rel="stylesheet" href="../style/advisor.css">
+  <link rel="stylesheet" href="../style/styles.css">
 </head>
 
 <body class="page-body main-gradient-bg">
-    <?php
-    session_start();
-    if (!isset($_SESSION['uid'])) {
-        header("Location: ../index.php");
-        exit();
+  <?php
+  session_start();
+  if (!isset($_SESSION['uid'])) {
+    header("Location: ../index.php");
+    exit();
+  }
+  $activePage = 'reports';
+  include("components/sidebar-student.php");
+  include("../models/functions.php");
+
+  $loginId = $_SESSION['uid'];
+  $student = getStudentByLoginId($conn, $loginId);
+
+  if (!$student) {
+    echo "<p style='color:red;'>Student record not found.</p>";
+    exit();
+  }
+
+  $userId = $student['user_id'];
+
+
+  $semesters     = getAllSemesters($conn);
+  $selectedSemId = isset($_GET['sem_id']) ? (int)$_GET['sem_id'] : ($semesters[0]['semester_id'] ?? 1);
+  $isOverall     = isset($_GET['overall']);
+
+
+  $allSubjects = getStudentSubjects($conn, $userId);
+  $semSubjects = getStudentSubjectsBySemester($conn, $userId, $selectedSemId);
+
+
+  $selectedSemName = '';
+  foreach ($semesters as $s) {
+    if ($s['semester_id'] == $selectedSemId) {
+      $selectedSemName = $s['semester_name'];
+      break;
     }
-    $activePage = 'reports';
-    include("components/sidebar-student.php");
-    include("../models/functions.php");
+  }
+  $selectedGPA = calculateGPA($semSubjects);
+  $cgpa        = calculateGPA($allSubjects);
 
-    $loginId = $_SESSION['uid'];
-    $student = getStudentByLoginId($conn, $loginId);
+  if ($isOverall) {
 
-    if (!$student) {
-        echo "<p style='color:red;'>Student record not found.</p>";
-        exit();
-    }
-
-    $userId = $student['user_id'];
-
-    // Get all semesters for dropdown
-    $semesters = getAllSemesters($conn);
-
-    // Selected semester (default to first)
-    $selectedSemId = isset($_GET['sem_id']) ? (int)$_GET['sem_id'] : ($semesters[0]['semester_id'] ?? 1);
-    $isOverall     = isset($_GET['overall']);
-
-    // Get subjects
-    $allSubjects = getStudentSubjects($conn, $userId);
-    $semSubjects = getStudentSubjectsBySemester($conn, $userId, $selectedSemId);
-
-    // --- Overall chart: per-semester GPA trend ---
     $subjectsBySem = [];
     foreach ($allSubjects as $subj) {
-        $subjectsBySem[$subj['semester_name']][] = $subj;
+      $subjectsBySem[$subj['semester_name']][] = $subj;
     }
     $semLabels = [];
     $semGPAs   = [];
     foreach ($subjectsBySem as $semName => $subjects) {
-        $semLabels[] = $semName;
-        $semGPAs[]   = calculateGPA($subjects);
+      $semLabels[] = $semName;
+      $semGPAs[]   = calculateGPA($subjects);
     }
+    $semLabelsJson = json_encode($semLabels);
+    $semGPAsJson   = json_encode($semGPAs);
+  } else {
 
-    // --- Semester chart: per-course grade points ---
-    $gradePoints = [
-        'A'  => 4.0, 'A-' => 3.7,
-        'B+' => 3.3, 'B'  => 3.0, 'B-' => 2.7,
-        'C+' => 2.3, 'C'  => 2.0, 'C-' => 1.7,
-        'D+' => 1.3, 'D'  => 1.0, 'E'  => 0.0
-    ];
-    $courseLabels = [];
-    $courseGPs    = [];
+    $subjectCodes = [];
+    $subjectGPAs  = [];
     foreach ($semSubjects as $subj) {
-        $courseLabels[] = $subj['subject_name'];
-        $grade = strtoupper(trim($subj['grade']));
-        $courseGPs[] = $gradePoints[$grade] ?? 0.0;
+      $point = gradeToPoint($subj['grade']);
+      if ($point === null) continue;
+      $subjectCodes[] = $subj['subject_code'] ?? $subj['subject_id'];
+      $subjectGPAs[]  = $point;
     }
+    $subjectCodesJson = json_encode($subjectCodes);
+    $subjectGPAsJson  = json_encode($subjectGPAs);
+  }
+  ?>
 
-    // For selected semester name + GPA
-    $selectedSemName = '';
-    foreach ($semesters as $s) {
-        if ($s['semester_id'] == $selectedSemId) {
-            $selectedSemName = $s['semester_name'];
-            break;
-        }
-    }
-    $selectedGPA = calculateGPA($semSubjects);
-    $cgpa        = calculateGPA($allSubjects);
+  <main class="main-content main-rounded">
+    <h1 class="content-title">Reports</h1>
 
-    $semLabelsJson   = json_encode($semLabels);
-    $semGPAsJson     = json_encode($semGPAs);
-    $courseLabelsJson = json_encode($courseLabels);
-    $courseGPsJson    = json_encode($courseGPs);
-    ?>
-
-    <main class="main-content main-rounded">
-        <h1 class="content-title">Reports</h1>
-
-        <div class="profile-card">
-            <form method="GET" action="student-reports.php" style="display: contents;">
-                <select class="control-element" name="sem_id">
-                    <?php foreach ($semesters as $s): ?>
-                        <option value="<?php echo $s['semester_id']; ?>"
-                            <?php echo $s['semester_id'] == $selectedSemId ? 'selected' : ''; ?>>
-                            <?php echo htmlspecialchars($s['semester_name']); ?>
-                        </option>
-                    <?php endforeach; ?>
-                </select>
-                <button class="control-element" type="submit">View Report</button>
-                <button class="control-element" type="submit" name="overall" value="1">Overall Report</button>
-            </form>
+    <div class="report-buttons-container">
+      <form method="GET" action="student-reports.php" style="display: contents;">
+        <div class="report-buttons">
+          <select class="dropdown-select" name="sem_id">
+            <?php foreach ($semesters as $s): ?>
+              <option value="<?php echo $s['semester_id']; ?>"
+                <?php echo $s['semester_id'] == $selectedSemId ? 'selected' : ''; ?>>
+                <?php echo htmlspecialchars($s['semester_name']); ?>
+              </option>
+            <?php endforeach; ?>
+          </select>
         </div>
+        <button class="report-buttons" type="submit">View Report</button>
+        <button class="report-buttons" type="submit" name="overall" value="1">Overall Report</button>
+      </form>
+    </div>
 
-        <?php if ($isOverall): ?>
-            <!-- Overall: semester GPA trend bar chart -->
-            <div class="profile-card" style="flex-direction: column;">
-                <h2 class="report-title">Overall Report - <?php echo htmlspecialchars($student['name']); ?></h2>
-                <p>CGPA: <strong><?php echo number_format($cgpa, 2); ?></strong></p>
-                <div class="chart-container">
-                    <canvas id="gpaChart"></canvas>
-                </div>
-            </div>
-            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-            <script src="../js/script.js"></script>
-            <script>
-                makeGraph({
-                    id: "gpaChart",
-                    type: "bar",
-                    title: "GPA Trend by Semester",
-                    xLabel: "Semester",
-                    yLabel: "GPA",
-                    xValues: <?php echo $semLabelsJson; ?>,
-                    yValues: <?php echo $semGPAsJson; ?>,
-                    label: "GPA"
-                });
-            </script>
+    <?php if ($isOverall): ?>
 
-        <?php else: ?>
-            <!-- Semester-specific: course grade points chart -->
-            <div class="profile-card" style="flex-direction: column;">
-                <h2 class="report-title">
-                    Detailed Report - <?php echo htmlspecialchars($student['name']); ?>,
-                    <?php echo htmlspecialchars($selectedSemName); ?>
-                </h2>
-                <p>GPA: <strong><?php echo number_format($selectedGPA, 2); ?></strong></p>
+      <!-- Overall: GPA per semester -->
+      <div class="profile-card" style="flex-direction: column;">
+        <h2 class="report-title">Overall Report — <?php echo htmlspecialchars($student['name']); ?></h2>
+        <p>CGPA: <strong><?php echo number_format($cgpa, 2); ?></strong></p>
+        <div class="chart-container">
+          <canvas id="gpaChart"></canvas>
+        </div>
+      </div>
 
-                <table style="width:100%; margin-top: 12px;">
-                    <thead>
-                        <tr>
-                            <th>Course Name</th>
-                            <th>Credit</th>
-                            <th>Grade</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php if (empty($semSubjects)): ?>
-                            <tr><td colspan="3" style="text-align:center;">No subjects found for this semester.</td></tr>
-                        <?php else: ?>
-                            <?php foreach ($semSubjects as $subj): ?>
-                                <tr>
-                                    <td><?php echo htmlspecialchars($subj['subject_name']); ?></td>
-                                    <td><?php echo htmlspecialchars($subj['credit_hours']); ?></td>
-                                    <td><?php echo htmlspecialchars($subj['grade']); ?></td>
-                                </tr>
-                            <?php endforeach; ?>
-                        <?php endif; ?>
-                    </tbody>
-                </table>
+    <?php else: ?>
 
-                <?php if (!empty($semSubjects)): ?>
-                <div class="chart-container" style="margin-top: 24px;">
-                    <canvas id="courseChart"></canvas>
-                </div>
-                <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-                <script src="../js/script.js"></script>
-                <script>
-                    makeGraph({
-                        id: "courseChart",
-                        type: "bar",
-                        title: "Grade Points by Course - <?php echo addslashes($selectedSemName); ?>",
-                        xLabel: "Course",
-                        yLabel: "Grade Points",
-                        xValues: <?php echo $courseLabelsJson; ?>,
-                        yValues: <?php echo $courseGPsJson; ?>,
-                        label: "Grade Points"
-                    });
-                </script>
-                <?php endif; ?>
-            </div>
+      <div class="profile-card" style="flex-direction: column;">
+        <h2 class="report-title">
+          Detailed Report — <?php echo htmlspecialchars($student['name']); ?>,
+          <?php echo htmlspecialchars($selectedSemName); ?>
+        </h2>
+        <p>GPA: <strong><?php echo number_format($selectedGPA, 2); ?></strong></p>
+
+        <table style="width:100%; margin-top: 12px;">
+          <thead>
+            <tr>
+              <th>Course Name</th>
+              <th>Credit</th>
+              <th>Grade</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php if (empty($semSubjects)): ?>
+              <tr>
+                <td colspan="3" style="text-align:center;">No subjects found for this semester.</td>
+              </tr>
+            <?php else: ?>
+              <?php foreach ($semSubjects as $subj): ?>
+                <tr>
+                  <td><?php echo htmlspecialchars($subj['subject_name']); ?></td>
+                  <td><?php echo htmlspecialchars($subj['credit_hours']); ?></td>
+                  <td><?php echo htmlspecialchars($subj['grade']); ?></td>
+                </tr>
+              <?php endforeach; ?>
+            <?php endif; ?>
+          </tbody>
+        </table>
+
+        <?php if (!empty($semSubjects)): ?>
+          <div class="chart-container" style="margin-top: 24px;">
+            <canvas id="subjectChart"></canvas>
+          </div>
         <?php endif; ?>
+      </div>
 
-    </main>
+    <?php endif; ?>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="../js/script.js"></script>
+    <script>
+      <?php if ($isOverall): ?>
+        makeGraph({
+          id: "gpaChart",
+          type: "bar",
+          title: "GPA Trend by Semester",
+          xLabel: "Semester",
+          yLabel: "GPA",
+          xValues: <?php echo $semLabelsJson; ?>,
+          yValues: <?php echo $semGPAsJson; ?>,
+          label: "GPA"
+        });
+      <?php elseif (!empty($semSubjects)): ?>
+        makeGraph({
+          id: "subjectChart",
+          type: "bar",
+          title: "Subject GPA — <?php echo addslashes($selectedSemName); ?>",
+          xLabel: "Subject",
+          yLabel: "GPA",
+          xValues: <?php echo $subjectCodesJson; ?>,
+          yValues: <?php echo $subjectGPAsJson; ?>,
+          label: "GPA"
+        });
+      <?php endif; ?>
+    </script>
+
+  </main>
 </body>
 
 </html>
