@@ -31,18 +31,13 @@
   }
 
   $userId = $student['user_id'];
-
-
   $semesters     = getAllSemesters($conn);
   $selectedSemId = isset($_GET['sem_id']) ? (int)$_GET['sem_id'] : ($semesters[0]['semester_id'] ?? 1);
   $isOverall     = isset($_GET['overall']);
-
-
   $allSubjects = getStudentSubjects($conn, $userId);
   $semSubjects = getStudentSubjectsBySemester($conn, $userId, $selectedSemId);
-
-
   $selectedSemName = '';
+
   foreach ($semesters as $s) {
     if ($s['semester_id'] == $selectedSemId) {
       $selectedSemName = $s['semester_name'];
@@ -51,6 +46,10 @@
   }
   $selectedGPA = calculateGPA($semSubjects);
   $cgpa        = calculateGPA($allSubjects);
+  $semLabelsJson    = json_encode([]);
+  $semGPAsJson      = json_encode([]);
+  $subjectCodesJson = json_encode([]);
+  $subjectGPAsJson  = json_encode([]);
 
   if ($isOverall) {
 
@@ -79,11 +78,10 @@
     $subjectCodesJson = json_encode($subjectCodes);
     $subjectGPAsJson  = json_encode($subjectGPAs);
   }
-  ?>
 
+  ?>
   <main class="main-content main-rounded">
     <h1 class="content-title">Reports</h1>
-
     <div class="report-buttons-container">
       <form method="GET" action="student-reports.php" style="display: contents;">
         <div class="report-buttons">
@@ -102,8 +100,6 @@
     </div>
 
     <?php if ($isOverall): ?>
-
-      <!-- Overall: GPA per semester -->
       <div class="profile-card" style="flex-direction: column;">
         <h2 class="report-title">Overall Report — <?php echo htmlspecialchars($student['name']); ?></h2>
         <p>CGPA: <strong><?php echo number_format($cgpa, 2); ?></strong></p>

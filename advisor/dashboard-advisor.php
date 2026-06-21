@@ -18,8 +18,6 @@
     include("../models/functions.php");
 
     $students = getAdvisorStudents($conn, $_SESSION['user_id']);
-
-    // --- CALCULATE SUMMARY STATS DYNAMICALLY ---
     $totalSupervised = count($students);
     $highRiskCount = 0;
     $deansListCount = 0;
@@ -28,12 +26,10 @@
     foreach ($students as $s) {
         $current_cgpa = isset($s['CGPA']) ? (float)$s['CGPA'] : 0.00;
         
-        // Count High Risk (Probation: < 2.00)
         if ($current_cgpa < 2.00) {
             $highRiskCount++;
         }
         
-        // Count Academic Excellence (Dean's List: >= 3.50)
         if ($current_cgpa >= 3.50) {
             $deansListCount++;
         }

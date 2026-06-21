@@ -30,14 +30,11 @@
     }
 
     $userId = $student['user_id'];
-
-    
     $allSubjects = getStudentSubjects($conn, $userId);
-    $cgpa        = calculateGPA($allSubjects);
-
-    
+    $cgpa        = calculateGPA($allSubjects); 
     $latestSemId      = null;
     $totalCreditTaken = 0;
+    
     foreach ($allSubjects as $subj) {
         $totalCreditTaken += $subj['credit_hours'];
         if ($latestSemId === null || $subj['semester_id'] > $latestSemId) {
@@ -46,8 +43,6 @@
     }
     $latestSubjects = $latestSemId ? getStudentSubjectsBySemester($conn, $userId, $latestSemId) : [];
     $latestGpa      = calculateGPA($latestSubjects);
-
-    
     $nameParts = explode(' ', $student['name'], 2);
     $firstName = $nameParts[0];
     $lastName  = isset($nameParts[1]) ? $nameParts[1] : '';

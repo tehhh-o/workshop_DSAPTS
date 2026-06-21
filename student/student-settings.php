@@ -76,7 +76,6 @@
     <div class="panel">
       <h3>Personal Info</h3>
 
-      <!-- Phone -->
       <form method="POST" action="student-settings.php">
         <input type="hidden" name="field" value="phone">
         <div class="input-field">
@@ -90,7 +89,6 @@
         </div>
       </form>
 
-      <!-- Email -->
       <form method="POST" action="student-settings.php">
         <input type="hidden" name="field" value="email">
         <div class="input-field">
@@ -104,7 +102,6 @@
         </div>
       </form>
 
-      <!-- Address -->
       <form method="POST" action="student-settings.php">
         <input type="hidden" name="field" value="address">
         <div class="input-field">
@@ -118,7 +115,6 @@
         </div>
       </form>
 
-      <!-- MUET Status -->
       <form method="POST" action="student-settings.php">
         <input type="hidden" name="field" value="muet_status">
         <div class="input-field">
