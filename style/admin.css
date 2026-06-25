@@ -308,5 +308,15 @@
     border-radius: 6px;
     background-color: #bbb;
 }
+
+/* edit ui design*/
+
+.edit-design {
+    display: flex;
+    padding: 6px 10px;
+    border-radius: 6px;
+    border: none;
+    margin: 10px;
+}
 /* to expand anything after changing display:grid to display:flex
     add flex-direction: column and width: 100% */

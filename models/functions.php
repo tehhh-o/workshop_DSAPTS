@@ -513,3 +513,17 @@ function addStudent($conn, $name, $email, $phone, $password, $advisor_id) {
         return array('success' => false, 'message' => 'Error occured. Please redo the process');
     }
 }
+
+function editAdmin($conn, $user_id, $field, $value, $allowed_fields = ['name', 'email', 'phone_number', 'login_id']) {
+    if (!in_array($field, $allowed_fields) || $value === '') {
+        return ['success' => false, 'message' => 'Invalid input.'];
+    }
+
+    $result = updateUserField($conn, $user_id, $field, $value);
+
+    if ($result) {
+        return ['success' => true, 'message' => 'Updated successfully!'];
+    } else {
+        return ['success' => false, 'message' => 'Something went wrong, please try again.'];
+    }
+}
