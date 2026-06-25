@@ -1,28 +1,3 @@
-<?php
-include("../models/functions.php");
-
-$error = '';
-$success = '';
-$advisors = getAllUser($conn, 'advisor');
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $result = addStudent(
-        $conn,
-        trim($_POST['name']     ?? ''),
-        trim($_POST['email']    ?? ''),
-        trim($_POST['phone']    ?? ''),
-        trim($_POST['password'] ?? ''),
-        (int) ($_POST['advisor_id'] ?? 0)
-    );
-
-    if ($result['success']) {
-        $success = $result['message'];
-    } else {
-        $error = $result['message'];
-    }
-}
-?>
-
 <!DOCTYPE html>
 <html lang="en">
  
@@ -40,6 +15,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <?php
     $activePage = 'student';
     include("components/sidebar-admin.php");
+    include("../models/functions.php");
+
+    $error = '';
+    $success = '';
+    $advisors = getAllUser($conn, 'advisor');
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $result = addStudent(
+        $conn,
+        trim($_POST['name']     ?? ''),
+        trim($_POST['email']    ?? ''),
+        trim($_POST['phone']    ?? ''),
+        trim($_POST['password'] ?? ''),
+        (int) ($_POST['advisor_id'] ?? 0)
+      );
+
+      if ($result['success']) {
+        $success = $result['message'];
+        } else {
+          $error = $result['message'];
+        }
+      }
     ?>
  
     <main class="main-content main-rounded">

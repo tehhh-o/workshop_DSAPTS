@@ -1,27 +1,3 @@
-<?php
-include("../models/functions.php");
-
-$error = '';
-$success = '';
-
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $result = addAdvisor(
-        $conn,
-        $_POST['name'],
-        $_POST['email'],
-        $_POST['phone'],
-        $_POST['password'],
-        $_POST['department']
-    );
-
-    if ($result['success']) {
-        $success = $result['message'];
-    } else {
-        $error = $result['message'];
-    }
-}
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -39,6 +15,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <?php
         $activePage = 'advisor';
         include("components/sidebar-admin.php");
+        include("../models/functions.php");
+
+        $error = '';
+        $success = '';
+
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $result = addAdvisor(
+            $conn,
+            $_POST['name'],
+            $_POST['email'],
+            $_POST['phone'],
+            $_POST['password'],
+            $_POST['department']
+        );
+
+        if ($result['success']) {
+        $success = $result['message'];
+        } else {
+            $error = $result['message'];
+        }
+    }
         ?>
 
         <main class="main-content main-rounded">

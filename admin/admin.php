@@ -13,7 +13,19 @@
 <body class="page-body main-gradient-bg">
     <?php
     $activePage = 'admin';
-    include("components/sidebar-admin.php")
+    include("components/sidebar-admin.php");
+    include("../models/functions.php");
+    ?>
+
+    <?php
+    $keyword = "";
+
+    if (isset($_GET['search'])) {
+        $keyword = $_GET['search'];
+        $admins = searchUserByName($conn, "admin", $keyword);
+    } else {
+        $admins = getAllUser($conn, "admin");
+    }
     ?>
 
     <main class="main-content main-rounded">
@@ -21,11 +33,24 @@
 
         <main class="content">
             <div class="toolbar">
-                <div class="search">
+                <!--<div class="search">
                     <span>☰</span>
                     <input placeholder="Hinted search text">
                     <span>🔍</span>
-                </div>
+                </div> -->
+                <form class="search" method="GET" action="">
+                    <span>☰</span>
+
+                    <input
+                        type="text"
+                        name="search"
+                        placeholder="Search admin name"
+                        value="<?= $keyword ?>">
+
+                    <button type="submit" style="background:none;border:none;cursor:pointer;">
+                        🔍
+                    </button>
+                </form>
                 <a class="admin-btn" href="admin-add.php">
                     <span class="admin-icon">👥</span>
                     <span class="admin-text">ADD</span>
@@ -42,7 +67,20 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
+                    <?php foreach ($admins as $a): ?>
+                        <tr>
+                            <td class="name-col"><?= $a['name'] ?></td>
+
+                            <td class="action">
+                                <a class="icon-btn" href="admin-edit.php?id=<?= $a['user_id'] ?>">✎</a>
+                            </td>
+
+                            <td class="action">
+                                <a class="icon-btn" href="admin-delete.php?id=<?= $a['user_id'] ?>">🗑</a>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                    <!--<tr>
                         <td class="name-col">Fen</td>
                         <td class="action">
                             <a class="icon-btn" href="admin-edit.php">✎</a>
@@ -50,7 +88,7 @@
                         <td class="action">
                             <button class="icon-btn">🗑</button>
                         </td>
-                    </tr>
+                    </tr> -->
                 </tbody>
             </table>
             </div>

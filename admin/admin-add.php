@@ -1,26 +1,3 @@
-<?php
-include("../models/functions.php");
-
-$error = '';
-$success = '';
-
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $result = addAdmin(
-        $conn,
-        $_POST['name'],
-        $_POST['email'],
-        $_POST['phone'],
-        $_POST['password']
-    );
-
-    if ($result['success']) {
-        $success = $result['message'];
-    } else {
-        $error = $result['message'];
-    }
-}
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -38,6 +15,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <?php
         $activePage = 'admin';
         include("components/sidebar-admin.php");
+        include("../models/functions.php");
+
+        $error = '';
+        $success = '';
+
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $result = addAdmin(
+            $conn,
+            $_POST['name'],
+            $_POST['email'],
+            $_POST['phone'],
+            $_POST['password']
+        );
+
+        if ($result['success']) {
+            $success = $result['message'];
+        } else {
+            $error = $result['message'];
+        }
+    }
         ?>
 
         <main class="main-content main-rounded">
