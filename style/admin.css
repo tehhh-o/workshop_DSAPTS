@@ -299,5 +299,14 @@
     z-index: 999;
 }
 
+/* add ui design*/
+
+.add-design {
+    flex: 1;
+    margin-left: 16px;
+    padding: 6px 10px;
+    border-radius: 6px;
+    background-color: #bbb;
+}
 /* to expand anything after changing display:grid to display:flex
     add flex-direction: column and width: 100% */
