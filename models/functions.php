@@ -12,12 +12,11 @@ include("../database/connection.php");
 // - getStudentSubjects($conn, $userId)                    // get all subject for a student for all sem
 // - getStudentSubjectsBySemester($conn, $userId, $semId)  // get all subject for a student for a specific sem
 // - calculateGPA($subjects)                               // to calculate the gpa for a sem or cgpa for all sem, pass $subjects based on type of getStudentSubject called
-// - getAllAlerts($conn)                    //
-// - searchAlertByName($conn, $keyword)                    //
+// - getAllAlerts($conn)                                   //add user
+// - searchAlertByName($conn, $keyword)                    //edit user
 
 
 // Incomplete Functions
-// - all edit
 // - subject related stuff (probably add in student add btn on admin->student.php page) (manage student subject)
 // - alert related trigger logic (main muet, secondary gpa,cgpa)
 // - phpmailer (otp, pseudo auto alert(send mail every 1pm monday) orrr manual alert(add a "send alert to student" btn for advisor)) (manual easier to demo)
@@ -514,16 +513,38 @@ function addStudent($conn, $name, $email, $phone, $password, $advisor_id) {
     }
 }
 
-function editAdmin($conn, $user_id, $field, $value, $allowed_fields = ['name', 'email', 'phone_number', 'login_id']) {
+function editAdmin($conn, $user_id, $field, $value) {
+    $allowed_fields = ['name', 'email', 'phone_number', 'login_id'];
     if (!in_array($field, $allowed_fields) || $value === '') {
         return ['success' => false, 'message' => 'Invalid input.'];
     }
-
     $result = updateUserField($conn, $user_id, $field, $value);
-
     if ($result) {
         return ['success' => true, 'message' => 'Updated successfully!'];
     } else {
         return ['success' => false, 'message' => 'Something went wrong, please try again.'];
+    }
+}
+
+function editAdvisor($conn, $user_id, $field, $value) {
+    $allowed_fields = ['name', 'email', 'phone_number', 'login_id', 'department'];
+    if (!in_array($field, $allowed_fields) || $value == '') {
+        return ['success' => false, 'message' => 'Invalid input.'];
+    }
+    if ($field == 'department') {
+        $stmt = $conn->prepare("UPDATE advisor SET department = ? WHERE user_id = ?");
+        $stmt->bind_param('si', $value, $user_id);
+        $stmt->execute();
+        $stmt->close();
+    } else {
+        updateUserField($conn, $user_id, $field, $value);
+    }
+    return ['success' => true, 'message' => 'Updated successfully!'];
+}
+
+function editStudent($conn, $user_id, $field, $value) {
+    $allowed_fields = ['name', 'email', 'phone_number', 'login_id'];
+    if (in_array($field, $allowed_fields) || $value == '') {
+        return ['success' => false, 'message' => 'Invalid input.'];
     }
 }

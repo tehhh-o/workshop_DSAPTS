@@ -15,9 +15,7 @@
     $activePage = 'admin';
     include("components/sidebar-admin.php");
     include("../models/functions.php");
-    ?>
 
-    <?php
     session_start();
     $user_id = $_GET['id'] ?? null;
     if (!$user_id) {
@@ -36,11 +34,11 @@
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $result = editAdmin(
-        $conn,
-        $user_id,
-        $_POST['field'],
-        trim($_POST['value'])
-    );
+          $conn,
+          $user_id,
+          $_POST['field'],
+          trim($_POST['value'])
+        );
 
     if ($result['success']) {
         $success = $result['message'];
@@ -101,7 +99,7 @@
                   <button type="submit" class="icon-btn">Save</button>
                 </div>
               </form>
-
+              
               </div>
             </div>
         </div>
