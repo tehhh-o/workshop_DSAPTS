@@ -68,6 +68,10 @@ function updateUserField($conn, $userId, $field, $value) // to update a single u
 
 function deleteUser($conn, $table, $user_id) // to delete a user(admin,advisor,student)
 {
+    if ($table === 'student') {
+    $conn->query("DELETE FROM student_subject WHERE user_id = '$user_id'");
+    }
+
     $childDeleted = $conn->query("
         DELETE FROM $table
         WHERE user_id = '$user_id'
