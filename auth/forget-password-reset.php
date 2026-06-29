@@ -8,7 +8,6 @@ if (!isset($_SESSION['reset_login_id'])) {
 }
 
 $session_uid = $_SESSION['reset_login_id'];
-
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
    
     $uid = mysqli_real_escape_string($conn, $session_uid);          
@@ -24,21 +23,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         $row = mysqli_fetch_assoc($result);
 
-        if ($row['password'] !== $oldPwd) {
+        $dbPassword = $row['password'];
+        if (str_starts_with($dbPassword, '$2y$')) {
+            $isOldPwdCorrect = password_verify($oldPwd, $dbPassword);
+        } else {
+            $isOldPwdCorrect = ($oldPwd === $dbPassword);
+        }
+    
+        if (!$isOldPwdCorrect) {
             echo "<script>alert('Old password incorrect');</script>";
         } 
-    
         elseif ($newPwd !== $confirmPwd) {
             echo "<script>alert('New password and confirm password do not match');</script>";
         } else {
-        
             $safeNewPwd = mysqli_real_escape_string($conn, $newPwd);
             $hashedPassword = password_hash($safeNewPwd, PASSWORD_DEFAULT);
             $update = "UPDATE user SET password='$hashedPassword' WHERE login_id='$uid'";
             
             if (mysqli_query($conn, $update)) {
                 session_destroy();
-
                 echo "<script>
                     alert('Password updated successfully');
                     window.location.href = '../index.php';
@@ -103,3 +106,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </body>
 
 </html>
+
+
+

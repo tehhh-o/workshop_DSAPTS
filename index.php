@@ -2,50 +2,35 @@
 session_start();
 include("database/connection.php");
 
-// if ($_SERVER["REQUEST_METHOD"] == "POST") {
-//     $uid = $_POST["uid"];
-//     $pwd = $_POST["pwd"];
-
-//     if (isset($users[$uid]) && $users[$uid] === $pwd) {
-
-//         if (str_starts_with($uid, 'A')) {
-//             header("Location: admin/dashboard-admin.php");
-//         } elseif (str_starts_with($uid, 'M')) {
-//             header("Location: advisor/dashboard-advisor.php");
-//         } else {
-//             header("Location: student/dashboard-student.php");
-//         }
-//         exit();
-//     } else {
-//         echo "<script>alert('Wrong user ID or password');</script>";
-//     }
-// }
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    $uid = $_POST["uid"];
-    $pwd = $_POST["pwd"];
+    $uid = mysqli_real_escape_string($conn, $_POST["uid"]);
+    $pwd = $_POST["pwd"]; // Ini kata laluan mentah yang ditaip oleh user di login form
 
-    $sql = "SELECT * FROM user WHERE login_id='$uid' AND password='$pwd'";
+    $sql = "SELECT * FROM user WHERE login_id='$uid'";
     $result = $conn->query($sql);
 
     if ($result && $result->num_rows > 0) {
-
         $user = $result->fetch_assoc();
 
-        // store session
-        $_SESSION['user_id'] = $user['user_id'];
-        $_SESSION['uid'] = $user['login_id'];
-        $_SESSION['name'] = $user['name'];
+        if (password_verify($pwd, $user['password'])) {
+            
+            $_SESSION['user_id'] = $user['user_id'];
+            $_SESSION['uid'] = $user['login_id'];
+            $_SESSION['name'] = $user['name'];
 
-        // redirect by role
-        if (str_starts_with($uid, 'A')) {
-            header("Location: admin/dashboard-admin.php");
-        } elseif (str_starts_with($uid, 'M')) {
-            header("Location: advisor/dashboard-advisor.php");
+            if (str_starts_with($uid, 'A')) {
+                header("Location: admin/dashboard-admin.php");
+            } elseif (str_starts_with($uid, 'M')) {
+                header("Location: advisor/dashboard-advisor.php");
+            } else {
+                header("Location: student/dashboard-student.php");
+            }
+            exit();
+
         } else {
-            header("Location: student/dashboard-student.php");
+            echo "<script>alert('Wrong user ID or password');</script>";
         }
-        exit();
     } else {
         echo "<script>alert('Wrong user ID or password');</script>";
     }
@@ -72,9 +57,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
             <nav class="nav-links">
-                <a href="auth/forget-password.php">About Us</a>
-                <a href="auth/forget-password.php">Contact Us</a>
-                <a href="auth/forget-password.php">Login</a>
+                <a href="index.php">Home</a>
+                <a href="about.php">About Us</a>
+                <a href="contact.php">Contact Us</a>
+        
             </nav>
 
             <img src="assets/imgs/dsapts-full.png" alt="" class="auth-logo">
