@@ -30,8 +30,6 @@
   }
 
   $userId = $student['user_id'];
-
-
   $successMsg = '';
   $errorMsg   = '';
 
@@ -129,7 +127,7 @@
 
       <div class="auth-links">
         <p></p>
-        <a href="">Change Password</a>
+        <a href="../auth/change-password.php">Change Password</a>
       </div>
     </div>
 
