@@ -12,13 +12,11 @@ include("../database/connection.php");
 // - getStudentSubjects($conn, $userId)                    // get all subject for a student for all sem
 // - getStudentSubjectsBySemester($conn, $userId, $semId)  // get all subject for a student for a specific sem
 // - calculateGPA($subjects)                               // to calculate the gpa for a sem or cgpa for all sem, pass $subjects based on type of getStudentSubject called
-// - getAllAlerts($conn)                    //
-// - searchAlertByName($conn, $keyword)                    //
+// - getAllAlerts($conn)                                   //add user
+// - searchAlertByName($conn, $keyword)                    //edit user
 
 
 // Incomplete Functions
-// - all edit
-// - all add
 // - subject related stuff (probably add in student add btn on admin->student.php page) (manage student subject)
 // - alert related trigger logic (main muet, secondary gpa,cgpa)
 // - phpmailer (otp, pseudo auto alert(send mail every 1pm monday) orrr manual alert(add a "send alert to student" btn for advisor)) (manual easier to demo)
@@ -70,6 +68,10 @@ function updateUserField($conn, $userId, $field, $value) // to update a single u
 
 function deleteUser($conn, $table, $user_id) // to delete a user(admin,advisor,student)
 {
+    if ($table === 'student') {
+    $conn->query("DELETE FROM student_subject WHERE user_id = '$user_id'");
+    }
+
     $childDeleted = $conn->query("
         DELETE FROM $table
         WHERE user_id = '$user_id'
@@ -405,4 +407,148 @@ function searchsubject($conn, $table, $keyword) // to search subject using subje
     return $data;
 }
 
+function addAdvisor($conn, $name, $email, $phone, $password, $department) {
+    if (empty($name) || empty($email) || empty($phone) || empty($password) || empty($department)) {
+        return ['success' => false, 'message' => 'Please fill in all fields.'];
+    }
 
+    $result = $conn->query("SELECT login_id FROM user INNER JOIN advisor ON user.user_id = advisor.user_id ORDER BY user.user_id DESC LIMIT 1");
+
+    if ($result && $result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        $lastId = $row['login_id'];
+    } else {
+        $lastId = 'M1113560';
+    }
+
+    $num = (int)substr($lastId, -1) + 1;
+    $login_id = 'M111356' . $num;
+
+    $stmt = $conn->prepare("INSERT INTO user (login_id, name, email, password, phone_number) VALUES (?, ?, ?, ?, ?)");
+    $stmt->bind_param('sssss', $login_id, $name, $email, $password, $phone);
+
+    if ($stmt->execute()) {
+        $new_user_id = $conn->insert_id;
+
+        $stmt2 = $conn->prepare("INSERT INTO advisor (user_id, department) VALUES (?, ?)");
+        $stmt2->bind_param('is', $new_user_id, $department);
+        $stmt2->execute();
+        $stmt2->close();
+        $stmt->close();
+
+        return ['success' => true, 'message' => 'Advisor added successfully! Login ID: ' . $login_id];
+    } else {
+        $stmt->close();
+        return ['success' => false, 'message' => 'Error occured. Please redo the process'];
+    }
+}
+
+function addAdmin($conn, $name, $email, $phone, $password) {
+    if (empty($name) || empty($email) || empty($phone) || empty($password)) {
+        return ['success' => false, 'message' => 'Please fill in all fields.'];
+    }
+
+    $result = $conn->query("SELECT login_id FROM user INNER JOIN admin ON user.user_id = admin.user_id ORDER BY user.user_id DESC LIMIT 1");
+
+    if ($result && $result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        $lastId = $row['login_id'];
+    } else {
+        $lastId = 'A03241010';
+    }
+
+    $num = (int)substr($lastId, -2) + 1;
+    $login_id = 'A0324101' . str_pad($num, 1, '0', STR_PAD_LEFT);
+
+    $stmt = $conn->prepare("INSERT INTO user (login_id, name, email, password, phone_number) VALUES (?, ?, ?, ?, ?)");
+    $stmt->bind_param('sssss', $login_id, $name, $email, $password, $phone);
+
+    if ($stmt->execute()) {
+        $new_user_id = $conn->insert_id;
+
+        $stmt2 = $conn->prepare("INSERT INTO admin (user_id) VALUES (?)");
+        $stmt2->bind_param('i', $new_user_id);
+        $stmt2->execute();
+        $stmt2->close();
+        $stmt->close();
+
+        return ['success' => true, 'message' => 'Admin added successfully! Login ID: ' . $login_id];
+    } else {
+        $stmt->close();
+        return ['success' => false, 'message' => 'Error occured. Please redo the process'];
+    }
+}
+
+function addStudent($conn, $name, $email, $phone, $password, $advisor_id) {
+
+    if (empty($name) || empty($email) || empty($phone) || empty($password) || empty($advisor_id)) {
+        return array('success' => false, 'message' => 'Please fill in all fields.');
+    }
+
+    $result = $conn->query("SELECT login_id FROM user INNER JOIN student ON user.user_id = student.user_id ORDER BY user.user_id DESC LIMIT 1");
+
+    if ($result && $result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        $lastId = $row['login_id'];
+    } else {
+        $lastId = 'D32155319';
+    }
+
+    $num = (int)substr($lastId, 1) + 1;
+    $login_id = 'D' . $num;
+
+    $stmt = $conn->prepare("INSERT INTO user (login_id, name, email, password, phone_number) VALUES (?, ?, ?, ?, ?)");
+    $stmt->bind_param('sssss', $login_id, $name, $email, $password, $phone);
+
+    if ($stmt->execute()) {
+        $new_user_id = $conn->insert_id;
+        $program_id = 1;
+
+        $stmt2 = $conn->prepare("INSERT INTO student (user_id, program_id, advisor_id, CGPA, muet_status, total_credit_taken, academic_standing) VALUES (?, ?, ?, 0.00, 'Not Taken', 0, 'New')");
+        $stmt2->bind_param('iii', $new_user_id, $program_id, $advisor_id);
+        $stmt2->execute();
+        $stmt2->close();
+        $stmt->close();
+
+        return array('success' => true, 'message' => 'Student added successfully! Login ID: ' . $login_id);
+    } else {
+        $stmt->close();
+        return array('success' => false, 'message' => 'Error occured. Please redo the process');
+    }
+}
+
+function editAdmin($conn, $user_id, $field, $value) {
+    $allowed_fields = ['name', 'email', 'phone_number', 'login_id'];
+    if (!in_array($field, $allowed_fields) || $value === '') {
+        return ['success' => false, 'message' => 'Invalid input.'];
+    }
+    $result = updateUserField($conn, $user_id, $field, $value);
+    if ($result) {
+        return ['success' => true, 'message' => 'Updated successfully!'];
+    } else {
+        return ['success' => false, 'message' => 'Something went wrong, please try again.'];
+    }
+}
+
+function editAdvisor($conn, $user_id, $field, $value) {
+    $allowed_fields = ['name', 'email', 'phone_number', 'login_id', 'department'];
+    if (!in_array($field, $allowed_fields) || $value == '') {
+        return ['success' => false, 'message' => 'Invalid input.'];
+    }
+    if ($field == 'department') {
+        $stmt = $conn->prepare("UPDATE advisor SET department = ? WHERE user_id = ?");
+        $stmt->bind_param('si', $value, $user_id);
+        $stmt->execute();
+        $stmt->close();
+    } else {
+        updateUserField($conn, $user_id, $field, $value);
+    }
+    return ['success' => true, 'message' => 'Updated successfully!'];
+}
+
+function editStudent($conn, $user_id, $field, $value) {
+    $allowed_fields = ['name', 'email', 'phone_number', 'login_id'];
+    if (in_array($field, $allowed_fields) || $value == '') {
+        return ['success' => false, 'message' => 'Invalid input.'];
+    }
+}

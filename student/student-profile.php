@@ -31,10 +31,10 @@
 
     $userId = $student['user_id'];
     $allSubjects = getStudentSubjects($conn, $userId);
-    $cgpa        = calculateGPA($allSubjects); 
+    $cgpa        = calculateGPA($allSubjects);
     $latestSemId      = null;
     $totalCreditTaken = 0;
-    
+
     foreach ($allSubjects as $subj) {
         $totalCreditTaken += $subj['credit_hours'];
         if ($latestSemId === null || $subj['semester_id'] > $latestSemId) {
@@ -52,11 +52,11 @@
         <h1 class="content-title">Profile</h1>
         <div class="profile-card">
             <div class="avatar-circle">
-                <svg viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="1.5" stroke-linecap="round"
-                    stroke-linejoin="round" width="100%" height="100%">
-                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                    <circle cx="12" cy="7" r="4"></circle>
-                </svg>
+                <?php if (!empty($advisor['profile_picture'])): ?>
+                    <img src="<?= htmlspecialchars($advisor['profile_picture']) ?>" alt="Profile Picture">
+                <?php else: ?>
+                    <img src="../assets/icons/user.png" style="margin-top: 12px;">
+                <?php endif; ?>
             </div>
             <div class="profile-summary">
                 <h2><?php echo htmlspecialchars($student['name']); ?></h2>
@@ -94,7 +94,7 @@
 
                 <div class="info-group">
                     <span class="label">Phone Number</span>
-                    <span class="value"><?php echo htmlspecialchars($student['phone'] ?? '-'); ?></span>
+                    <span class="value"><?php echo htmlspecialchars($student['phone_number'] ?? '-'); ?></span>
                 </div>
 
             </div>

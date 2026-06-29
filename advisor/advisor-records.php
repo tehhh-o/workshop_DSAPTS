@@ -2,123 +2,122 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard</title> <!-- change this title -->
-  <link rel="stylesheet" href="../style/layout.css">
-  <link rel="stylesheet" href="../style/advisor.css">
-  <link rel="stylesheet" href="../style/styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title> <!-- change this title -->
+    <link rel="stylesheet" href="../style/layout.css">
+    <link rel="stylesheet" href="../style/advisor.css">
+    <link rel="stylesheet" href="../style/styles.css">
 </head>
 
 <body class="page-body main-gradient-bg">
-  <?php
-  session_start();
-  $activePage = 'records';
-  include("components/sidebar-advisor.php");
-  include("../models/functions.php");
+    <?php
+    session_start();
+    $activePage = 'records';
+    include("components/sidebar-advisor.php");
+    include("../models/functions.php");
 
-      
-  $keyword = $_GET['search'] ?? '';
-  $userId = $_GET['user_id'] ?? null;
 
-  $students = [];
-  $subjects = [];
+    $keyword = $_GET['search'] ?? '';
+    $userId = $_GET['user_id'] ?? null;
 
-  if ($userId) {
-      $subjects = getStudentSubjects($conn, $userId);
-  }
-  elseif ($keyword) {
-      $students = searchAdvisorStudents($conn, $_SESSION['user_id'], $keyword);
-  }
-  $studentName = '';
+    $students = [];
+    $subjects = [];
 
-  if ($userId) {
-      $student = getUserById($conn, "student", "student.user_id", $userId);
-      $studentName = $student['name'] ?? '';
-  }
-  ?>
+    if ($userId) {
+        $subjects = getStudentSubjects($conn, $userId);
+    } elseif ($keyword) {
+        $students = searchAdvisorStudents($conn, $_SESSION['user_id'], $keyword);
+    }
+    $studentName = '';
 
-  <main class="main-content main-rounded">
-    <h1 class="content-title">Records</h1>
+    if ($userId) {
+        $student = getUserById($conn, "student", "student.user_id", $userId);
+        $studentName = $student['name'] ?? '';
+    }
+    ?>
 
-<div class="toolbar">
+    <main class="main-content main-rounded">
+        <h1 class="content-title">Records</h1>
 
-    <div class="search-wrapper">
+        <div class="toolbar">
 
-        <form class="search" method="GET" action="">
-            <span>☰</span>
+            <div class="search-wrapper">
 
-            <input
-                type="text"
-                name="search"
-                placeholder="Search student name"
-                value="<?= $keyword ?>">
+                <form class="search" method="GET" action="">
+                    <span>☰</span>
 
-            <button type="submit" style="background:none;border:none;cursor:pointer;">
-                🔍
-            </button>
-        </form>
+                    <input
+                        type="text"
+                        name="search"
+                        placeholder="Search student name"
+                        value="<?= $keyword ?>">
 
-        <div class="search-results">
-            <?php if ($keyword && !$userId): ?>
-                <h3>Search Results</h3>
+                    <button type="submit" style="background:none;border:none;cursor:pointer;">
+                        <img src="../assets/icons/search.png" alt="" style="height: 16px;">
+                    </button>
+                </form>
 
-                <ul>
-                    <?php foreach ($students as $s): ?>
-                        <li>
-                        <a href="?user_id=<?= $s['user_id'] ?>" style="text-decoration: none;">
-                                <?= $s['name'] ?>
-                            </a>
-                        </li>
-                    <?php endforeach; ?>
-                </ul>
-            <?php endif; ?>
+                <div class="search-results">
+                    <?php if ($keyword && !$userId): ?>
+                        <h3>Search Results</h3>
+
+                        <ul>
+                            <?php foreach ($students as $s): ?>
+                                <li>
+                                    <a href="?user_id=<?= $s['user_id'] ?>" style="text-decoration: none;">
+                                        <?= $s['name'] ?>
+                                    </a>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
+                    <?php endif; ?>
+                </div>
+
+            </div>
+
         </div>
 
-    </div>
-
-</div>
-            
-    <table>
-        <thead>
-            <tr>
-              <th colspan="4" style="text-align:left;">
-                  <h3>Student Name: <?= $studentName ?></h3>
-            </tr>
-            <tr>
-                <th>Course ID</th>
-                <th>Course Name</th>
-                <th>Credit</th>
-                <th>Grade</th>
-            </tr>
-        </thead>
-
-        <tbody>
-            <?php if (!$userId): ?>
+        <table>
+            <thead>
                 <tr>
-                    <td colspan="4" style="text-align:center;">
-                        Search and select a student
-                    </td>
+                    <th colspan="4" style="text-align:left;">
+                        <h3>Student Name: <?= $studentName ?></h3>
                 </tr>
-
-            <?php elseif (empty($subjects)): ?>
                 <tr>
-                    <td colspan="4" style="text-align:center;">
-                        No records found
-                    </td>
+                    <th>Course ID</th>
+                    <th>Course Name</th>
+                    <th>Credit</th>
+                    <th>Grade</th>
                 </tr>
+            </thead>
 
-            <?php else: ?>
-                <?php foreach ($subjects as $s): ?>
+            <tbody>
+                <?php if (!$userId): ?>
                     <tr>
-                        <td><?= $s['subject_code'] ?></td>
-                        <td><?= $s['subject_name'] ?></td>
-                        <td><?= $s['credit_hours'] ?></td>
-                        <td><?= $s['grade'] ?></td>
+                        <td colspan="4" style="text-align:center;">
+                            Search and select a student
+                        </td>
                     </tr>
-                <?php endforeach; ?>
-            <?php endif; ?>
-        </tbody>
-    </table>
-  </main>
+
+                <?php elseif (empty($subjects)): ?>
+                    <tr>
+                        <td colspan="4" style="text-align:center;">
+                            No records found
+                        </td>
+                    </tr>
+
+                <?php else: ?>
+                    <?php foreach ($subjects as $s): ?>
+                        <tr>
+                            <td><?= $s['subject_code'] ?></td>
+                            <td><?= $s['subject_name'] ?></td>
+                            <td><?= $s['credit_hours'] ?></td>
+                            <td><?= $s['grade'] ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            </tbody>
+        </table>
+    </main>
 </body>

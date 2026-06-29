@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title> <!-- change this title -->
+    <title>Settings</title> <!-- change this title -->
     <link rel="stylesheet" href="../style/layout.css">
     <link rel="stylesheet" href="../style/admin.css">
     <link rel="stylesheet" href="../style/styles.css">
@@ -14,17 +14,6 @@
     <?php
     $activePage = 'settings';
     include("components/sidebar-admin.php");
-
-
-
-    // include '../models/mail.php';
-    // sendMail(
-    //     "elvintehh@gmail.com",
-    //     "Account Created",
-    //     "Welcome to DSAPTS. Test Mail."
-    // );
-
-
     ?>
 
     <main class="main-content main-rounded">

@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,8 +14,8 @@
   <?php
   session_start();
   if (!isset($_SESSION['uid'])) {
-      header("Location: ../index.php");
-      exit();
+    header("Location: ../index.php");
+    exit();
   }
   $activePage = 'settings';
   include("components/sidebar-student.php");
@@ -26,35 +25,35 @@
   $student = getStudentByLoginId($conn, $loginId);
 
   if (!$student) {
-      echo "<p style='color:red;'>Student record not found.</p>";
-      exit();
+    echo "<p style='color:red;'>Student record not found.</p>";
+    exit();
   }
 
   $userId = $student['user_id'];
 
-  
+
   $successMsg = '';
   $errorMsg   = '';
 
   if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-      $field = $_POST['field']  ?? '';
-      $value = $_POST['value']  ?? '';
+    $field = $_POST['field']  ?? '';
+    $value = $_POST['value']  ?? '';
 
-      $allowedFields = ['phone', 'email', 'address', 'muet_status'];
+    $allowedFields = ['phone_number', 'email', 'address', 'muet_status'];
 
-      if (in_array($field, $allowedFields) && $value !== '') {
-          
-          if ($field === 'muet_status') {
-              $updated = $conn->query("UPDATE student SET muet_status = '$value' WHERE user_id = '$userId'");
-          } else {
-              $updated = updateUserField($conn, $userId, $field, $value);
-          }
-          $successMsg = $updated ? 'Saved successfully.' : 'Save failed.';
-          
-          $student = getStudentByLoginId($conn, $loginId);
+    if (in_array($field, $allowedFields) && $value !== '') {
+
+      if ($field === 'muet_status') {
+        $updated = $conn->query("UPDATE student SET muet_status = '$value' WHERE user_id = '$userId'");
       } else {
-          $errorMsg = 'Invalid field or empty value.';
+        $updated = updateUserField($conn, $userId, $field, $value);
       }
+      $successMsg = $updated ? 'Saved successfully.' : 'Save failed.';
+
+      $student = getStudentByLoginId($conn, $loginId);
+    } else {
+      $errorMsg = 'Invalid field or empty value.';
+    }
   }
   ?>
 
@@ -77,11 +76,11 @@
       <h3>Personal Info</h3>
 
       <form method="POST" action="student-settings.php">
-        <input type="hidden" name="field" value="phone">
+        <input type="hidden" name="field" value="phone_number">
         <div class="input-field">
           <h4>Phone Number</h4>
           <div class="edit-field">
-            <input type="text" name="value" value="<?php echo htmlspecialchars($student['phone'] ?? ''); ?>">
+            <input type="text" name="value" value="<?php echo htmlspecialchars($student['phone_number'] ?? ''); ?>">
             <button type="submit" style="background:none;border:none;cursor:pointer;padding:0;">
               <img src="../assets/icons/edit.png" alt="Save">
             </button>

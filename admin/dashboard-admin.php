@@ -46,54 +46,61 @@
         <h1 class="content-title">Dashboard</h1>
         <h3 class="content-welcome">Welcome, Admin</h3>
 
-        <div class="stats">
-            <div class="stat-card">
-                <div class="stat-num"><?php echo ($studentCount); ?></div>
-                <div class="stat-label">Total Students</div>
+        <div class="dashboard-summary-cards">
+            <div class="stat-card" style="border-left:5px solid #007bff;">
+                <div class="card-text-head">Total Students</div>
+                <div class="card-text-body" style="color:#212529;">
+                    <?= $studentCount ?>
+                </div>
             </div>
-            <div class="stat-card">
-                <div class="stat-num"><?php echo ($advisorCount); ?></div>
-                <div class="stat-label">Total Advisors</div>
+            <div class="stat-card" style="border-left:5px solid #dc3545;">
+                <div class="card-text-head">Total Advisors</div>
+                <div class="card-text-body" style="color:#212529;">
+                    <?= $advisorCount ?>
+                </div>
             </div>
-            <div class="stat-card">
-                <div class="stat-num"><?php echo ($adminCount); ?></div>
-                <div class="stat-label">Total Admins</div>
+            <div class="stat-card" style="border-left:5px solid #28a745;">
+                <div class="card-text-head">Total Admins</div>
+                <div class="card-text-body" style="color:#212529;">
+                    <?= $adminCount ?>
+                </div>
             </div>
-            <div class="stat-card">
-                <div class="stat-num"><?php echo ($alertCount); ?></div>
-                <div class="stat-label">Total Alerts</div>
+            <div class="stat-card" style="border-left:5px solid #7b00ff;">
+                <div class="card-text-head">Total Alerts</div>
+                <div class="card-text-body" style="color:#212529;">
+                    <?= $alertCount ?>
+                </div>
             </div>
         </div>
-        </div>
-        <div class="panel">
-            <h3>Recent Alerts Activity</h3>
-            <table>
-                <thead>
+
+        <h3>Recent Alerts Activity</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Alert Type</th>
+                    <th>Student</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($recentAlerts as $a): ?>
                     <tr>
-                        <th>Date</th>
-                        <th>Alert Type</th>
-                        <th>Student</th>
+                        <td>
+                            <?= date("F d Y", strtotime($a['date_sent'])) ?>
+                        </td>
+
+                        <td>
+                            <?= $a['alert_type'] ?>
+                        </td>
+
+                        <td>
+                            <?= $a['name'] ?>
+                        </td>
                     </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($recentAlerts as $a): ?>
-                        <tr>
-                            <td>
-                                <?= date("F d Y", strtotime($a['date_sent'])) ?>
-                            </td>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
 
-                            <td>
-                                <?= $a['alert_type'] ?>
-                            </td>
-
-                            <td>
-                                <?= $a['name'] ?>
-                            </td>
-                        </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
-        </div>
     </main>
 </body>
 
