@@ -485,7 +485,7 @@ function addStudent($conn, $name, $email, $phone, $password, $advisor_id) {
         return array('success' => false, 'message' => 'Please fill in all fields.');
     }
 
-    $result = $conn->query("SELECT login_id FROM user INNER JOIN student ON user.user_id = student.user_id ORDER BY user.user_id DESC LIMIT 1");
+    $result = $conn->query("SELECT login_id FROM user INNER JOIN student ON user.user_id = student.user_id WHERE user.login_id LIKE 'D%' ORDER BY CAST(SUBSTRING(user.login_id, 2) AS UNSIGNED) DESC LIMIT 1");
 
     if ($result && $result->num_rows > 0) {
         $row = $result->fetch_assoc();
@@ -504,8 +504,9 @@ function addStudent($conn, $name, $email, $phone, $password, $advisor_id) {
         $new_user_id = $conn->insert_id;
         $program_id = 1;
 
-        $stmt2 = $conn->prepare("INSERT INTO student (user_id, program_id, advisor_id, CGPA, muet_status, total_credit_taken, academic_standing) VALUES (?, ?, ?, 0.00, 'Not Taken', 0, 'New')");
-        $stmt2->bind_param('iii', $new_user_id, $program_id, $advisor_id);
+        $preferred_degree_field = 'None';
+        $stmt2 = $conn->prepare("INSERT INTO student (user_id, program_id, advisor_id, CGPA, muet_status, total_credit_taken, plan_to_degree, preferred_degree_field) VALUES (?, ?, ?, 0.00, 'Not Taken', 0, 'No', ?)");
+        $stmt2->bind_param('iiis', $new_user_id, $program_id, $advisor_id, $preferred_degree_field);
         $stmt2->execute();
         $stmt2->close();
         $stmt->close();
