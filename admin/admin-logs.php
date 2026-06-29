@@ -15,48 +15,38 @@
     $activePage = 'logs';
     include("components/sidebar-admin.php");
     include("../models/functions.php");
-    $logs = getAll($conn, "alert");
+    $logs = getAllAlerts($conn);
     ?>
 
     <main class="main-content main-rounded">
         <h1 class="content-title">Admin Logs</h1>
-        <div class="logs-box">
-            <div class="logs-table-wrapper">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th>Action</th>
-                            <th>Detail</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+        <div class="content">
 
-                        <?php foreach ($logs as $a): ?>
-                            <tr>
-                                <td><?php echo $a['date_sent']; ?></td>
-                                <td><?php echo $a['message'] ?></td>
-                                <td><?php echo $a['alert_type'] ?></td>
-                            </tr>
-                        <?php endforeach; ?>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Student</th>
+                        <th>Action</th>
+                        <th>Detail</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
 
+                    <?php foreach ($logs as $a): ?>
                         <tr>
-                            <td>2026-06-12</td>
-                            <td>Login</td>
-                            <td>Admin logged into the system</td>
+                            <td><?php echo $a['name']; ?></td>
+                            <td><?php echo $a['message'] ?></td>
+                            <td><?php echo $a['alert_type'] ?></td>
+                            <td><?php echo $a['date_sent']; ?></td>
                         </tr>
-                        <tr>
-                            <td>2026-06-12</td>
-                            <td>Add Student</td>
-                            <td>New student record added</td>
-                        </tr>
-                        
-                    </tbody>
-                </table>
-            </div>
+                    <?php endforeach; ?>
+
+                </tbody>
+            </table>
+
         </div>
     </main>
-    </class=>
 
 </body>
 

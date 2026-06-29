@@ -147,7 +147,7 @@
             value="<?= $keyword ?>">
 
           <button type="submit" style="background:none;border:none;cursor:pointer;">
-            🔍
+            <img src="../assets/icons/search.png" alt="" style="height: 16px;">
           </button>
         </form>
 

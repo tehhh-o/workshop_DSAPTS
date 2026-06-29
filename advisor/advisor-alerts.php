@@ -98,7 +98,7 @@
                                     <input type="hidden" name="send_name" value="<?= htmlspecialchars($a['name']) ?>">
                                     <input type="hidden" name="send_message" value="<?= htmlspecialchars($a['message']) ?>">
                                     <button type="submit" style="background:none;border:none;cursor:pointer;padding:0;">
-                                        <img src="../assets/icons/send.png" alt="Send Alert">
+                                        <img src="../assets/icons/send.png" alt="Send Alert" style="height: 24px;">
                                     </button>
                                 </form>
                             </td>
