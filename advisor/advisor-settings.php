@@ -68,7 +68,7 @@
         <?php endif; ?>
 
         <div class="input-field" style="margin-top: 12px;">
-            <h3 style="margin-right: 24px;">Student ID</h3>
+            <h3 style="margin-right: 24px;">Advisor ID</h3>
             <input type="text" value="<?php echo htmlspecialchars($advisor['login_id']); ?>" disabled>
         </div>
 
@@ -119,7 +119,7 @@
 
             <div class="auth-links">
                 <p></p>
-                <a href="">Change Password</a>
+                <a href="../auth/change-password.php">Change Password</a>
             </div>
         </div>
 
