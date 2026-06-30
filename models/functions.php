@@ -276,6 +276,19 @@ function getAdvisorByLoginId($conn, $login_id)
     return $result ? $result->fetch_assoc() : null;
 }
 
+function getAdvisorByStudentId($conn, $advisor_id) // get advisor details from student's advisor_id
+{
+    $result = $conn->query("
+        SELECT advisor.*, user.name, user.email, user.phone_number
+        FROM advisor
+        INNER JOIN user ON advisor.user_id = user.user_id
+        WHERE advisor.user_id = '$advisor_id'
+        LIMIT 1
+    ");
+
+    return $result ? $result->fetch_assoc() : null;
+}
+
 
 function getAllSemesters($conn) // get all semesters for dropdown
 {
