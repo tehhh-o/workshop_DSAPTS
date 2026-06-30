@@ -41,11 +41,14 @@
     if (in_array($field, $allowedFields) && $value !== '') {
 
       if ($field === 'muet_status') {
-        $updated = $conn->query("UPDATE student SET muet_status = '$value' WHERE user_id = '$userId'");
+        $safeValue = $conn->real_escape_string($value);
+        $updated = $conn->query("UPDATE student SET muet_status = '$safeValue' WHERE user_id = '$userId'");
       } elseif ($field === 'plan_degree') {
-        $updated = $conn->query("UPDATE student SET plan_to_degree = '$value' WHERE user_id = '$userId'");
+        $safeValue = $conn->real_escape_string($value);
+        $updated = $conn->query("UPDATE student SET plan_to_degree = '$safeValue' WHERE user_id = '$userId'");
       } elseif ($field === 'preferred_degree_field') {
-        $updated = $conn->query("UPDATE student SET preferred_degree_field = '$value' WHERE user_id = '$userId'");
+        $safeValue = $conn->real_escape_string($value);
+        $updated = $conn->query("UPDATE student SET preferred_degree_field = '$safeValue' WHERE user_id = '$userId'");
       } else {
         $updated = updateUserField($conn, $userId, $field, $value);
       }
@@ -74,108 +77,151 @@
     </div>
 
     <div class="panel">
-      <h3>Personal Info</h3>
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+        <h3 style="margin: 0;">Personal Info</h3>
+        <button type="button" id="edit-btn" style="padding: 6px 14px; border-radius: 8px; cursor: pointer; background-color: #f0f0f0; border: 1px solid #ccc; color: #333; font-weight: bold;">
+              Edit Profile
+        </button>
+      </div>
 
-      <form method="POST" action="student-settings.php">
+      <form id="settings-form" method="POST" action="student-settings.php">
+
         <input type="hidden" name="field" value="phone_number">
         <div class="input-field">
           <h4>Phone Number</h4>
           <div class="edit-field">
-            <input type="text" name="value" value="<?php echo htmlspecialchars($student['phone_number'] ?? ''); ?>">
-            <button type="submit" style="background:none;border:none;cursor:pointer;padding:0;">
-              <img src="../assets/icons/edit.png" alt="Save">
-            </button>
+            <input type="text" name="phone_number_val" class="toggle-input" value="<?php echo htmlspecialchars($student['phone_number'] ?? ''); ?>" disabled>
           </div>
         </div>
-      </form>
 
-      <form method="POST" action="student-settings.php">
-        <input type="hidden" name="field" value="email">
         <div class="input-field">
           <h4>Email</h4>
           <div class="edit-field">
-            <input type="text" name="value" value="<?php echo htmlspecialchars($student['email'] ?? ''); ?>">
-            <button type="submit" style="background:none;border:none;cursor:pointer;padding:0;">
-              <img src="../assets/icons/edit.png" alt="Save">
-            </button>
+            <input type="text" name="email_val" class="toggle-input" value="<?php echo htmlspecialchars($student['email'] ?? ''); ?>" disabled>
           </div>
         </div>
-      </form>
 
-      <form method="POST" action="student-settings.php">
-        <input type="hidden" name="field" value="address">
         <div class="input-field">
           <h4>Address</h4>
           <div class="edit-field">
-            <input type="text" name="value" value="<?php echo htmlspecialchars($student['address'] ?? ''); ?>">
-            <button type="submit" style="background:none;border:none;cursor:pointer;padding:0;">
-              <img src="../assets/icons/edit.png" alt="Save">
-            </button>
+            <input type="text" name="address_val" class="toggle-input" value="<?php echo htmlspecialchars($student['address'] ?? ''); ?>" disabled>
           </div>
         </div>
-      </form>
 
-      <form method="POST" action="student-settings.php">
-        <input type="hidden" name="field" value="muet_status">
         <div class="input-field">
           <h4>Muet Status</h4>
           <div class="edit-field">
-            <input type="text" name="value" value="<?php echo htmlspecialchars($student['muet_status'] ?? ''); ?>">
-            <button type="submit" style="background:none;border:none;cursor:pointer;padding:0;">
-              <img src="../assets/icons/edit.png" alt="Save">
-            </button>
+            <input type="text" name="muet_status_val" class="toggle-input" value="<?php echo htmlspecialchars($student['muet_status'] ?? ''); ?>" disabled>
           </div>
         </div>
-      </form>
 
-      <form method="POST" action="student-settings.php">
-        <input type="hidden" name="field" value="plan_degree">
         <div class="input-field">
           <h4>Plan to Degree</h4>
-          <div class="edit-field" style="display: flex; align-items: center; gap: 10px;">
-          
-          <select name="value" style="width: 192px; height: 38px; padding: 6px 12px; border: 1px solid #ccc; border-radius: 6px; background-color: #fff5f5; font-size: 14px; color: #333; box-sizing: border-box;">
+          <div class="edit-field">
+          <select name="plan_degree_val" class="toggle-input" style="width: 198px; height: 38px; padding: 6px 12px; border: 1px solid #ccc; border-radius: 6px; background-color: #fff5f5; font-size: 14px; color: #333; box-sizing: border-box;" disabled>
             <option value="Yes"<?php echo htmlspecialchars($student['plan_to_degree'] ?? '') === 'Yes' ? 'selected' : '' ?>>Yes</option>
             <option value="No" <?php echo htmlspecialchars($student['plan_to_degree'] ?? '') === 'No' ? 'selected' : '' ?>>No</option>
-          </select>     
-          
-          <button type="submit" style="background:none; border:none; cursor:pointer; padding:0; display: flex; align-items: center;">
-            <img src="../assets/icons/edit.png" alt="Save" style="width: 24px; height: 24px;">
-          </button>
-          
+          </select>              
           </div> 
         </div>
-       </form>
 
-    <form method="POST" action="student-settings.php">
-      <input type="hidden" name="field" value="preferred_degree_field">
-      <div class="input-field">
-        <h4>Preferred Degree Field</h4>
-        <div class="edit-field" style="display: flex; align-items: center; gap: 10px;">
-          
-          <select name="value" style="width: 192px; height: 38px; padding: 3px 9px; border: 1px solid #ccc; border-radius: 6px; background-color: #fff5f5; font-size: 14px; color: #333; box-sizing: border-box;">
-            <option value="Game Technology" <?php echo htmlspecialchars($student['preferred_degree_field'] ?? '') === 'Game Technology' ? 'selected' : '' ?>>Game Technology</option>
-            <option value="Software Engineering" <?php echo htmlspecialchars($student['preferred_degree_field'] ?? '') === 'Software Engineering' ? 'selected' : '' ?>>Software Engineering</option>
-            <option value="Artificial Intelligence" <?php echo htmlspecialchars($student['preferred_degree_field'] ?? '') === 'Artificial Intelligence' ? 'selected' : '' ?>>Artificial Intelligence</option>
-            <option value="Interactive Media" <?php echo htmlspecialchars($student['preferred_degree_field'] ?? '') === 'Interactive Media' ? 'selected' : '' ?>>Interactive Media</option>
-            <option value="Computer Networking" <?php echo htmlspecialchars($student['preferred_degree_field'] ?? '') === 'Computer Networking' ? 'selected' : '' ?>>Computer Networking</option>
-            <option value="Cloud Computing" <?php echo htmlspecialchars($student['preferred_degree_field'] ?? '') === 'Cloud Computing' ? 'selected' : '' ?>>Cloud Computing</option>                    
-            <option value="N/A" <?php echo htmlspecialchars($student['preferred_degree_field'] ?? '') === 'N/A' ? 'selected' : '' ?>>N/A</option>
-          </select>
-          
-          <button type="submit" style="background:none; border:none; cursor:pointer; padding:0; display: flex; align-items: center;">
-            <img src="../assets/icons/edit.png" alt="Save" style="width: 24px; height: 24px;">
-          </button>
-          
+        <div class="input-field">
+          <h4>Preferred Degree Field</h4>
+          <div class="edit-field">
+            <select name="preferred_degree_field_val" class="toggle-input" style="width: 198px; height: 38px; padding: 3px 9px; border: 1px solid #ccc; border-radius: 6px; background-color: #fff5f5; font-size: 14px; color: #333; box-sizing: border-box;" disabled>
+              <option value="Game Technology" <?php echo htmlspecialchars($student['preferred_degree_field'] ?? '') === 'Game Technology' ? 'selected' : '' ?>>Game Technology</option>
+              <option value="Software Engineering" <?php echo htmlspecialchars($student['preferred_degree_field'] ?? '') === 'Software Engineering' ? 'selected' : '' ?>>Software Engineering</option>
+              <option value="Artificial Intelligence" <?php echo htmlspecialchars($student['preferred_degree_field'] ?? '') === 'Artificial Intelligence' ? 'selected' : '' ?>>Artificial Intelligence</option>
+              <option value="Interactive Media" <?php echo htmlspecialchars($student['preferred_degree_field'] ?? '') === 'Interactive Media' ? 'selected' : '' ?>>Interactive Media</option>
+              <option value="Computer Networking" <?php echo htmlspecialchars($student['preferred_degree_field'] ?? '') === 'Computer Networking' ? 'selected' : '' ?>>Computer Networking</option>
+              <option value="Cloud Computing" <?php echo htmlspecialchars($student['preferred_degree_field'] ?? '') === 'Cloud Computing' ? 'selected' : '' ?>>Cloud Computing</option>                    
+              <option value="N/A" <?php echo htmlspecialchars($student['preferred_degree_field'] ?? '') === 'N/A' ? 'selected' : '' ?>>N/A</option>
+            </select>
+          </div>
         </div>
+
+        <input type="hidden" id="submit-field" name="field" value="">
+        <input type="hidden" id="submit-value" name="value" value="">
+
+        <div id="action-buttons" class="form-submit" style="margin-top: 20px; display: none;">
+            <div style="display: flex; justify-content: flex-end; width: 100%; gap: 12px;">
+                    
+                <button type="reset" id="cancel-btn" style="padding:10px 18px; border-radius:12px; cursor:pointer; background-color: #f0f0f0; border: 1px solid #ccc; color: #333;">
+                    Clear
+                </button>
+
+                <button type="submit" style="padding:10px 18px; border-radius:12px; cursor:pointer; background-color: #007bff; border: 1px solid #007bff; color: white;">
+                    Save Changes
+                </button>
+             </div>
+         </div>
+      </form>
+      <div class="auth-links" style="padding:10px">
+          <p></p>
+          <a href="../auth/change-password.php">Change Password</a>
       </div>
-    </form>
-        <div class="auth-links">
-                <p></p>
-                <a href="../auth/change-password.php">Change Password</a>
-        </div>
     </div>
   </main>
+
+  <script>
+    const editBtn = document.getElementById('edit-btn');
+    const actionButtons = document.getElementById('action-buttons');
+    const inputs = document.querySelectorAll('.toggle-input');
+    const cancelBtn = document.getElementById('cancel-btn');
+    const form = document.getElementById('settings-form');
+
+    editBtn.addEventListener('click', () => {
+        inputs.forEach(input => {
+            input.removeAttribute('disabled');
+        });
+       
+        actionButtons.style.display = 'block';
+        editBtn.style.display = 'none';
+    });
+
+    cancelBtn.addEventListener('click', () => {
+        setTimeout(() => {
+            inputs.forEach(input => {
+                input.setAttribute('disabled', 'true');
+            });
+            actionButtons.style.display = 'none';
+            editBtn.style.display = 'block';
+        }, 10);
+    });
+
+    
+    form.addEventListener('submit', (e) => {
+        let fieldToSave = '';
+        let valueToSave = '';
+
+        const fieldMappings = [
+            { key: 'phone_number', selector: 'input[name="phone_number_val"]' },
+            { key: 'email', selector: 'input[name="email_val"]' },
+            { key: 'address', selector: 'input[name="address_val"]' },
+            { key: 'muet_status', selector: 'input[name="muet_status_val"]' },
+            { key: 'plan_degree', selector: 'select[name="plan_degree_val"]' },
+            { key: 'preferred_degree_field', selector: 'select[name="preferred_degree_field_val"]' }
+        ];
+
+       
+        for (let mapping of fieldMappings) {
+            let el = form.querySelector(mapping.selector);
+            if (el && el.value !== el.defaultValue) {
+                fieldToSave = mapping.key;
+                valueToSave = el.value;
+            }
+        }
+
+        
+        if(!fieldToSave) {
+            fieldToSave = 'phone_number';
+            valueToSave = form.querySelector('input[name="phone_number_val"]').value;
+        }
+
+        document.getElementById('submit-field').value = fieldToSave;
+        document.getElementById('submit-value').value = valueToSave;
+    });
+  </script>
 </body>
 
 </html>

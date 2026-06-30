@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="../style/auth.css">
     <link rel="stylesheet" href="../style/styles.css">
     <style>
-        /* Optional: Ensures a clean look when inputs transition from disabled to active */
+
         .edit-field input:disabled {
             background-color: #f5f5f5;
             color: #888;
@@ -49,7 +49,6 @@
     $successMsg = '';
     $errorMsg   = '';
 
-    // Fixed PHP form handling to support saving all inputs together
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $phone = $_POST['phone_number'] ?? '';
         $email = $_POST['email'] ?? '';
@@ -65,7 +64,6 @@
             } else {
                 $errorMsg = 'Some or all fields failed to save.';
             }
-            // Refresh advisor array data
             $advisor = getUserById($conn, "advisor", "advisor.user_id", $_SESSION['user_id']);
         } else {
             $errorMsg = 'All fields are required.';
@@ -149,17 +147,14 @@
         const cancelBtn = document.getElementById('cancel-btn');
 
         editBtn.addEventListener('click', () => {
-            // Enable inputs
             inputs.forEach(input => {
                 input.removeAttribute('disabled');
             });
-            // Show Save/Clear buttons, hide Edit button
             actionButtons.style.display = 'block';
             editBtn.style.display = 'none';
         });
 
         cancelBtn.addEventListener('click', () => {
-            // If clear/reset is clicked, optionally lock back down after reset delay
             setTimeout(() => {
                 inputs.forEach(input => {
                     input.setAttribute('disabled', 'true');
