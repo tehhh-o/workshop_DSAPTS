@@ -52,7 +52,13 @@
 ?>
 
     <main class="main-content main-rounded">
-        <h1 class="content-title">Edit Advisor</h1>
+        <div class="title-row">
+          <h1 class="content-title">Edit Admin</h1>
+          <div class="back-button">
+          <button style="background: transparent; border:none;" type="button"  onclick="window.location.href='admin.php'">
+          <img src="../assets/icons/back.png" alt="" style="height: 25px;"></button>
+        </div>
+    </div>
 
         <?php if ($success): ?>
             <p style="color: green; margin-bottom: 10px;"><?= $success ?></p>
@@ -92,25 +98,6 @@
                   <button type="submit" class="icon-btn">Save</button>
                 </div>
               </form>
-
-              <form method="POST" action="advisor-edit.php?id=<?= $user_id ?>">
-                <div class="edit-row">
-                  <span>User ID</span>
-                  <input type="hidden" name="field" value="login_id">
-                  <input class="edit-design" type="text" name="value" value="<?= $advisor['login_id'] ?>">
-                  <button type="submit" class="icon-btn">Save</button>
-                </div>
-              </form>
-
-              <form method="POST" action="advisor-edit.php?id=<?= $user_id ?>">
-                <div class="edit-row">
-                  <span>Department</span>
-                  <input type="hidden" name="field" value="department">
-                  <input class="edit-design" type="text" name="value" value="<?= $advisor['department'] ?>">
-                  <button type="submit" class="icon-btn">Save</button>
-                </div>
-              </form>
-
               </div>
             </div>
         </div>
