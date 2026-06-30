@@ -17,7 +17,9 @@
     include("components/sidebar-advisor.php");
     include("../models/functions.php");
 
-        $keyword       = $_GET['search'] ?? '';
+    $keyword = isset($_GET['search']) ? trim($_GET['search']) : '';
+
+    $keyword = str_replace([';', "'", '"'], '', $keyword);
         $muet          = $_GET['muet'] ?? '';
         $cgpa          = $_GET['cgpa'] ?? '';
         $plan_degree   = $_GET['plan_degree'] ?? '';
