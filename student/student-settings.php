@@ -42,6 +42,10 @@
 
       if ($field === 'muet_status') {
         $updated = $conn->query("UPDATE student SET muet_status = '$value' WHERE user_id = '$userId'");
+      } elseif ($field === 'plan_degree') {
+        $updated = $conn->query("UPDATE student SET plan_to_degree = '$value' WHERE user_id = '$userId'");
+      } elseif ($field === 'preferred_degree_field') {
+        $updated = $conn->query("UPDATE student SET preferred_degree_field = '$value' WHERE user_id = '$userId'");
       } else {
         $updated = updateUserField($conn, $userId, $field, $value);
       }
@@ -131,8 +135,8 @@
           <div class="edit-field" style="display: flex; align-items: center; gap: 10px;">
           
           <select name="value" style="width: 192px; height: 38px; padding: 6px 12px; border: 1px solid #ccc; border-radius: 6px; background-color: #fff5f5; font-size: 14px; color: #333; box-sizing: border-box;">
-            <option value="Yes"<?php echo htmlspecialchars($student['plan_degree'] ?? '') === 'Yes' ? 'selected' : '' ?>>Yes</option>
-            <option value="No" <?php echo htmlspecialchars($student['plan_degree'] ?? '') === 'No' ? 'selected' : '' ?>>No</option>
+            <option value="Yes"<?php echo htmlspecialchars($student['plan_to_degree'] ?? '') === 'Yes' ? 'selected' : '' ?>>Yes</option>
+            <option value="No" <?php echo htmlspecialchars($student['plan_to_degree'] ?? '') === 'No' ? 'selected' : '' ?>>No</option>
           </select>     
           
           <button type="submit" style="background:none; border:none; cursor:pointer; padding:0; display: flex; align-items: center;">
