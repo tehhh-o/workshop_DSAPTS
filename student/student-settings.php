@@ -111,7 +111,11 @@
         <div class="input-field">
           <h4>Muet Status</h4>
           <div class="edit-field">
-            <input type="text" name="muet_status_val" class="toggle-input" value="<?php echo htmlspecialchars($student['muet_status'] ?? ''); ?>" disabled>
+            <select name="muet_status_val" class="toggle-input" style="width: 198px; height: 38px; padding: 6px 12px; border: 1px solid #ccc; border-radius: 6px; background-color: #fff5f5; font-size: 14px; color: #333; box-sizing: border-box;" disabled>
+            <option value="Pass"<?php echo htmlspecialchars($student['muet_status'] ?? '') === 'Pass' ? 'selected' : '' ?>>Pass</option>
+            <option value="Failed" <?php echo htmlspecialchars($student['muet_status'] ?? '') === 'Failed' ? 'selected' : '' ?>>Failed</option>
+              <option value="Not Taken" <?php echo htmlspecialchars($student['muet_status'] ?? '') === 'Not Taken' ? 'selected' : '' ?>>Not Taken</option>
+          </select>  
           </div>
         </div>
 
