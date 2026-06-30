@@ -2,7 +2,7 @@
 session_start();
 include __DIR__ . '/../database/connection.php';
 
-// Tendang balik ke page pertama kalau tiada data session aktif
+// go back to forgot password if the user has not requested an OTP
 if (!isset($_SESSION['system_otp'])) {
     header("Location: forget-password.php");
     exit();
