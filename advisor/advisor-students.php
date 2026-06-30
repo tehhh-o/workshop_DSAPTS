@@ -17,12 +17,85 @@
     include("components/sidebar-advisor.php");
     include("../models/functions.php");
 
-    $students = getAdvisorStudents($conn, $_SESSION['user_id']);
+        $keyword       = $_GET['search'] ?? '';
+        $muet          = $_GET['muet'] ?? '';
+        $cgpa          = $_GET['cgpa'] ?? '';
+        $plan_degree   = $_GET['plan_degree'] ?? '';
+        $degree_field  = $_GET['degree_field'] ?? '';
+
+        $students = filterAdvisorStudents(
+            $conn, 
+            $_SESSION['user_id'], 
+            $keyword, 
+            $muet, 
+            $cgpa, 
+            $plan_degree, 
+            $degree_field
+        );
     ?>
 
     <main class="main-content main-rounded">
         <h2 class="content-title" style="margin-top: 10px; margin-bottom: 15px;">Student List</h2>
+<div class="toolbar">
 
+        <form class="toolbar-form" method="GET" style="display: flex; gap: 15px; align-items: center; width: 100%;">
+
+            <div class="search">
+                <input 
+                    type="text" 
+                    name="search" 
+                    placeholder="Search student name"
+                    value="<?= htmlspecialchars($keyword) ?>">
+
+                <button type="submit" class="search-btn">
+                    <img src="../assets/icons/search.png" alt="" style="height:16px;">
+                </button>
+            </div>
+
+            <div class="filters" style="display: flex; align-items: center; gap: 10px;">
+
+
+                <select name="muet" class="filter-select">
+                    <option value="">MUET</option>
+                    <option value="Pass" <?= $muet === 'Pass' ? 'selected' : '' ?>>Pass</option>
+                    <option value="Fail" <?= $muet === 'Fail' ? 'selected' : '' ?>>Fail</option>
+                </select>
+
+                <select name="cgpa" class="filter-select">
+                    <option value="">CGPA</option>
+                    <option value="excellent" <?= $cgpa === 'excellent' ? 'selected' : '' ?>>Excellent (3.5 - 4.0)</option>
+                    <option value="average" <?= $cgpa === 'average' ? 'selected' : '' ?>>Average (2.0 - 3.5)</option>
+                    <option value="risk" <?= $cgpa === 'risk' ? 'selected' : '' ?>>At Risk (0 - 2.0)</option>
+                </select>
+
+                <select name="plan_degree" class="filter-select">
+                    <option value="">Plan to Degree</option>
+                    <option value="Yes" <?= $plan_degree === 'Yes' ? 'selected' : '' ?>>Yes</option>
+                    <option value="No" <?= $plan_degree === 'No' ? 'selected' : '' ?>>No</option>
+                </select>
+
+                <select name="degree_field" class="filter-select">
+                    <option value="">Degree Field</option>
+                    <option value="Game Technology" <?= $degree_field === 'Game Technology' ? 'selected' : '' ?>>Game Technology</option>
+                    <option value="Software Engineering" <?= $degree_field === 'Software Engineering' ? 'selected' : '' ?>>Software Engineering</option>
+                    <option value="Artificial Intelligence" <?= $degree_field === 'Artificial Intelligence' ? 'selected' : '' ?>>Artificial Intelligence</option>
+                    <option value="Interactive Media" <?= $degree_field === 'Interactive Media' ? 'selected' : '' ?>>Interactive Media</option>
+                    <option value="Computer Networking" <?= $degree_field === 'Computer Networking' ? 'selected' : '' ?>>Computer Networking</option>
+                    <option value="Cloud Computing" <?= $degree_field === 'Cloud Computing' ? 'selected' : '' ?>>Cloud Computing</option>                    
+                    <option value="N/A" <?= $degree_field === 'N/A' ? 'selected' : '' ?>>N/A</option>
+                </select>
+
+                <button type="submit" class="filter-btn">
+                    Apply
+                </button>
+                
+                <a href="?" class="clear-btn" style="text-decoration: none; font-size: 14px; color: #666;">Clear All</a>
+            </div>
+
+        </form>
+    </div>
+
+</div>
         <div class="content">
             <table class="table-student">
                 <thead>

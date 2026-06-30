@@ -138,7 +138,6 @@
     <div class="toolbar">
       <div class="search-wrapper">
         <form class="search" method="GET" action="">
-          <span>☰</span>
 
           <input
             type="text"

@@ -14,6 +14,7 @@ include("../database/connection.php");
 // - calculateGPA($subjects)                               // to calculate the gpa for a sem or cgpa for all sem, pass $subjects based on type of getStudentSubject called
 // - getAllAlerts($conn)                                   //add user
 // - searchAlertByName($conn, $keyword)                    //edit user
+// - filterAdvisorStudents
 
 
 // Incomplete Functions
@@ -122,6 +123,54 @@ function getAllUser($conn, $table) // to get all personal detail for all user
     return $data;
 }
 
+function filterAdvisorStudents($conn, $advisorId, $keyword, $muet, $cgpa, $plan_degree, $degree_field)
+{
+    $sql = "
+        SELECT student.*, user.*
+        FROM student
+        INNER JOIN user ON student.user_id = user.user_id
+        WHERE student.advisor_id = '$advisorId'
+    ";
+
+    if (!empty($keyword)) {
+        $sql .= " AND user.name LIKE '%$keyword%'";
+    }
+
+    if (!empty($muet)) {
+        $sql .= " AND student.muet_status = '$muet'";
+    }
+
+    if (!empty($plan_degree)) {
+        $sql .= " AND student.plan_to_degree = '$plan_degree'";
+    }
+
+if (!empty($degree_field)) {
+    if ($degree_field === 'N/A') {
+        $sql .= " AND (student.preferred_degree_field IS NULL OR student.preferred_degree_field = '')";
+    } else {
+        $sql .= " AND student.preferred_degree_field = '$degree_field'";
+    }
+}
+
+    if ($cgpa == 'excellent') {
+        $sql .= " AND student.CGPA >= 3.50";
+    } elseif ($cgpa == 'average') {
+        $sql .= " AND student.CGPA >= 2.00 AND student.CGPA < 3.50";
+    } elseif ($cgpa == 'risk') {
+        $sql .= " AND student.CGPA < 2.00";
+    }
+
+    $sql .= " ORDER BY user.name";
+
+    $result = $conn->query($sql);
+    $data = [];
+
+    while ($row = $result->fetch_assoc()) {
+        $data[] = $row;
+    }
+
+    return $data;
+}
 function getStudentSubjects($conn, $userId) // get all subject for a student for all sem
 {
     $sql = "

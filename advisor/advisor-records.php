@@ -41,27 +41,18 @@
         <h1 class="content-title">Records</h1>
 
         <div class="toolbar">
-
             <div class="search-wrapper">
 
                 <form class="search" method="GET" action="">
-                    <span>☰</span>
 
-                    <input
-                        type="text"
-                        name="search"
-                        placeholder="Search student name"
-                        value="<?= $keyword ?>">
-
+                    <input type="text" name="search" placeholder="Search student name" value="<?= $keyword ?>">
                     <button type="submit" style="background:none;border:none;cursor:pointer;">
                         <img src="../assets/icons/search.png" alt="" style="height: 16px;">
                     </button>
                 </form>
-
                 <div class="search-results">
                     <?php if ($keyword && !$userId): ?>
                         <h3>Search Results</h3>
-
                         <ul>
                             <?php foreach ($students as $s): ?>
                                 <li>
@@ -73,7 +64,7 @@
                         </ul>
                     <?php endif; ?>
                 </div>
-
+            </div>
             </div>
 
         </div>
