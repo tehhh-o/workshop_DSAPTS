@@ -35,6 +35,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         } 
         elseif ($newPwd !== $confirmPwd) {
             echo "<script>alert('New password and confirm password do not match');</script>";
+        } elseif ($newPwd === $oldPwd) {
+            echo "<script>alert('New password and old password cannot be the same');</script>";
         } else {
             $safeNewPwd = mysqli_real_escape_string($conn, $newPwd);
             $hashedPassword = password_hash($safeNewPwd, PASSWORD_DEFAULT);
@@ -42,7 +44,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             
             if (mysqli_query($conn, $update)) {
                 
-                // Tentukan pautan redirect berdasarkan huruf pangkal ID
                 if (str_starts_with($uid, 'A')) {
                     $redirectUrl = "../admin/admin-settings.php";
                 } elseif (str_starts_with($uid, 'M')) {
