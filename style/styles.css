@@ -232,14 +232,6 @@ th.action {
   display: block;
 }
 
-.edit-list {
-  max-width: 720px;
-  margin: 0 auto;
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-}
-
 .edit-row {
   display: flex;
   align-items: center;
@@ -328,5 +320,11 @@ th.action {
 .title-row {
   display: inline-flex;
   justify-content: space-between;
+  width: 100%;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
   width: 100%;
 }

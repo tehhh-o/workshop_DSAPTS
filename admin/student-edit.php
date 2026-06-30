@@ -35,13 +35,9 @@
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $action = $_POST['action'] ?? 'edit_field';
 
-        if ($action === 'edit_field') {
-            $result = editAdmin(
-                $conn,
-                $studentId,
-                $_POST['field'],
-                trim($_POST['value'])
-            );
+        if ($action === 'edit_fields') {
+            $fields = $_POST['fields'] ?? [];
+            $result = editAdmin($conn, $studentId, $fields);
             if ($result['success']) {
                 $success = $result['message'];
                 $student = getUserById($conn, "student", "student.user_id", $studentId);
@@ -63,9 +59,9 @@
 
     <main class="main-content main-rounded">
         <div class="title-row">
-          <h1 class="content-title">Edit Admin</h1>
+          <h1 class="content-title">Edit Student</h1>
           <div class="back-button">
-          <button style="background: transparent; border:none;" type="button"  onclick="window.location.href='admin.php'">
+          <button style="background: transparent; border:none;" type="button"  onclick="window.location.href='student.php'">
           <img src="../assets/icons/back.png" alt="" style="height: 25px;"></button>
       </div>
     </div>
@@ -85,33 +81,26 @@
                 <div class="edit-wrapper">
                     <div class="edit-list">
 
-                        <form method="POST" action="student-edit.php?id=<?= $studentId ?>">
-                            <input type="hidden" name="action" value="edit_field">
+                        <form class="user-info" method="POST" action="student-edit.php?id=<?= $studentId ?>">
+                            <input type="hidden" name="action" value="edit_fields">
+
                             <div class="edit-row">
                                 <span>Name</span>
-                                <input type="hidden" name="field" value="name">
-                                <input class="edit-design" type="text" name="value" value="<?= htmlspecialchars($student['name']) ?>">
-                                <button type="submit" class="icon-btn">Save</button>
+                                <input class="edit-design" type="text" name="fields[name]" value="<?= htmlspecialchars($student['name']) ?>">
                             </div>
-                        </form>
 
-                        <form method="POST" action="student-edit.php?id=<?= $studentId ?>">
-                            <input type="hidden" name="action" value="edit_field">
                             <div class="edit-row">
                                 <span>Email</span>
-                                <input type="hidden" name="field" value="email">
-                                <input class="edit-design" type="text" name="value" value="<?= htmlspecialchars($student['email']) ?>">
-                                <button type="submit" class="icon-btn">Save</button>
+                                <input class="edit-design" type="text" name="fields[email]" value="<?= htmlspecialchars($student['email']) ?>">
                             </div>
-                        </form>
 
-                        <form method="POST" action="student-edit.php?id=<?= $studentId ?>">
-                            <input type="hidden" name="action" value="edit_field">
                             <div class="edit-row">
                                 <span>Phone Number</span>
-                                <input type="hidden" name="field" value="phone_number">
-                                <input class="edit-design" type="text" name="value" value="<?= htmlspecialchars($student['phone_number']) ?>">
-                                <button type="submit" class="icon-btn">Save</button>
+                                <input class="edit-design" type="text" name="fields[phone_number]" value="<?= htmlspecialchars($student['phone_number']) ?>">
+                            </div>
+
+                            <div style="display: flex; justify-content: center; margin-top: 12px;">
+                                <button type="submit" class="report-buttons" class="icon-btn">Save</button>
                             </div>
                         </form>
                     </div>
