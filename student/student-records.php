@@ -30,7 +30,8 @@
   }
 
   $userId     = $student['user_id'];
-  $keyword    = $_GET['search'] ?? '';
+  $keyword = isset($_GET['search']) ? trim($_GET['search']) : '';
+  $keyword = str_replace([';', "'", '"'], '', $keyword);
   $semester   = $_GET['semester'] ?? '';
   $gpa_filter = $_GET['gpa_filter'] ?? '';
 

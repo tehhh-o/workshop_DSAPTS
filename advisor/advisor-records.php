@@ -18,7 +18,8 @@
     include("../models/functions.php");
 
 
-    $keyword = $_GET['search'] ?? '';
+    $keyword = isset($_GET['search']) ? trim($_GET['search']) : '';
+    $keyword = str_replace([';', "'", '"'], '', $keyword);
     $userId = $_GET['user_id'] ?? null;
 
     $students = [];
