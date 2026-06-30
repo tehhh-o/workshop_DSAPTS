@@ -204,18 +204,26 @@
       </div>
 
     <?php elseif (!$userId): ?>
-      <tr>
-        <td colspan="4" style="text-align:center;">
-          Search and select a student
-        </td>
-      </tr>
+      <table>
+        <tbody>
+          <tr>
+            <td colspan="5" style="text-align:center;">
+              Search and select a student
+            </td>
+          </tr>
+        </tbody>
+      </table>
 
     <?php elseif (empty($subjects)): ?>
-      <tr>
-        <td colspan="4" style="text-align:center;">
-          No records found
-        </td>
-      </tr>
+      <table>
+        <tbody>
+          <tr>
+            <td colspan="5" style="text-align:center;">
+              No records found
+            </td>
+          </tr>
+        </tbody>
+      </table>
 
     <?php elseif ($isOverall): ?>
 
@@ -239,22 +247,26 @@
         <table style="width:100%; margin-top: 12px;">
           <thead>
             <tr>
+              <th>Course Code</th>
               <th>Course Name</th>
               <th>Credit</th>
               <th>Grade</th>
+              <th>GPA</th>
             </tr>
           </thead>
           <tbody>
             <?php if (empty($semSubjects)): ?>
               <tr>
-                <td colspan="3" style="text-align:center;">No subjects found for this semester.</td>
+                <td colspan="5" style="text-align:center;">No subjects found for this semester.</td>
               </tr>
             <?php else: ?>
               <?php foreach ($semSubjects as $subj): ?>
                 <tr>
+                  <td><?php echo htmlspecialchars($subj['subject_code']); ?></td>
                   <td><?php echo htmlspecialchars($subj['subject_name']); ?></td>
                   <td><?php echo htmlspecialchars($subj['credit_hours']); ?></td>
                   <td><?php echo htmlspecialchars($subj['grade']); ?></td>
+                  <td><?php echo htmlspecialchars(gradeToPoint($subj['grade'])); ?></td>
                 </tr>
               <?php endforeach; ?>
             <?php endif; ?>

@@ -27,17 +27,19 @@
             <table class="table-student">
                 <thead>
                     <tr>
-                        <th class="name-col" style="padding: 12px; text-align: left;">Student Name</th>
-                        <th style="padding: 12px; text-align: center; width: 20%;">Muet Status</th>
-                        <th style="padding: 12px; text-align: center; width: 15%;">CGPA</th>
-                        <th style="padding: 12px; text-align: center; width: 15%;">View Record</th>
+                        <th class="name-col" style="width: 40%;">Student Name</th>
+                        <th>Muet Status</th>
+                        <th>CGPA</th>
+                        <th>Plan To Continue Degree</th>
+                        <th>Preferred Degree Field</th>
+                        <th>View Record</th>
                     </tr>
                 </thead>
 
                 <tbody>
                     <?php if (empty($students)): ?>
                         <tr>
-                            <td colspan="4">No supervised students assigned to your record.</td>
+                            <td colspan="6">No supervised students assigned to your record.</td>
                         </tr>
                     <?php else: ?>
                         <?php foreach ($students as $s): ?>
@@ -49,17 +51,27 @@
                                 </td>
 
                                 <td>
-                                    <?= htmlspecialchars($s['muet_status']) ?>
+                                    <span style="<?= $s['muet_status'] != 'Pass' ? 'color: #dc3545;' : '' ?>">
+                                        <?= htmlspecialchars($s['muet_status']) ?>
+                                    </span>
                                 </td>
 
                                 <td>
                                     <?php if ($student_cgpa < 2.00): ?>
-                                        <span style="color: #dc3545; font-weight: bold;">⚠️ <?= number_format($student_cgpa, 2) ?></span>
+                                        <span style="color: #dc3545; font-weight: bold; display:inline-flex; gap:4px; align-items: center;"> <img src="../assets/icons/triangle-warning.png" alt="" style="height: 16px;"> <?= number_format($student_cgpa, 2) ?></span>
                                     <?php elseif ($student_cgpa >= 3.50): ?>
-                                        <span style="color: #28a745; font-weight: bold;">🌟 <?= number_format($student_cgpa, 2) ?></span>
+                                        <span style="color: #28a745; font-weight: bold; display:inline-flex; gap:4px; align-items: center;"> <img src="../assets/icons/medal.png" alt="" style="height: 16px;"> <?= number_format($student_cgpa, 2) ?></span>
                                     <?php else: ?>
                                         <?= number_format($student_cgpa, 2) ?>
                                     <?php endif; ?>
+                                </td>
+
+                                <td>
+                                    <?= htmlspecialchars($s['plan_to_degree']) ?>
+                                </td>
+
+                                <td>
+                                    <?= htmlspecialchars($s['preferred_degree_field'] ?? 'N/A') ?>
                                 </td>
 
                                 <td>

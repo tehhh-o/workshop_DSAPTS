@@ -120,9 +120,11 @@
         <table style="width:100%; margin-top: 12px;">
           <thead>
             <tr>
+              <th>Course Code</th>
               <th>Course Name</th>
               <th>Credit</th>
               <th>Grade</th>
+              <th>GPA</th>
             </tr>
           </thead>
           <tbody>
@@ -133,9 +135,11 @@
             <?php else: ?>
               <?php foreach ($semSubjects as $subj): ?>
                 <tr>
+                  <td><?php echo htmlspecialchars($subj['subject_code']); ?></td>
                   <td><?php echo htmlspecialchars($subj['subject_name']); ?></td>
                   <td><?php echo htmlspecialchars($subj['credit_hours']); ?></td>
                   <td><?php echo htmlspecialchars($subj['grade']); ?></td>
+                  <td><?php echo htmlspecialchars(gradeToPoint($subj['grade'])); ?></td>
                 </tr>
               <?php endforeach; ?>
             <?php endif; ?>

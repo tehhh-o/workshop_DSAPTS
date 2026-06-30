@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,8 +14,8 @@
   <?php
   session_start();
   if (!isset($_SESSION['uid'])) {
-      header("Location: ../index.php");
-      exit();
+    header("Location: ../index.php");
+    exit();
   }
   $activePage = 'records';
   include("components/sidebar-student.php");
@@ -26,8 +25,8 @@
   $student = getStudentByLoginId($conn, $loginId);
 
   if (!$student) {
-      echo "<p style='color:red;'>Student record not found.</p>";
-      exit();
+    echo "<p style='color:red;'>Student record not found.</p>";
+    exit();
   }
 
   $userId = $student['user_id'];
@@ -70,6 +69,7 @@
           <th>Course Name</th>
           <th>Credit</th>
           <th>Grade</th>
+          <th>GPA</th>
           <th>Semester</th>
         </tr>
       </thead>
@@ -81,11 +81,12 @@
         <?php else: ?>
           <?php foreach ($subjects as $subj): ?>
             <tr>
-              <td><?php echo htmlspecialchars($subj['subject_id']); ?></td>
+              <td><?php echo htmlspecialchars($subj['subject_code']); ?></td>
               <td><?php echo htmlspecialchars($subj['subject_name']); ?></td>
               <td><?php echo htmlspecialchars($subj['credit_hours']); ?></td>
               <td><?php echo htmlspecialchars($subj['grade']); ?></td>
-              <td><?php echo htmlspecialchars($subj['semester_id']); ?></td>
+              <td><?php echo htmlspecialchars(gradeToPoint($subj['grade'])); ?></td>
+              <td><?php echo htmlspecialchars($subj['semester_name']); ?></td>
             </tr>
           <?php endforeach; ?>
         <?php endif; ?>

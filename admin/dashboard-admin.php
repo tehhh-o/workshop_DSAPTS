@@ -30,6 +30,13 @@
 
 <body class="page-body main-gradient-bg">
     <?php
+    session_start();
+
+    if (!isset($_SESSION['user_id'])) {
+        header("Location: ../index.php");
+        exit();
+    }
+
     $activePage = 'dashboard';
     include("components/sidebar-admin.php");
     include("../models/functions.php");
@@ -44,7 +51,7 @@
 
     <main class="main-content main-rounded">
         <h1 class="content-title">Dashboard</h1>
-        <h3 class="content-welcome">Welcome, Admin</h3>
+        <h3 class="content-welcome">Welcome, <?= $_SESSION['name'] ?></h3>
 
         <div class="dashboard-summary-cards">
             <div class="stat-card" style="border-left:5px solid #007bff;">

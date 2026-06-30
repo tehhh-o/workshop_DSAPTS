@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,8 +15,8 @@
   <?php
   session_start();
   if (!isset($_SESSION['uid'])) {
-      header("Location: ../index.php");
-      exit();
+    header("Location: ../index.php");
+    exit();
   }
   $activePage = 'dashboard';
   include("components/sidebar-student.php");
@@ -29,14 +28,14 @@
   $student = getStudentByLoginId($conn, $loginId);
 
   if (!$student) {
-      echo "<p style='color:red;'>Student record not found.</p>";
-      exit();
+    echo "<p style='color:red;'>Student record not found.</p>";
+    exit();
   }
 
   $userId  = $student['user_id'];
   $allSubjects = getStudentSubjects($conn, $userId);
   $subjectsBySem = [];
-  
+
   foreach ($allSubjects as $subj) {
     $semName = $subj['semester_name'];
     $subjectsBySem[$semName][] = $subj;
@@ -51,22 +50,22 @@
   $semGPAsJson   = json_encode($semGPAs);
   ?>
 
-    <main class="main-content main-rounded">
+  <main class="main-content main-rounded">
     <h1 class="content-title">Dashboard</h1>
     <h3 class="content-welcome">Welcome, <?php echo htmlspecialchars($student['name']); ?></h3>
     <div class="dashboard-summary-cards">
-            <div class="stat-card" style="border-left: 5px solid #007bff;">
-                <div class="card-text-head">Current CGPA</div>
-                <div class="card-text-body"  style="color: #212529;"><?= number_format($student['CGPA'], 2) ?></div>
-            </div>
+      <div class="stat-card" style="border-left: 5px solid #007bff;">
+        <div class="card-text-head">Current CGPA</div>
+        <div class="card-text-body" style="color: #212529;"><?= number_format($student['CGPA'], 2) ?></div>
+      </div>
 
-            <div class="stat-card" style="border-left: 5px solid #7b00ff;">
-                <div class="card-text-head">Muet Status</div>
-                <div class="card-text-body"  style="color: #212529;"><?=  $student['muet_status'] ?></div>
-            </div>
+      <div class="stat-card" style="border-left: 5px solid #7b00ff;">
+        <div class="card-text-head">Muet Status</div>
+        <div class="card-text-body" style="color: #212529;"><?= $student['muet_status'] ?></div>
+      </div>
 
-        </div>
-    
+    </div>
+
     <div class="chart-container">
       <canvas id="gpaChart"></canvas>
     </div>

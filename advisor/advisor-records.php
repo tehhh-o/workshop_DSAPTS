@@ -81,28 +81,30 @@
         <table>
             <thead>
                 <tr>
-                    <th colspan="4" style="text-align:left;">
+                    <th colspan="6" style="text-align:left;">
                         <h3>Student Name: <?= $studentName ?></h3>
                 </tr>
                 <tr>
-                    <th>Course ID</th>
+                    <th>Course Code</th>
                     <th>Course Name</th>
                     <th>Credit</th>
                     <th>Grade</th>
+                    <th>GPA</th>
+                    <th>Semester</th>
                 </tr>
             </thead>
 
             <tbody>
                 <?php if (!$userId): ?>
                     <tr>
-                        <td colspan="4" style="text-align:center;">
+                        <td colspan="6" style="text-align:center;">
                             Search and select a student
                         </td>
                     </tr>
 
                 <?php elseif (empty($subjects)): ?>
                     <tr>
-                        <td colspan="4" style="text-align:center;">
+                        <td colspan="6" style="text-align:center;">
                             No records found
                         </td>
                     </tr>
@@ -114,6 +116,8 @@
                             <td><?= $s['subject_name'] ?></td>
                             <td><?= $s['credit_hours'] ?></td>
                             <td><?= $s['grade'] ?></td>
+                            <td><?= gradeToPoint($s['grade']) ?></td>
+                            <td><?= $s['semester_name'] ?></td>
                         </tr>
                     <?php endforeach; ?>
                 <?php endif; ?>
