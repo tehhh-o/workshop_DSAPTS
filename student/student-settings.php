@@ -38,8 +38,8 @@
     $value = $_POST['value']  ?? '';
 
     $allowedFields = ['phone_number', 'email', 'address', 'muet_status' , 'plan_degree', 'preferred_degree_field'];
+    
     if (in_array($field, $allowedFields) && $value !== '') {
-
       if ($field === 'muet_status') {
         $safeValue = $conn->real_escape_string($value);
         $updated = $conn->query("UPDATE student SET muet_status = '$safeValue' WHERE user_id = '$userId'");
@@ -52,13 +52,13 @@
       } else {
         $updated = updateUserField($conn, $userId, $field, $value);
       }
+      
       $successMsg = $updated ? 'Saved successfully.' : 'Save failed.';
-
       $student = getStudentByLoginId($conn, $loginId);
     } else {
       $errorMsg = 'Invalid field or empty value.';
     }
-  }
+  } 
   ?>
 
   <main class="main-content main-rounded">
