@@ -79,7 +79,7 @@
     <table>
       <thead>
         <tr>
-          <th colspan="5" style="text-align: start;">
+          <th colspan="7" style="text-align: start;">
             Name: <?php echo htmlspecialchars($student['name']); ?>
           </th>
         </tr>

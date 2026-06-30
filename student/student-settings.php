@@ -37,8 +37,7 @@
     $field = $_POST['field']  ?? '';
     $value = $_POST['value']  ?? '';
 
-    $allowedFields = ['phone_number', 'email', 'address', 'muet_status'];
-
+    $allowedFields = ['phone_number', 'email', 'address', 'muet_status' , 'plan_degree', 'preferred_degree_field'];
     if (in_array($field, $allowedFields) && $value !== '') {
 
       if ($field === 'muet_status') {
@@ -125,10 +124,52 @@
         </div>
       </form>
 
-      <div class="auth-links">
-        <p></p>
-        <a href="../auth/change-password.php">Change Password</a>
+      <form method="POST" action="student-settings.php">
+        <input type="hidden" name="field" value="plan_degree">
+        <div class="input-field">
+          <h4>Plan to Degree</h4>
+          <div class="edit-field" style="display: flex; align-items: center; gap: 10px;">
+          
+          <select name="value" style="width: 192px; height: 38px; padding: 6px 12px; border: 1px solid #ccc; border-radius: 6px; background-color: #fff5f5; font-size: 14px; color: #333; box-sizing: border-box;">
+            <option value="Yes"<?php echo htmlspecialchars($student['plan_degree'] ?? '') === 'Yes' ? 'selected' : '' ?>>Yes</option>
+            <option value="No" <?php echo htmlspecialchars($student['plan_degree'] ?? '') === 'No' ? 'selected' : '' ?>>No</option>
+          </select>     
+          
+          <button type="submit" style="background:none; border:none; cursor:pointer; padding:0; display: flex; align-items: center;">
+            <img src="../assets/icons/edit.png" alt="Save" style="width: 24px; height: 24px;">
+          </button>
+          
+          </div> 
+        </div>
+       </form>
+
+    <form method="POST" action="student-settings.php">
+      <input type="hidden" name="field" value="preferred_degree_field">
+      <div class="input-field">
+        <h4>Preferred Degree Field</h4>
+        <div class="edit-field" style="display: flex; align-items: center; gap: 10px;">
+          
+          <select name="value" style="width: 192px; height: 38px; padding: 3px 9px; border: 1px solid #ccc; border-radius: 6px; background-color: #fff5f5; font-size: 14px; color: #333; box-sizing: border-box;">
+            <option value="Game Technology" <?php echo htmlspecialchars($student['preferred_degree_field'] ?? '') === 'Game Technology' ? 'selected' : '' ?>>Game Technology</option>
+            <option value="Software Engineering" <?php echo htmlspecialchars($student['preferred_degree_field'] ?? '') === 'Software Engineering' ? 'selected' : '' ?>>Software Engineering</option>
+            <option value="Artificial Intelligence" <?php echo htmlspecialchars($student['preferred_degree_field'] ?? '') === 'Artificial Intelligence' ? 'selected' : '' ?>>Artificial Intelligence</option>
+            <option value="Interactive Media" <?php echo htmlspecialchars($student['preferred_degree_field'] ?? '') === 'Interactive Media' ? 'selected' : '' ?>>Interactive Media</option>
+            <option value="Computer Networking" <?php echo htmlspecialchars($student['preferred_degree_field'] ?? '') === 'Computer Networking' ? 'selected' : '' ?>>Computer Networking</option>
+            <option value="Cloud Computing" <?php echo htmlspecialchars($student['preferred_degree_field'] ?? '') === 'Cloud Computing' ? 'selected' : '' ?>>Cloud Computing</option>                    
+            <option value="N/A" <?php echo htmlspecialchars($student['preferred_degree_field'] ?? '') === 'N/A' ? 'selected' : '' ?>>N/A</option>
+          </select>
+          
+          <button type="submit" style="background:none; border:none; cursor:pointer; padding:0; display: flex; align-items: center;">
+            <img src="../assets/icons/edit.png" alt="Save" style="width: 24px; height: 24px;">
+          </button>
+          
+        </div>
       </div>
+    </form>
+        <div class="auth-links">
+                <p></p>
+                <a href="../auth/change-password.php">Change Password</a>
+        </div>
     </div>
   </main>
 </body>
