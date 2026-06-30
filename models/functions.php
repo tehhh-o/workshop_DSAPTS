@@ -633,7 +633,7 @@ function addStudent($conn, $name, $email, $phone, $password, $advisor_id) {
 }
 
 function editAdmin($conn, $user_id, $field, $value) {
-    $allowed_fields = ['name', 'email', 'phone_number', 'login_id'];
+    $allowed_fields = ['name', 'email', 'phone_number'];
     if (!in_array($field, $allowed_fields) || $value === '') {
         return ['success' => false, 'message' => 'Invalid input.'];
     }

@@ -38,7 +38,13 @@
         ?>
 
         <main class="main-content main-rounded">
-            <h1 class="content-title">Add Admin</h1>
+            <div class="title-row">
+            <h1 class="content-title">Edit Admin</h1>
+            <div class="back-button">
+            <button style="background: transparent; border:none;" type="button"  onclick="window.location.href='admin.php'">
+            <img src="../assets/icons/back.png" alt="" style="height: 25px;"></button>
+            </div>
+        </div>
 
             <div class="content">
 
