@@ -646,18 +646,38 @@ function addStudent($conn, $name, $email, $phone, $password, $advisor_id) // to 
     }
 }
 
-function editAdmin($conn, $user_id, $field, $value) // validates and updates specific details for an admin profile
+function editAdmin($conn, $user_id, $fieldsAndValues) // validates and updates specific details for an admin profile
 {
     $allowed_fields = ['name', 'email', 'phone_number'];
-    if (!in_array($field, $allowed_fields) || $value === '') {
-        return ['success' => false, 'message' => 'Invalid input.'];
+    $savedCount = 0;
+    $errors = [];
+ 
+    foreach ($fieldsAndValues as $field => $value) {
+        $value = trim($value);
+ 
+        if (!in_array($field, $allowed_fields)) {
+            continue;
+        }
+        if ($value === '') {
+            continue;
+        }
+ 
+        $result = updateUserField($conn, $user_id, $field, $value);
+        if ($result) {
+            $savedCount++;
+        } else {
+            $errors[] = "Could not save $field.";
+        }
     }
-    $result = updateUserField($conn, $user_id, $field, $value);
-    if ($result) {
-        return ['success' => true, 'message' => 'Updated successfully!'];
-    } else {
-        return ['success' => false, 'message' => 'Something went wrong, please try again.'];
+ 
+    if ($savedCount === 0 && empty($errors)) {
+        return ['success' => false, 'message' => 'No changes were made.'];
     }
+    if (!empty($errors)) {
+        return ['success' => false, 'message' => implode(' ', $errors)];
+    }
+ 
+    return ['success' => true, 'message' => 'Updated successfully!'];
 }
 
 function editAdvisor($conn, $user_id, $field, $value) // validates and updates specific details for an advisor profile or department
