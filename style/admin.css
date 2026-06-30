@@ -271,5 +271,41 @@
     margin: 10px;
 }
 
+tr.grade-pass td {
+    background: #e3f6e3;
+}
+
+tr.grade-conditional td {
+    background: #fff7d6;
+}
+
+tr.grade-fail td {
+    background: #fbe1e1;
+}
+
+tr.grade-none td {
+    background: #fff;
+}
+
+.grade-locked td {
+    background: #e0e0e0;
+    color: #414141;
+}
+
+.lock-note {
+    font-size: 13px;
+    color: #e4f756;
+    margin-bottom: 10px;
+}
+
+.save-btn {
+    background: rgba(255, 255, 255, 0.5);
+    transition: background 0.2s ease;
+}
+
+.glass-btn:hover {
+    background: rgba(0, 0, 0, 0.15);
+}
+
 /* to expand anything after changing display:grid to display:flex
     add flex-direction: column and width: 100% */

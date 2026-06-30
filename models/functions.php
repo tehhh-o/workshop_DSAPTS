@@ -667,3 +667,116 @@ function editStudent($conn, $user_id, $field, $value) {
         return ['success' => false, 'message' => 'Invalid input.'];
     }
 }
+// ===================== Student Subject - Simplified Per-Semester Functions =====================
+
+function getSubjectsBySemester($conn, $semId) // curriculum subjects belonging to one semester
+{
+    $result = $conn->query("SELECT * FROM subject WHERE semester_id = '$semId' ORDER BY subject_code ASC");
+    $data = [];
+    while ($row = $result->fetch_assoc()) {
+        $data[] = $row;
+    }
+    return $data;
+}
+
+function getSubjectGrade($conn, $userId, $subjectId, $semId) // the single grade row for this subject in this exact semester
+{
+    $result = $conn->query("
+        SELECT * FROM student_subject
+        WHERE user_id = '$userId' AND subject_id = '$subjectId' AND semester_id = '$semId'
+        LIMIT 1
+    ");
+    return $result ? $result->fetch_assoc() : null;
+}
+
+function classifyGrade($grade) // 'pass' | 'conditional' | 'fail' | 'none'
+{
+    if ($grade === null || $grade === '') {
+        return 'none';
+    }
+    $grade = strtoupper(trim($grade));
+    if ($grade === 'E') {
+        return 'fail';
+    }
+    if (in_array($grade, ['D+', 'C-'])) {
+        return 'conditional';
+    }
+    return 'pass';
+}
+
+function isSemesterUnlocked($conn, $userId, $semId, $allSemesters)
+// A semester is unlocked if it's the first one, OR every subject in the
+// immediately preceding semester has a grade entered and that grade isn't a fail (E).
+{
+    $prevSemId = null;
+    foreach ($allSemesters as $i => $s) {
+        if ((int) $s['semester_id'] === (int) $semId) {
+            if ($i > 0) {
+                $prevSemId = (int) $allSemesters[$i - 1]['semester_id'];
+            }
+            break;
+        }
+    }
+
+    if ($prevSemId === null) {
+        return true; // first semester, always open
+    }
+
+    $prevSubjects = getSubjectsBySemester($conn, $prevSemId);
+    if (empty($prevSubjects)) {
+        return true; // nothing defined for the previous semester, don't block
+    }
+
+    foreach ($prevSubjects as $subj) {
+        $row = getSubjectGrade($conn, $userId, $subj['subject_id'], $prevSemId);
+        if (!$row || empty($row['grade']) || classifyGrade($row['grade']) === 'fail') {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+function saveSemesterGrades($conn, $userId, $semId, $gradesBySubjectId)
+// $gradesBySubjectId = [subject_id => grade]. Blank entries are skipped (left untouched).
+{
+    $savedCount = 0;
+    $errors = [];
+
+    foreach ($gradesBySubjectId as $subjectId => $grade) {
+        $grade = strtoupper(trim($grade));
+        if ($grade === '') {
+            continue;
+        }
+        if (gradeToPoint($grade) === null) {
+            $errors[] = "Subject #$subjectId: invalid grade.";
+            continue;
+        }
+
+        $subjectId = (int) $subjectId;
+        $status = (classifyGrade($grade) === 'fail') ? 'Fail' : 'Pass';
+
+        $stmt = $conn->prepare("
+            INSERT INTO student_subject (user_id, subject_id, semester_id, grade, status, attempt_no)
+            VALUES (?, ?, ?, ?, ?, 1)
+            ON DUPLICATE KEY UPDATE grade = ?, status = ?
+        ");
+        $stmt->bind_param('iiissss', $userId, $subjectId, $semId, $grade, $status, $grade, $status);
+        $ok = $stmt->execute();
+        $stmt->close();
+
+        if ($ok) {
+            $savedCount++;
+        } else {
+            $errors[] = "Subject #$subjectId: could not save.";
+        }
+    }
+
+    if ($savedCount === 0 && empty($errors)) {
+        return ['success' => false, 'message' => 'No grades were entered.'];
+    }
+    if (!empty($errors)) {
+        return ['success' => false, 'message' => implode(' ', $errors)];
+    }
+    return ['success' => true, 'message' => $savedCount . ' subject(s) saved successfully!'];
+}
