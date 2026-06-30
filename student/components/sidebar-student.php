@@ -31,7 +31,7 @@
          <img src="../assets/icons/settings.png" alt="">
          <h3>Settings</h3>
      </a>
-     <a class="sidebar-nav sidebar-logout" href="../logout.php">
+     <a class="sidebar-nav sidebar-logout" href="../auth/logout.php">
          <img src="../assets/icons/exit.png" alt="" style="transform: scaleX(-1);">
          <h3>Logout</h3>
      </a>
