@@ -8,6 +8,21 @@
     <link rel="stylesheet" href="../style/layout.css">
     <link rel="stylesheet" href="../style/auth.css">
     <link rel="stylesheet" href="../style/styles.css">
+    <style>
+        /* Optional: Ensures a clean look when inputs transition from disabled to active */
+        .edit-field input:disabled {
+            background-color: #f5f5f5;
+            color: #888;
+            cursor: not-allowed;
+            border: 1px solid #ddd;
+        }
+        .edit-field input {
+            background-color: #fff;
+            color: #333;
+            border: 1px solid #ccc;
+            transition: all 0.3s ease;
+        }
+    </style>
 </head>
 
 <body class="page-body main-gradient-bg">
@@ -31,28 +46,29 @@
 
     $userId = $advisor['user_id'];
 
-
     $successMsg = '';
     $errorMsg   = '';
 
+    // Fixed PHP form handling to support saving all inputs together
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $field = $_POST['field']  ?? '';
-        $value = $_POST['value']  ?? '';
+        $phone = $_POST['phone_number'] ?? '';
+        $email = $_POST['email'] ?? '';
+        $address = $_POST['address'] ?? '';
 
-        $allowedFields = ['phone_number', 'email', 'address'];
+        if ($phone !== '' && $email !== '' && $address !== '') {
+            $u1 = updateUserField($conn, $userId, 'phone_number', $phone);
+            $u2 = updateUserField($conn, $userId, 'email', $email);
+            $u3 = updateUserField($conn, $userId, 'address', $address);
 
-        if (in_array($field, $allowedFields) && $value !== '') {
-
-            if ($field === 'muet_status') {
-                $updated = $conn->query("UPDATE student SET muet_status = '$value' WHERE user_id = '$userId'");
+            if ($u1 && $u2 && $u3) {
+                $successMsg = 'Saved successfully.';
             } else {
-                $updated = updateUserField($conn, $userId, $field, $value);
+                $errorMsg = 'Some or all fields failed to save.';
             }
-            $successMsg = $updated ? 'Saved successfully.' : 'Save failed.';
-
-            $advisor = getAdvisorByLoginId($conn, $loginId);
+            // Refresh advisor array data
+            $advisor = getUserById($conn, "advisor", "advisor.user_id", $_SESSION['user_id']);
         } else {
-            $errorMsg = 'Invalid field or empty value.';
+            $errorMsg = 'All fields are required.';
         }
     }
     ?>
@@ -73,56 +89,86 @@
         </div>
 
         <div class="panel">
-            <h3>Personal Info</h3>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <h3 style="margin: 0;">Personal Info</h3>
+                <button type="button" id="edit-btn" style="padding: 6px 14px; border-radius: 8px; cursor: pointer; background-color: #f0f0f0; border: 1px solid #ccc; color: #333; font-weight: bold;">
+                    Edit Profile
+                </button>
+            </div>
 
-            <!-- Phone -->
             <form method="POST" action="advisor-settings.php">
-                <input type="hidden" name="field" value="phone_number">
+                
                 <div class="input-field">
                     <h4>Phone Number</h4>
                     <div class="edit-field">
-                        <input type="text" name="value" value="<?php echo htmlspecialchars($advisor['phone_number'] ?? ''); ?>">
-                        <button type="submit" style="background:none;border:none;cursor:pointer;padding:0;">
-                            <img src="../assets/icons/edit.png" alt="Save">
-                        </button>
+                        <input type="text" class="toggle-input" name="phone_number" value="<?php echo htmlspecialchars($advisor['phone_number'] ?? ''); ?>" disabled>
                     </div>
                 </div>
-            </form>
 
-            <!-- Email -->
-            <form method="POST" action="advisor-settings.php">
-                <input type="hidden" name="field" value="email">
                 <div class="input-field">
                     <h4>Email</h4>
                     <div class="edit-field">
-                        <input type="text" name="value" value="<?php echo htmlspecialchars($advisor['email'] ?? ''); ?>">
-                        <button type="submit" style="background:none;border:none;cursor:pointer;padding:0;">
-                            <img src="../assets/icons/edit.png" alt="Save">
-                        </button>
+                        <input type="text" class="toggle-input" name="email" value="<?php echo htmlspecialchars($advisor['email'] ?? ''); ?>" disabled>
                     </div>
                 </div>
-            </form>
 
-            <!-- Address -->
-            <form method="POST" action="advisor-settings.php">
-                <input type="hidden" name="field" value="address">
                 <div class="input-field">
                     <h4>Address</h4>
                     <div class="edit-field">
-                        <input type="text" name="value" value="<?php echo htmlspecialchars($advisor['address'] ?? ''); ?>">
-                        <button type="submit" style="background:none;border:none;cursor:pointer;padding:0;">
-                            <img src="../assets/icons/edit.png" alt="Save">
-                        </button>
+                        <input type="text" class="toggle-input" name="address" value="<?php echo htmlspecialchars($advisor['address'] ?? ''); ?>" disabled>
                     </div>
                 </div>
+
+                <div id="action-buttons" class="form-submit" style="margin-top: 20px; display: none;">
+                    <div style="display: flex; justify-content: flex-end; width: 100%; gap: 12px;">
+                        
+                        <button type="reset" id="cancel-btn" style="padding:10px 18px; border-radius:12px; cursor:pointer; background-color: #f0f0f0; border: 1px solid #ccc; color: #333;">
+                            Clear
+                        </button>
+
+                        <button type="submit" style="padding:10px 18px; border-radius:12px; cursor:pointer; background-color: #007bff; border: 1px solid #007bff; color: white;">
+                            Save Changes
+                        </button>
+
+                    </div>
+                </div>
+
             </form>
 
-            <div class="auth-links">
+            <div class="auth-links" style="padding:10px">
                 <p></p>
                 <a href="../auth/change-password.php">Change Password</a>
             </div>
         </div>
     </main>
+
+    <script>
+        const editBtn = document.getElementById('edit-btn');
+        const actionButtons = document.getElementById('action-buttons');
+        const inputs = document.querySelectorAll('.toggle-input');
+        const cancelBtn = document.getElementById('cancel-btn');
+
+        editBtn.addEventListener('click', () => {
+            // Enable inputs
+            inputs.forEach(input => {
+                input.removeAttribute('disabled');
+            });
+            // Show Save/Clear buttons, hide Edit button
+            actionButtons.style.display = 'block';
+            editBtn.style.display = 'none';
+        });
+
+        cancelBtn.addEventListener('click', () => {
+            // If clear/reset is clicked, optionally lock back down after reset delay
+            setTimeout(() => {
+                inputs.forEach(input => {
+                    input.setAttribute('disabled', 'true');
+                });
+                actionButtons.style.display = 'none';
+                editBtn.style.display = 'block';
+            }, 10);
+        });
+    </script>
 </body>
 
 </html>
