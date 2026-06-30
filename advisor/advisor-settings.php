@@ -40,7 +40,7 @@
     $advisor = getUserById($conn, "advisor", "advisor.user_id", $_SESSION['user_id']);
 
     if (!$advisor) {
-        echo "<p style='color:red;'>Advisor record not found.</p>";
+        echo "<script>alert('Advisor record not found.');</script>";
         exit();
     }
 
@@ -71,15 +71,15 @@
     }
     ?>
 
+    <?php if ($successMsg): ?>
+        <script>alert("<?php echo addslashes($successMsg); ?>");</script>
+    <?php endif; ?>
+    <?php if ($errorMsg): ?>
+        <script>alert("<?php echo addslashes($errorMsg); ?>");</script>
+    <?php endif; ?>
+
     <main class="main-content main-rounded">
         <h1 class="content-title">Settings</h1>
-
-        <?php if ($successMsg): ?>
-            <p style="color: green; margin-bottom: 8px;"><?php echo $successMsg; ?></p>
-        <?php endif; ?>
-        <?php if ($errorMsg): ?>
-            <p style="color: red; margin-bottom: 8px;"><?php echo $errorMsg; ?></p>
-        <?php endif; ?>
 
         <div class="input-field" style="margin-top: 12px;">
             <h3 style="margin-right: 24px;">Advisor ID</h3>
