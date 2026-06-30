@@ -31,7 +31,7 @@
         <h3>Settings</h3>
     </a>
 
-    <a class="sidebar-nav sidebar-logout" href="../">
+    <a class="sidebar-nav sidebar-logout" href="../logout.php">
         <img src="../assets/icons/exit.png" alt="">
         <h3>Logout</h3>
     </a>
