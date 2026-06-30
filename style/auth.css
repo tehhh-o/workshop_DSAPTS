@@ -51,14 +51,19 @@
     position: absolute;
     top: 16px;
     right: 0;
+         margin-right: 16px;
 }
 
 .nav-links a {
-    font-size: 16px;
-    color: #003087;
+   margin-left: 20px;
     text-decoration: none;
-    font-weight: 500;
-    margin-right: 16px;
+            color: #002060;
+            font-weight: bold;
+       
+}
+
+.nav-links a:hover {
+    text-decoration: underline;
 }
 
 .auth-logo {

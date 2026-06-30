@@ -90,7 +90,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             <nav class="auth-links">
                 <a href="../">Back to Login</a>
-                <a href="">Need More Help?</a>
+                <a href="../contact.php">Need More Help?</a>
             </nav>
         </form>
 
