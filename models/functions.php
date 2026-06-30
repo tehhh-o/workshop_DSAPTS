@@ -171,6 +171,40 @@ if (!empty($degree_field)) {
 
     return $data;
 }
+
+function getStudentAcademicRecords($conn, $studentUserId, $searchCourse = '', $semester = '', $gradeStatus = '')
+{
+    $sql = "
+        SELECT * FROM student_courses 
+        WHERE user_id = '$studentUserId'
+    ";
+
+    if (!empty($searchCourse)) {
+        $sql .= " AND (course_code LIKE '%$searchCourse%' OR course_name LIKE '%$searchCourse%')";
+    }
+
+    if (!empty($semester)) {
+        $sql .= " AND semester = '$semester'";
+    }
+
+    if ($gradeStatus === 'low') {
+        $sql .= " AND gpa < 3.00"; // Below B
+    } elseif ($gradeStatus === 'fail') {
+        $sql .= " AND gpa <= 1.70"; // C- and below
+    }
+
+    $sql .= " ORDER BY semester DESC, course_code ASC";
+
+    $result = $conn->query($sql);
+    $data = [];
+
+    while ($row = $result->fetch_assoc()) {
+        $data[] = $row;
+    }
+
+    return $data;
+}
+
 function getStudentSubjects($conn, $userId) // get all subject for a student for all sem
 {
     $sql = "
@@ -435,15 +469,34 @@ function getRecentAlerts($conn)
     return $data;
 }
 
-function searchsubject($conn, $table, $keyword) // to search subject using subject name or id (student)
+function getStudentFilteredRecords($conn, $userId, $keyword = '', $semester = '', $gpaFilter = '')
 {
     $sql = "
-        SELECT $table.*, subject.*
-        FROM $table
-        INNER JOIN subject ON $table.subject_id = subject.subject_id
-        WHERE subject.subject_name LIKE '%$keyword%'
-        OR subject.subject_id LIKE '%$keyword%'
+        SELECT student_subject.*, subject.*, semester.semester_name
+        FROM student_subject
+        INNER JOIN subject ON student_subject.subject_id = subject.subject_id
+        INNER JOIN semester ON student_subject.semester_id = semester.semester_id
+        WHERE student_subject.user_id = '$userId'
     ";
+
+    if (!empty($keyword)) {
+        $sql .= " AND (subject.subject_name LIKE '%$keyword%' OR subject.subject_code LIKE '%$keyword%')";
+    }
+
+    if (!empty($semester)) {
+        $sql .= " AND semester.semester_name = '$semester'";
+    }
+
+    if ($gpaFilter == 'excellent') {
+        $sql .= " AND student_subject.grade IN ('A+', 'A', 'A-', 'B+')";
+    } elseif ($gpaFilter == 'average') {
+        $sql .= " AND student_subject.grade IN ('B', 'B-', 'C+', 'C')";
+    } elseif ($gpaFilter == 'risk') {
+        $sql .= " AND student_subject.grade IN ('C-', 'D+', 'D', 'F')";
+    }
+
+    $sql .= " ORDER BY semester.semester_name DESC, subject.subject_id ASC";
+
     $result = $conn->query($sql);
     $data = [];
 
@@ -455,7 +508,6 @@ function searchsubject($conn, $table, $keyword) // to search subject using subje
 
     return $data;
 }
-
 function addAdvisor($conn, $name, $email, $phone, $password, $department) {
     if (empty($name) || empty($email) || empty($phone) || empty($password) || empty($department)) {
         return ['success' => false, 'message' => 'Please fill in all fields.'];

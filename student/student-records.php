@@ -29,17 +29,12 @@
     exit();
   }
 
-  $userId = $student['user_id'];
-  $keyword  = '';
-  $subjects = [];
+  $userId     = $student['user_id'];
+  $keyword    = $_GET['search'] ?? '';
+  $semester   = $_GET['semester'] ?? '';
+  $gpa_filter = $_GET['gpa_filter'] ?? '';
 
-  if (isset($_GET['search']) && $_GET['search'] !== '') {
-    $keyword  = $_GET['search'];
-    $subjects = searchsubject($conn, 'student_subject', $keyword);
-    $subjects = array_filter($subjects, fn($s) => $s['user_id'] == $userId);
-  } else {
-    $subjects = getStudentSubjects($conn, $userId);
-  }
+  $subjects = getStudentFilteredRecords($conn, $userId, $keyword, $semester, $gpa_filter);
   ?>
 
   <main class="main-content main-rounded">
@@ -48,14 +43,37 @@
     <div class="toolbar">
       <form method="GET" action="student-records.php" style="display: contents;">
         <div class="search">
-          <span>☰</span>
           <input name="search" placeholder="Search Course" value="<?php echo htmlspecialchars($keyword); ?>">
           <button type="submit" style="background: none; border: none; cursor: pointer; padding: 0;">
             <img src="../assets/icons/search.png" alt="" style="height: 16px;">
           </button>
         </div>
+        <div class="filters" style="display: flex; align-items: center; gap: 10px;">
+        <span class="filter-label">Filter:</span>
+
+        <select name="semester" class="filter-select">
+            <option value="">All Semesters</option>
+            <option value="1-2024/2025" <?= $semester === '1-2024/2025' ? 'selected' : '' ?>>1-2024/2025</option>
+            <option value="2-2024/2025" <?= $semester === '2-2024/2025' ? 'selected' : '' ?>>2-2024/2025</option>
+        </select>
+
+        <select name="gpa_filter" class="filter-select">
+            <option value="">Course Grade</option>
+            <option value="excellent" <?= $gpa_filter === 'excellent' ? 'selected' : '' ?>>Excellent (A/B+)</option>
+            <option value="average" <?= $gpa_filter === 'average' ? 'selected' : '' ?>>Average (B-/C)</option>
+            <option value="risk" <?= $gpa_filter === 'risk' ? 'selected' : '' ?>>At Risk (C- & below)</option>
+        </select>
+
+        <button type="submit" class="filter-btn">
+            Apply
+        </button>
+        
+        <a href="student-records.php" class="clear-btn" style="text-decoration: none; font-size: 14px; color: #666;">Clear All</a>
+        </div>
       </form>
     </div>
+
+    
 
     <table>
       <thead>
