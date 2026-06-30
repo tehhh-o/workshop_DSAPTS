@@ -122,23 +122,6 @@
                 <a href="../auth/change-password.php">Change Password</a>
             </div>
         </div>
-
-        <div class="panel">
-            <h3>Theme</h3>
-            <div class="input-field">
-                <h4>Theme Mode</h4>
-                <div class="theme-field">
-                    <div class="theme-mode">
-                        <img src="../assets/icons/moon.png" alt="">
-                        <h4>Dark</h4>
-                    </div>
-                    <div class="theme-mode active-theme">
-                        <img src="../assets/icons/sun.png" alt="">
-                        <h4>Light</h4>
-                    </div>
-                </div>
-            </div>
-        </div>
     </main>
 </body>
 
