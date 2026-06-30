@@ -5,7 +5,7 @@ include("database/connection.php");
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $uid = mysqli_real_escape_string($conn, $_POST["uid"]);
-    $pwd = $_POST["pwd"]; // Ini kata laluan mentah yang ditaip oleh user di login form
+    $pwd = $_POST["pwd"]; 
 
     $sql = "SELECT * FROM user WHERE login_id='$uid'";
     $result = $conn->query($sql);
@@ -57,10 +57,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
             <nav class="nav-links">
-                <a href="index.php">Home</a>
+                <a href="index.php" style="border-bottom: 2px solid #003087;">Home</a>
                 <a href="about.php">About Us</a>
                 <a href="contact.php">Contact Us</a>
-        
+     
             </nav>
 
             <img src="assets/imgs/dsapts-full.png" alt="" class="auth-logo">
