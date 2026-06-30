@@ -46,6 +46,11 @@
     $nameParts = explode(' ', $student['name'], 2);
     $firstName = $nameParts[0];
     $lastName  = isset($nameParts[1]) ? $nameParts[1] : '';
+
+    $advisor = null;
+    if (!empty($student['advisor_id'])) {
+        $advisor = getAdvisorByStudentId($conn, $student['advisor_id']);
+    }
     ?>
 
     <main class="main-content main-rounded">
@@ -104,7 +109,39 @@
                 <span class="value"><?php echo htmlspecialchars($student['address'] ?? '-'); ?></span>
             </div>
         </div>
-
+            <div class="details-box" style="margin-top: 20px;">
+                <div class="details-grid2">
+                    <h2 class="label">Academic Advisor Contact</h2>
+                </div>
+                <?php if ($advisor): ?>
+                <div class="details-grid" style="margin-top: 12px;">
+                    <div class="info-group">
+                        <span class="label">Advisor Name</span>
+                        <span class="value"><?php echo htmlspecialchars($advisor['name']); ?></span>
+                    </div>
+                    <div class="info-group">
+                        <span class="label">Phone Number</span>
+                        <span class="value">
+                            <a href="tel:<?php echo htmlspecialchars($advisor['phone_number'] ?? ''); ?>" style="color: inherit; text-decoration: none;">
+                                <?php echo htmlspecialchars($advisor['phone_number'] ?? '-'); ?>
+                            </a>
+                        </span>
+                    </div>
+                    <div class="info-group" style="grid-column: span 2;">
+                        <span class="label">Email</span>
+                        <span class="value">
+                            <a href="mailto:<?php echo htmlspecialchars($advisor['email'] ?? ''); ?>" style="color: inherit; text-decoration: none;">
+                                <?php echo htmlspecialchars($advisor['email'] ?? '-'); ?>
+                            </a>
+                        </span>
+                    </div>
+                </div>
+                <?php else: ?>
+                <div style="margin-top: 12px;">
+                    <span class="value">No advisor has been assigned yet. Please contact the faculty office for assistance.</span>
+                </div>
+                <?php endif; ?>
+            </div>
     </main>
 
 </body>
