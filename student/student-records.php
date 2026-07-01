@@ -121,7 +121,7 @@
       <tbody>
         <?php if (empty($subjects)): ?>
           <tr>
-            <td colspan="5" style="text-align: center;">No records found.</td>
+            <td colspan="8" style="text-align: center;">No records found.</td>
           </tr>
         <?php else: ?>
           <?php foreach ($subjects as $subj): ?>
