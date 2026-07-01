@@ -2,6 +2,7 @@
 function refreshAlert($conn)
 {
     $newAlertsCount = 0;
+    $dismissedAlertsCount = 0;
 
     $alertMessages = [
         'CGPA Warning' => 'Your CGPA has fallen below the recommended threshold. Please consult your advisor.',
@@ -10,6 +11,7 @@ function refreshAlert($conn)
     ];
 
     $dateSent = date('Y-m-d');
+    $allAlertTypes = array_keys($alertMessages);
 
     $sql = "SELECT user_id, CGPA, muet_status FROM student";
     $result = $conn->query($sql);
@@ -34,31 +36,60 @@ function refreshAlert($conn)
                 $alertsToCheck[] = 'Academic Standing Notice';
             }
 
-            foreach ($alertsToCheck as $alertType) {
+            foreach ($allAlertTypes as $alertType) {
+                $shouldBeActive = in_array($alertType, $alertsToCheck);
+
+                // check if got existing active alert
                 $checkSql = "
                     SELECT alert_id FROM alert
                     WHERE user_id = '$userId'
                     AND alert_type = '$alertType'
                 ";
                 $checkResult = $conn->query($checkSql);
+                $exists = $checkResult && $checkResult->num_rows > 0;
 
-                if ($checkResult && $checkResult->num_rows == 0) {
+                if ($shouldBeActive && !$exists) {
+                    // condition is met but no alert yet so insert
                     $message = $alertMessages[$alertType];
                     $insertSql = "
                         INSERT INTO alert (user_id, alert_type, message, date_sent)
                         VALUES ('$userId', '$alertType', '$message', '$dateSent')
                     ";
-
                     $conn->query($insertSql);
                     $newAlertsCount++;
+                } elseif (!$shouldBeActive && $exists) {
+                    // alert exists but condition is no longer met then delete it
+                    $deleteSql = "
+                        DELETE FROM alert
+                        WHERE user_id = '$userId'
+                        AND alert_type = '$alertType'
+                    ";
+                    $conn->query($deleteSql);
+                    $dismissedAlertsCount++;
                 }
             }
         }
     }
 
-    if ($newAlertsCount > 0) {
-        return "Success: $newAlertsCount new alert(s) issued.";
+    $uid = $_SESSION['uid'] ?? '';
+    $isAdmin = str_starts_with($uid, 'A');
+
+    $parts = [];
+    if ($isAdmin) {
+        if ($newAlertsCount > 0) {
+            $parts[] = "$newAlertsCount alert(s) added";
+        }
+        if ($dismissedAlertsCount > 0) {
+            $parts[] = "$dismissedAlertsCount alert(s) dismissed";
+        }
+        if (empty($parts)) {
+            return "No changes: alerts are already up to date.";
+        }
+        return "Success: " . implode(", ", $parts) . ".";
     } else {
-        return "No new alert issued.";
+        if (empty($parts)) {
+            return "No changes: alerts are already up to date.";
+        }
+        return "Success: alerts refreshed.";
     }
 }

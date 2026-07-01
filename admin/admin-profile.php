@@ -12,10 +12,16 @@
 
 <body class="page-body main-gradient-bg">
     <?php
+    session_start();
+    if (!isset($_SESSION['uid'])) {
+        header("Location: ../index.php");
+        exit();
+    }
     $activePage = 'profile';
     include("components/sidebar-admin.php");
     include("../models/functions.php");
-    $user = getUserById($conn, "admin", "login_id", "A03241012");
+    $loginId = $_SESSION['uid'];
+    $user = getUserById($conn, "admin", "admin.user_id", $_SESSION['user_id']);
 
     $nameParts = explode(' ', trim($user['name']));
     $firstName = $nameParts[0];
