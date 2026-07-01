@@ -159,7 +159,7 @@
         <div class="input-field">
           <h4>Muet Status</h4>
           <div class="edit-field">
-            <select name="muet_status_val" class="toggle-input" data-initial="<?php echo htmlspecialchars($student['muet_status'] ?? ''); ?>" style="width: 198px; height: 38px; padding: 6px 12px; border: 1px solid #ccc; border-radius: 6px; background-color: #fff5f5; font-size: 14px; color: #333; box-sizing: border-box;" disabled>
+            <select name="muet_status_val" class="toggle-input" data-initial="<?php echo htmlspecialchars($student['muet_status'] ?? ''); ?>" style="width: 198px; height: 38px; padding: 6px 12px; border: 1px solid #ccc; border-radius: 6px; background-color: #fff5f5; font-size: 14px; box-sizing: border-box;" disabled>
               <option value="Pass" <?php echo htmlspecialchars($student['muet_status'] ?? '') === 'Pass' ? 'selected' : '' ?>>Pass</option>
               <option value="Failed" <?php echo htmlspecialchars($student['muet_status'] ?? '') === 'Failed' ? 'selected' : '' ?>>Failed</option>
               <option value="Not Taken" <?php echo htmlspecialchars($student['muet_status'] ?? '') === 'Not Taken' ? 'selected' : '' ?>>Not Taken</option>
@@ -170,7 +170,7 @@
         <div class="input-field">
           <h4>Plan to Degree</h4>
           <div class="edit-field">
-            <select name="plan_degree_val" class="toggle-input" data-initial="<?php echo htmlspecialchars($student['plan_to_degree'] ?? ''); ?>" style="width: 198px; height: 38px; padding: 6px 12px; border: 1px solid #ccc; border-radius: 6px; background-color: #fff5f5; font-size: 14px; color: #333; box-sizing: border-box;" disabled>
+            <select name="plan_degree_val" class="toggle-input" data-initial="<?php echo htmlspecialchars($student['plan_to_degree'] ?? ''); ?>" style="width: 198px; height: 38px; padding: 6px 12px; border: 1px solid #ccc; border-radius: 6px; background-color: #fff5f5; font-size: 14px; box-sizing: border-box;" disabled>
               <option value="Yes" <?php echo htmlspecialchars($student['plan_to_degree'] ?? '') === 'Yes' ? 'selected' : '' ?>>Yes</option>
               <option value="No" <?php echo htmlspecialchars($student['plan_to_degree'] ?? '') === 'No' ? 'selected' : '' ?>>No</option>
             </select>
@@ -180,7 +180,7 @@
         <div class="input-field">
           <h4>Preferred Degree Field</h4>
           <div class="edit-field">
-            <select name="preferred_degree_field_val" class="toggle-input" data-initial="<?php echo htmlspecialchars($student['preferred_degree_field'] ?? ''); ?>" style="width: 198px; height: 38px; padding: 3px 9px; border: 1px solid #ccc; border-radius: 6px; background-color: #fff5f5; font-size: 14px; color: #333; box-sizing: border-box;" disabled>
+            <select name="preferred_degree_field_val" class="toggle-input" data-initial="<?php echo htmlspecialchars($student['preferred_degree_field'] ?? ''); ?>" style="width: 198px; height: 38px; padding: 3px 9px; border: 1px solid #ccc; border-radius: 6px; background-color: #fff5f5; font-size: 14px; box-sizing: border-box;" disabled>
               <option value="Game Technology" <?php echo htmlspecialchars($student['preferred_degree_field'] ?? '') === 'Game Technology' ? 'selected' : '' ?>>Game Technology</option>
               <option value="Software Engineering" <?php echo htmlspecialchars($student['preferred_degree_field'] ?? '') === 'Software Engineering' ? 'selected' : '' ?>>Software Engineering</option>
               <option value="Artificial Intelligence" <?php echo htmlspecialchars($student['preferred_degree_field'] ?? '') === 'Artificial Intelligence' ? 'selected' : '' ?>>Artificial Intelligence</option>
@@ -229,12 +229,14 @@
 
       actionButtons.style.display = 'block';
       editBtn.style.display = 'none';
+      inputs.style.color = "black";
     });
 
     cancelBtn.addEventListener('click', () => {
       setTimeout(() => {
         inputs.forEach(input => {
           input.setAttribute('disabled', 'true');
+          input.style.color = "grey";
         });
         actionButtons.style.display = 'none';
         editBtn.style.display = 'block';

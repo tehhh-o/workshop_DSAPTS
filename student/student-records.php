@@ -58,10 +58,10 @@
         <div style="display: flex; align-items: center; gap: 12px;">
 
           <div class="search" style="display: flex; max-width: 350px;">
-            <input type="text" name="search" placeholder="Search Course" value="<?= htmlspecialchars($keyword ?? '') ?>"
+            <input type="text" name="search" placeholder="Search Course" value="<?= htmlspecialchars($keyword ?? '') ?>">
 
-              <button type="submit" style="background: none; border: none; cursor: pointer; padding: 0; display: flex; align-items: center; justify-content: center; padding-right: 10px;">
-            <img src="../assets/icons/search.png" alt="" style="height: 16px;">
+            <button type="submit" style="background: none; border: none; cursor: pointer; padding: 0; display: flex; align-items: center; justify-content: center;">
+              <img src="../assets/icons/search.png" alt="" style="height: 16px;">
             </button>
           </div>
 
