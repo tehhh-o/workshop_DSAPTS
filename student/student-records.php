@@ -9,16 +9,17 @@
   <link rel="stylesheet" href="../style/student.css">
   <link rel="stylesheet" href="../style/styles.css">
 </head>
-    <script>
-function toggleFilters() {
+<script>
+  function toggleFilters() {
     const panel = document.getElementById('filterPanel');
     if (panel.style.display === 'none' || panel.style.display === '') {
-        panel.style.display = 'flex';
+      panel.style.display = 'flex';
     } else {
-        panel.style.display = 'none';
+      panel.style.display = 'none';
     }
-}
+  }
 </script>
+
 <body class="page-body main-gradient-bg">
   <?php
   session_start();
@@ -32,6 +33,7 @@ function toggleFilters() {
 
   $loginId = $_SESSION['uid'];
   $student = getStudentByLoginId($conn, $loginId);
+  $semesters     = getAllSemesters($conn);
 
   if (!$student) {
     echo "<p style='color:red;'>Student record not found.</p>";
@@ -50,51 +52,55 @@ function toggleFilters() {
   <main class="main-content main-rounded">
     <h1 class="content-title">Records</h1>
 
-<div class="toolbar">
-    <form class="toolbar-form" method="GET" action="student-records.php" style="display: flex; flex-direction: column; gap: 15px;">
-        
-        <div style="display: flex; align-items: center; gap: 12px;">
-            
-            <div class="search" style="display: flex; max-width: 350px;">
-                <input type="text" name="search" placeholder="Search Course" value="<?= htmlspecialchars($keyword ?? '') ?>"
-                
-                <button type="submit" style="background: none; border: none; cursor: pointer; padding: 0; display: flex; align-items: center; justify-content: center; padding-right: 10px;">
-                    <img src="../assets/icons/search.png" alt="" style="height: 16px;">
-                </button>
-            </div>
+    <div class="toolbar">
+      <form class="toolbar-form" method="GET" action="student-records.php" style="display: flex; flex-direction: column; gap: 15px;">
 
-            <button type="button" onclick="toggleFilters()" class="filter-btn" >
-                <img src="../assets/icons/filter.png" alt="" style="height: 25px; width: auto; display: block;"> 
-                    Filters
+        <div style="display: flex; align-items: center; gap: 12px;">
+
+          <div class="search" style="display: flex; max-width: 350px;">
+            <input type="text" name="search" placeholder="Search Course" value="<?= htmlspecialchars($keyword ?? '') ?>"
+
+              <button type="submit" style="background: none; border: none; cursor: pointer; padding: 0; display: flex; align-items: center; justify-content: center; padding-right: 10px;">
+            <img src="../assets/icons/search.png" alt="" style="height: 16px;">
             </button>
-            
+          </div>
+
+          <button type="button" onclick="toggleFilters()" class="filter-btn">
+            <img src="../assets/icons/filter.png" alt="" style="height: 25px; width: auto; display: block;">
+            Filters
+          </button>
+
         </div>
 
-        <?php 
+        <?php
         $hasActiveFilters = (!empty($semester) || !empty($gpa_filter));
         ?>
 
         <div id="filterPanel" style="display: <?= $hasActiveFilters ? 'flex' : 'none' ?>; flex-wrap: wrap; align-items: center; gap: 10px; background-color: #f8fafc; border: 1px solid #e2e8f0; padding: 15px; border-radius: 8px;">
-            
-            <select name="semester" class="filter-select">
-                <option value="">All Semesters</option>
-                <option value="1-2024/2025" <?= ($semester ?? '') === '1-2024/2025' ? 'selected' : '' ?>>1-2024/2025</option>
-                <option value="2-2024/2025" <?= ($semester ?? '') === '2-2024/2025' ? 'selected' : '' ?>>2-2024/2025</option>
-            </select>
 
-            <select name="gpa_filter" class="filter-select">
-                <option value="">Course Grade</option>
-                <option value="excellent" <?= ($gpa_filter ?? '') === 'excellent' ? 'selected' : '' ?>>Excellent (A/B+)</option>
-                <option value="average" <?= ($gpa_filter ?? '') === 'average' ? 'selected' : '' ?>>Average (B-/C)</option>
-                <option value="risk" <?= ($gpa_filter ?? '') === 'risk' ? 'selected' : '' ?>>At Risk (C- & below)</option>
-            </select>
+          <select name="semester" class="filter-select">
+            <option value="">All Semesters</option>
+            <?php foreach ($semesters as $s): ?>
+              <option value="<?php echo $s['semester_name']; ?>"
+                <?php echo $s['semester_name'] == $semester ? 'selected' : ''; ?>>
+                <?php echo htmlspecialchars($s['semester_name']); ?>
+              </option>
+            <?php endforeach; ?>
+          </select>
 
-            <button type="submit" class="filter-btn">Apply</button>
-            <a href="student-records.php" class="clear-btn" style="text-decoration: none; font-family: sans-serif; font-size: 14px; color: #64748b;">Clear All</a>
+          <select name="gpa_filter" class="filter-select">
+            <option value="">Course Grade</option>
+            <option value="excellent" <?= ($gpa_filter ?? '') === 'excellent' ? 'selected' : '' ?>>Excellent (A/B+)</option>
+            <option value="average" <?= ($gpa_filter ?? '') === 'average' ? 'selected' : '' ?>>Average (B-/C)</option>
+            <option value="risk" <?= ($gpa_filter ?? '') === 'risk' ? 'selected' : '' ?>>At Risk (C- & below)</option>
+          </select>
+
+          <button type="submit" class="filter-btn">Apply</button>
+          <a href="student-records.php" class="clear-btn" style="text-decoration: none; font-family: sans-serif; font-size: 14px; color: #64748b;">Clear All</a>
         </div>
-    </form>
-</div>
-    
+      </form>
+    </div>
+
 
     <table>
       <thead>

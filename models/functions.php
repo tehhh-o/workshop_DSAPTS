@@ -653,17 +653,17 @@ function editAdmin($conn, $user_id, $fieldsAndValues) // validates and updates s
     $allowed_fields = ['name', 'email', 'phone_number'];
     $savedCount = 0;
     $errors = [];
- 
+
     foreach ($fieldsAndValues as $field => $value) {
         $value = trim($value);
- 
+
         if (!in_array($field, $allowed_fields)) {
             continue;
         }
         if ($value === '') {
             continue;
         }
- 
+
         $result = updateUserField($conn, $user_id, $field, $value);
         if ($result) {
             $savedCount++;
@@ -671,14 +671,14 @@ function editAdmin($conn, $user_id, $fieldsAndValues) // validates and updates s
             $errors[] = "Could not save $field.";
         }
     }
- 
+
     if ($savedCount === 0 && empty($errors)) {
         return ['success' => false, 'message' => 'No changes were made.'];
     }
     if (!empty($errors)) {
         return ['success' => false, 'message' => implode(' ', $errors)];
     }
- 
+
     return ['success' => true, 'message' => 'Updated successfully!'];
 }
 
@@ -706,8 +706,6 @@ function editStudent($conn, $user_id, $field, $value) // checks fields allowed f
         return ['success' => false, 'message' => 'Invalid input.'];
     }
 }
-
-// ===================== Student Subject - Simplified Per-Semester Functions =====================
 
 function getSubjectsBySemester($conn, $semId) // curriculum subjects belonging to one semester
 {
@@ -774,9 +772,42 @@ function isSemesterUnlocked($conn, $userId, $semId, $allSemesters) // checks if 
 
     return true;
 }
+function updateStudentCGPA($conn, $userId)
+{
+    $userId = (int) $userId;
+
+    $sql = "
+        SELECT ss.grade, sub.credit_hours
+        FROM student_subject ss
+        JOIN subject sub ON sub.subject_id = ss.subject_id
+        WHERE ss.user_id = $userId
+    ";
+    $result = $conn->query($sql);
+
+    $totalCredit = 0;
+    $totalPoints = 0;
+
+    while ($row = $result->fetch_assoc()) {
+        $point = gradeToPoint($row['grade']);
+        if ($point === null) {
+            continue; // skip invalid/ungraded rows just in case
+        }
+        $credits = (float) $row['credit_hours'];
+        $totalCredit += $credits;
+        $totalPoints += $point * $credits;
+    }
+
+    $cgpa = $totalCredit > 0 ? round($totalPoints / $totalCredit, 2) : 0;
+
+    $conn->query("UPDATE student SET total_credit_taken = $totalCredit, CGPA = $cgpa WHERE user_id = $userId");
+
+    return ['total_credit_taken' => $totalCredit, 'CGPA' => $cgpa];
+}
 
 function saveSemesterGrades($conn, $userId, $semId, $gradesBySubjectId) // saves or updates structural semester grade entries for a student
 {
+    $userId = (int) $userId;
+    $semId = (int) $semId;
     $savedCount = 0;
     $errors = [];
 
@@ -792,21 +823,25 @@ function saveSemesterGrades($conn, $userId, $semId, $gradesBySubjectId) // saves
 
         $subjectId = (int) $subjectId;
         $status = (classifyGrade($grade) === 'fail') ? 'Fail' : 'Pass';
+        $gradeEsc = $conn->real_escape_string($grade);
+        $statusEsc = $conn->real_escape_string($status);
 
-        $stmt = $conn->prepare("
+        $sql = "
             INSERT INTO student_subject (user_id, subject_id, semester_id, grade, status, attempt_no)
-            VALUES (?, ?, ?, ?, ?, 1)
-            ON DUPLICATE KEY UPDATE grade = ?, status = ?
-        ");
-        $stmt->bind_param('iiissss', $userId, $subjectId, $semId, $grade, $status, $grade, $status);
-        $ok = $stmt->execute();
-        $stmt->close();
+            VALUES ($userId, $subjectId, $semId, '$gradeEsc', '$statusEsc', 1)
+            ON DUPLICATE KEY UPDATE grade = '$gradeEsc', status = '$statusEsc'
+        ";
+        $ok = $conn->query($sql);
 
         if ($ok) {
             $savedCount++;
         } else {
             $errors[] = "Subject #$subjectId: could not save.";
         }
+    }
+
+    if ($savedCount > 0) {
+        updateStudentCGPA($conn, $userId);
     }
 
     if ($savedCount === 0 && empty($errors)) {
