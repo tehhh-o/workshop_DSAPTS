@@ -493,6 +493,8 @@ function getRecentAlerts($conn) // get the 3 most recent alerts triggered in the
     return $data;
 }
 
+
+
 function getStudentFilteredRecords($conn, $userId, $keyword = '', $semester = '', $gpaFilter = '') // advanced filtering of a student's enrolled subjects
 {
     $sql = "
