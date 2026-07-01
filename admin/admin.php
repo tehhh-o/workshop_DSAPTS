@@ -65,11 +65,11 @@
                         <td class="name-col"><?= $a['name'] ?></td>
 
                         <td class="action">
-                            <a class="icon-btn" href="admin-edit.php?id=<?= $a['user_id'] ?>">✎</a>
+                            <a class="icon-btn" href="admin-edit.php?id=<?= $a['user_id'] ?>"><img src="../assets/icons/pencil.png" alt="" style="height: 16px;"></a>
                         </td>
 
                         <td class="action">
-                            <a class="icon-btn" href="admin-delete.php?id=<?= $a['user_id'] ?>">🗑</a>
+                            <a class="icon-btn" href="admin-delete.php?id=<?= $a['user_id'] ?>"><img src="../assets/icons/trash.png" alt="" style="height: 16px;"></a>
                         </td>
                     </tr>
                 <?php endforeach; ?>

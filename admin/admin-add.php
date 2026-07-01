@@ -26,7 +26,7 @@
             $_POST['name'],
             $_POST['email'],
             $_POST['phone'],
-            $_POST['password']
+            'admin123'
         );
 
         if ($result['success']) {
@@ -74,11 +74,6 @@
                                 <div class="edit-row">
                                     <span>Phone Number</span>
                                     <input class="add-design" type="text" name="phone" placeholder="e.g. 012-3456789">
-                                </div>
-
-                                <div class="edit-row">
-                                    <span>Password</span>
-                                    <input class="add-design" type="password" name="password" placeholder="Password">
                                 </div>
 
                                 <button class="add-submit" type="submit">Add</button>

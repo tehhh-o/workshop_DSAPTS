@@ -552,9 +552,10 @@ function addAdvisor($conn, $name, $email, $phone, $password, $department) // to 
 
     $num = (int)substr($lastId, -1) + 1;
     $login_id = 'M111356' . $num;
+    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
     $stmt = $conn->prepare("INSERT INTO user (login_id, name, email, password, phone_number) VALUES (?, ?, ?, ?, ?)");
-    $stmt->bind_param('sssss', $login_id, $name, $email, $password, $phone);
+    $stmt->bind_param('sssss', $login_id, $name, $email, $hashedPassword, $phone);
 
     if ($stmt->execute()) {
         $new_user_id = $conn->insert_id;
@@ -589,9 +590,10 @@ function addAdmin($conn, $name, $email, $phone, $password) // to add a new admin
 
     $num = (int)substr($lastId, -2) + 1;
     $login_id = 'A0324101' . str_pad($num, 1, '0', STR_PAD_LEFT);
+    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
     $stmt = $conn->prepare("INSERT INTO user (login_id, name, email, password, phone_number) VALUES (?, ?, ?, ?, ?)");
-    $stmt->bind_param('sssss', $login_id, $name, $email, $password, $phone);
+    $stmt->bind_param('sssss', $login_id, $name, $email, $hashedPassword, $phone);
 
     if ($stmt->execute()) {
         $new_user_id = $conn->insert_id;
@@ -626,9 +628,10 @@ function addStudent($conn, $name, $email, $phone, $password, $advisor_id) // to 
 
     $num = (int)substr($lastId, 1) + 1;
     $login_id = 'D' . $num;
+    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
     $stmt = $conn->prepare("INSERT INTO user (login_id, name, email, password, phone_number) VALUES (?, ?, ?, ?, ?)");
-    $stmt->bind_param('sssss', $login_id, $name, $email, $password, $phone);
+    $stmt->bind_param('sssss', $login_id, $name, $email, $hashedPassword, $phone);
 
     if ($stmt->execute()) {
         $new_user_id = $conn->insert_id;

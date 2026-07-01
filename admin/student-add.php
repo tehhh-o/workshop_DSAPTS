@@ -27,7 +27,7 @@
         trim($_POST['name']     ?? ''),
         trim($_POST['email']    ?? ''),
         trim($_POST['phone']    ?? ''),
-        trim($_POST['password'] ?? ''),
+        'student123',
         (int) ($_POST['advisor_id'] ?? 0)
       );
 
@@ -41,7 +41,7 @@
  
     <main class="main-content main-rounded">
       <div class="title-row">
-        <h1 class="content-title">Edit Admin</h1>
+        <h1 class="content-title">Add Student</h1>
         <div class="back-button">
         <button style="background: transparent; border:none;" type="button"  onclick="window.location.href='admin.php'">
         <img src="../assets/icons/back.png" alt="" style="height: 25px;"></button>
@@ -79,10 +79,6 @@
                   <option value="<?= $adv['user_id'] ?>"><?= htmlspecialchars($adv['name']) ?></option>
                 <?php endforeach; ?>
               </select>
-            </div>
-            <div class="edit-row">
-              <span>Password</span>
-              <input class="add-design" type="password" name="password" placeholder="Password">
             </div>
             <button class="add-submit" type="submit">Add</button>
           </div>

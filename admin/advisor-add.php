@@ -26,8 +26,8 @@
             $_POST['name'],
             $_POST['email'],
             $_POST['phone'],
-            $_POST['password'],
-            $_POST['department']
+            'advisor123',
+            'Computer Science'
         );
 
         if ($result['success']) {
@@ -40,7 +40,7 @@
 
         <main class="main-content main-rounded">
             <div class="title-row">
-            <h1 class="content-title">Edit Admin</h1>
+            <h1 class="content-title">Add Advisor</h1>
             <div class="back-button">
             <button style="background: transparent; border:none;" type="button"  onclick="window.location.href='admin.php'">
             <img src="../assets/icons/back.png" alt="" style="height: 25px;"></button>
@@ -76,17 +76,6 @@
                                     <span>Phone Number</span>
                                     <input class="add-design" type="text" name="phone" placeholder="e.g. 012-3456789">
                                 </div>
-
-                                <div class="edit-row">
-                                    <span>Department</span>
-                                    <input class="add-design" type="text" name="department" placeholder="e.g. Computer Science">
-                                </div>
-
-                                <div class="edit-row">
-                                    <span>Password</span>
-                                    <input class="add-design" type="password" name="password" placeholder="Password">
-                                </div>
-
                                 <button class="add-submit" type="submit">Add</button>
 
                             </div>
