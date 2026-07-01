@@ -8,6 +8,21 @@
     <link rel="stylesheet" href="../style/layout.css">
     <link rel="stylesheet" href="../style/auth.css">
     <link rel="stylesheet" href="../style/styles.css">
+    <style>
+
+        .edit-field input:disabled {
+            background-color: #f5f5f5;
+            color: #888;
+            cursor: not-allowed;
+            border: 1px solid #ddd;
+        }
+        .edit-field input {
+            background-color: #fff;
+            color: #333;
+            border: 1px solid #ccc;
+            transition: all 0.3s ease;
+        }
+    </style>
 
 </head>
 
@@ -35,7 +50,6 @@
     $successMsg = '';
     $errorMsg   = '';
 
-    // Fixed PHP form handling to support saving all inputs together
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $phone = $_POST['phone_number'] ?? '';
         $email = $_POST['email'] ?? '';
@@ -51,7 +65,6 @@
             } else {
                 $errorMsg = 'Some or all fields failed to save.';
             }
-            // Refresh advisor array data
             $advisor = getUserById($conn, "advisor", "advisor.user_id", $_SESSION['user_id']);
         } else {
             $errorMsg = 'All fields are required.';

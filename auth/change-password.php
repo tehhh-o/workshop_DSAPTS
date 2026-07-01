@@ -15,6 +15,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $newPwd = $_POST["new_pwd"];   
     $confirmPwd = $_POST["confirm_pwd"]; 
 
+    // Passowrd validation pattern:
+    // ^(?=.*[A-Z])       -> Must contain at least one uppercase letter
+    // (?=.*\d)           -> Must contain at least one digit
+    // (?=.*[^A-Za-z0-9]) -> Must contain at least one special character/symbol
+    // .{8,20}$           -> Must be between 8 and 20 characters long
+
+    $passwordPattern = '/^(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,20}$/';
+
     $sql = "SELECT * FROM user WHERE login_id='$uid'";
     $result = mysqli_query($conn, $sql);
 
@@ -35,11 +43,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         } 
         elseif ($newPwd !== $confirmPwd) {
             echo "<script>alert('New password and confirm password do not match');</script>";
-        } elseif ($newPwd === $oldPwd) {
+        } 
+        elseif ($newPwd === $oldPwd) {
             echo "<script>alert('New password and old password cannot be the same');</script>";
-        } else {
-            $safeNewPwd = mysqli_real_escape_string($conn, $newPwd);
-            $hashedPassword = password_hash($safeNewPwd, PASSWORD_DEFAULT);
+        } 
+        // Backend Validation Check
+        elseif (!preg_match($passwordPattern, $newPwd)) {
+            echo "<script>alert('Password must be 8-20 characters long, include at least 1 uppercase letter, 1 number, and 1 symbol.');</script>";
+        } 
+        else {
+           
+            $hashedPassword = password_hash($newPwd, PASSWORD_DEFAULT);
             $update = "UPDATE user SET password='$hashedPassword' WHERE login_id='$uid'";
             
             if (mysqli_query($conn, $update)) {
@@ -101,7 +115,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             <div class="auth-field">
                 <label for="new_pwd">New Password</label>
-                <input type="password" id="new_pwd" name="new_pwd" required>
+                <input 
+                    type="password" 
+                    id="new_pwd" 
+                    name="new_pwd" 
+                    minlength="8"
+                    maxlength="20"
+                    pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,20}$"
+                    title="Must be between 8 and 20 characters, containing at least 1 uppercase letter, 1 number, and 1 special character."
+                    required
+                >
             </div>
 
             <div class="auth-field">

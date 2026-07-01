@@ -9,21 +9,35 @@ include("../database/connection.php");
 // - deleteUser($conn, $table, $user_id)                   // to delete a user(admin,advisor,student)
 // - searchUserByName($conn, $table, $keyword)             // to search user (admin, advisor, student)
 // - getAllUser($conn, $table)                             // to get all personal detail for all user
+// - filterAdvisorStudents($conn, $advisorId, $keyword, $muet, $cgpa, $plan_degree, $degree_field) // to filter and search students assigned to a specific advisor
+// - getStudentAcademicRecords($conn, $studentUserId, $searchCourse, $semester, $gradeStatus) // to retrieve student academic history from student_courses with optional filtering
 // - getStudentSubjects($conn, $userId)                    // get all subject for a student for all sem
 // - getStudentSubjectsBySemester($conn, $userId, $semId)  // get all subject for a student for a specific sem
 // - calculateGPA($subjects)                               // to calculate the gpa for a sem or cgpa for all sem, pass $subjects based on type of getStudentSubject called
-// - getAllAlerts($conn)                                   //add user
-// - searchAlertByName($conn, $keyword)                    //edit user
-// - filterAdvisorStudents
-
-
-// Incomplete Functions
-// - subject related stuff (probably add in student add btn on admin->student.php page) (manage student subject)
-// - alert related trigger logic (main muet, secondary gpa,cgpa)
-// - phpmailer (otp, pseudo auto alert(send mail every 1pm monday) orrr manual alert(add a "send alert to student" btn for advisor)) (manual easier to demo)
-// - hash password on add new user(add advisor,admin,student) as now plaintext
-// - login to hash entered password to compare hashed db password
-// - logout to clear session (code already at top of dashboard_admin)
+// - getAllAlerts($conn)                                   // get all system alerts with the corresponding student's name
+// - getStudentByLoginId($conn, $login_id)                 // get student full profile by session login_id
+// - getAdvisorByLoginId($conn, $login_id)                 // get advisor full profile by session login_id
+// - getAdvisorByStudentId($conn, $advisor_id)             // get advisor details from student's advisor_id
+// - getAllSemesters($conn)                                // get all semesters for dropdown lists
+// - searchAlertByName($conn, $keyword)                    // search alerts by student name
+// - getAdvisorAlerts($conn, $advisorId)                   // get all alerts triggered by students belonging to a specific advisor
+// - getAdvisorStudents($conn, $advisorId)                 // get all students assigned to a specific advisor sorted by name
+// - searchAdvisorStudents($conn, $advisorId, $keyword)    // search for students assigned to a specific advisor by name keyword
+// - gradeToPoint($grade)                                  // converts a letter grade into its corresponding GPA points
+// - updateUserProfile($conn, $userId, $phone, $email, $address) // to update multiple user profile fields (phone, email, and address) at once
+// - getRecentAlerts($conn)                                // get the 3 most recent alerts triggered in the system
+// - getStudentFilteredRecords($conn, $userId, $keyword, $semester, $gpaFilter) // advanced filtering of a student's enrolled subjects
+// - addAdvisor($conn, $name, $email, $phone, $password, $department) // to add a new advisor user and auto-generate their login ID
+// - addAdmin($conn, $name, $email, $phone, $password)     // to add a new admin user and auto-generate their login ID
+// - addStudent($conn, $name, $email, $phone, $password, $advisor_id) // to add a new student user, assign an advisor, and auto-generate their login ID
+// - editAdmin($conn, $user_id, $field, $value)             // validates and updates specific details for an admin profispecific details for an advisor profile or department
+// - editStudent($conn, $user_id, $field, $value)           // checks fields allowed fole
+// - editAdvisor($conn, $user_id, $field, $value)           // validates and updates r student editing
+// - getSubjectsBySemester($conn, $semId)                  // curriculum subjects belonging to one semester
+// - getSubjectGrade($conn, $userId, $subjectId, $semId)   // the single grade row for this subject in this exact semester
+// - classifyGrade($grade)                                 // classifies a letter grade as 'pass', 'conditional', 'fail', or 'none'
+// - isSemesterUnlocked($conn, $userId, $semId, $allSemesters) // checks if a semester is unlocked based on preceding semester requirements
+// - saveSemesterGrades($conn, $userId, $semId, $gradesBySubjectId) // saves or updates structural semester grade entries for a student
 
 
 function getCount($conn, $table)  // for admin dashboard count
@@ -70,7 +84,7 @@ function updateUserField($conn, $userId, $field, $value) // to update a single u
 function deleteUser($conn, $table, $user_id) // to delete a user(admin,advisor,student)
 {
     if ($table === 'student') {
-    $conn->query("DELETE FROM student_subject WHERE user_id = '$user_id'");
+        $conn->query("DELETE FROM student_subject WHERE user_id = '$user_id'");
     }
 
     $childDeleted = $conn->query("
@@ -123,7 +137,7 @@ function getAllUser($conn, $table) // to get all personal detail for all user
     return $data;
 }
 
-function filterAdvisorStudents($conn, $advisorId, $keyword, $muet, $cgpa, $plan_degree, $degree_field)
+function filterAdvisorStudents($conn, $advisorId, $keyword, $muet, $cgpa, $plan_degree, $degree_field) // to filter and search students assigned to a specific advisor
 {
     $sql = "
         SELECT student.*, user.*
@@ -144,13 +158,13 @@ function filterAdvisorStudents($conn, $advisorId, $keyword, $muet, $cgpa, $plan_
         $sql .= " AND student.plan_to_degree = '$plan_degree'";
     }
 
-if (!empty($degree_field)) {
-    if ($degree_field === 'N/A') {
-        $sql .= " AND (student.preferred_degree_field IS NULL OR student.preferred_degree_field = '')";
-    } else {
-        $sql .= " AND student.preferred_degree_field = '$degree_field'";
+    if (!empty($degree_field)) {
+        if ($degree_field === 'N/A') {
+            $sql .= " AND (student.preferred_degree_field IS NULL OR student.preferred_degree_field = '')";
+        } else {
+            $sql .= " AND student.preferred_degree_field = '$degree_field'";
+        }
     }
-}
 
     if ($cgpa == 'excellent') {
         $sql .= " AND student.CGPA >= 3.50";
@@ -172,7 +186,7 @@ if (!empty($degree_field)) {
     return $data;
 }
 
-function getStudentAcademicRecords($conn, $studentUserId, $searchCourse = '', $semester = '', $gradeStatus = '')
+function getStudentAcademicRecords($conn, $studentUserId, $searchCourse = '', $semester = '', $gradeStatus = '') // to retrieve student academic history from student_courses with optional filtering
 {
     $sql = "
         SELECT * FROM student_courses 
@@ -265,7 +279,7 @@ function calculateGPA($subjects)  // to calculate the gpa for a sem or cgpa for 
     return round($totalPoints / $totalCredits, 2);
 }
 
-function getAllAlerts($conn) // get all alerts with student name
+function getAllAlerts($conn) // get all system alerts with the corresponding student's name
 {
     $sql = "
         SELECT alert.*, user.name
@@ -297,7 +311,7 @@ function getStudentByLoginId($conn, $login_id) // get student full profile by se
     return $result ? $result->fetch_assoc() : null;
 }
 
-function getAdvisorByLoginId($conn, $login_id)
+function getAdvisorByLoginId($conn, $login_id) // get advisor full profile by session login_id
 {
     $result = $conn->query("
         SELECT advisor.*, user.*
@@ -323,8 +337,7 @@ function getAdvisorByStudentId($conn, $advisor_id) // get advisor details from s
     return $result ? $result->fetch_assoc() : null;
 }
 
-
-function getAllSemesters($conn) // get all semesters for dropdown
+function getAllSemesters($conn) // get all semesters for dropdown lists
 {
     $result = $conn->query("SELECT * FROM semester ORDER BY semester_id ASC");
     $data = [];
@@ -357,7 +370,7 @@ function searchAlertByName($conn, $keyword) // search alerts by student name
     return $data;
 }
 
-function getAdvisorAlerts($conn, $advisorId)
+function getAdvisorAlerts($conn, $advisorId) // get all alerts triggered by students belonging to a specific advisor
 {
     $sql = "
         SELECT
@@ -380,8 +393,7 @@ function getAdvisorAlerts($conn, $advisorId)
     return $data;
 }
 
-
-function getAdvisorStudents($conn, $advisorId)
+function getAdvisorStudents($conn, $advisorId) // get all students assigned to a specific advisor sorted by name
 {
     $sql = "
         SELECT
@@ -405,7 +417,7 @@ function getAdvisorStudents($conn, $advisorId)
     return $data;
 }
 
-function searchAdvisorStudents($conn, $advisorId, $keyword)
+function searchAdvisorStudents($conn, $advisorId, $keyword) // search for students assigned to a specific advisor by name keyword
 {
     $sql = "
         SELECT student.*, user.*
@@ -427,7 +439,7 @@ function searchAdvisorStudents($conn, $advisorId, $keyword)
     return $data;
 }
 
-function gradeToPoint($grade)
+function gradeToPoint($grade) // converts a letter grade into its corresponding GPA points
 {
     $gradePoints = [
         'A'  => 4.0,
@@ -446,7 +458,7 @@ function gradeToPoint($grade)
     return $gradePoints[$grade] ?? null;
 }
 
-function updateUserProfile($conn, $userId, $phone, $email, $address)
+function updateUserProfile($conn, $userId, $phone, $email, $address) // to update multiple user profile fields (phone, email, and address) at once
 {
     $sql = "
         UPDATE user
@@ -459,8 +471,7 @@ function updateUserProfile($conn, $userId, $phone, $email, $address)
     return $conn->query($sql);
 }
 
-
-function getRecentAlerts($conn)
+function getRecentAlerts($conn) // get the 3 most recent alerts triggered in the system
 {
     $sql = "
         SELECT alert.*, user.name
@@ -482,7 +493,7 @@ function getRecentAlerts($conn)
     return $data;
 }
 
-function getStudentFilteredRecords($conn, $userId, $keyword = '', $semester = '', $gpaFilter = '')
+function getStudentFilteredRecords($conn, $userId, $keyword = '', $semester = '', $gpaFilter = '') // advanced filtering of a student's enrolled subjects
 {
     $sql = "
         SELECT student_subject.*, subject.*, semester.semester_name
@@ -521,7 +532,9 @@ function getStudentFilteredRecords($conn, $userId, $keyword = '', $semester = ''
 
     return $data;
 }
-function addAdvisor($conn, $name, $email, $phone, $password, $department) {
+
+function addAdvisor($conn, $name, $email, $phone, $password, $department) // to add a new advisor user and auto-generate their login ID
+{
     if (empty($name) || empty($email) || empty($phone) || empty($password) || empty($department)) {
         return ['success' => false, 'message' => 'Please fill in all fields.'];
     }
@@ -557,7 +570,8 @@ function addAdvisor($conn, $name, $email, $phone, $password, $department) {
     }
 }
 
-function addAdmin($conn, $name, $email, $phone, $password) {
+function addAdmin($conn, $name, $email, $phone, $password) // to add a new admin user and auto-generate their login ID
+{
     if (empty($name) || empty($email) || empty($phone) || empty($password)) {
         return ['success' => false, 'message' => 'Please fill in all fields.'];
     }
@@ -593,8 +607,8 @@ function addAdmin($conn, $name, $email, $phone, $password) {
     }
 }
 
-function addStudent($conn, $name, $email, $phone, $password, $advisor_id) {
-
+function addStudent($conn, $name, $email, $phone, $password, $advisor_id) // to add a new student user, assign an advisor, and auto-generate their login ID
+{
     if (empty($name) || empty($email) || empty($phone) || empty($password) || empty($advisor_id)) {
         return array('success' => false, 'message' => 'Please fill in all fields.');
     }
@@ -632,20 +646,42 @@ function addStudent($conn, $name, $email, $phone, $password, $advisor_id) {
     }
 }
 
-function editAdmin($conn, $user_id, $field, $value) {
+function editAdmin($conn, $user_id, $fieldsAndValues) // validates and updates specific details for an admin profile
+{
     $allowed_fields = ['name', 'email', 'phone_number'];
-    if (!in_array($field, $allowed_fields) || $value === '') {
-        return ['success' => false, 'message' => 'Invalid input.'];
+    $savedCount = 0;
+    $errors = [];
+ 
+    foreach ($fieldsAndValues as $field => $value) {
+        $value = trim($value);
+ 
+        if (!in_array($field, $allowed_fields)) {
+            continue;
+        }
+        if ($value === '') {
+            continue;
+        }
+ 
+        $result = updateUserField($conn, $user_id, $field, $value);
+        if ($result) {
+            $savedCount++;
+        } else {
+            $errors[] = "Could not save $field.";
+        }
     }
-    $result = updateUserField($conn, $user_id, $field, $value);
-    if ($result) {
-        return ['success' => true, 'message' => 'Updated successfully!'];
-    } else {
-        return ['success' => false, 'message' => 'Something went wrong, please try again.'];
+ 
+    if ($savedCount === 0 && empty($errors)) {
+        return ['success' => false, 'message' => 'No changes were made.'];
     }
+    if (!empty($errors)) {
+        return ['success' => false, 'message' => implode(' ', $errors)];
+    }
+ 
+    return ['success' => true, 'message' => 'Updated successfully!'];
 }
 
-function editAdvisor($conn, $user_id, $field, $value) {
+function editAdvisor($conn, $user_id, $field, $value) // validates and updates specific details for an advisor profile or department
+{
     $allowed_fields = ['name', 'email', 'phone_number', 'login_id', 'department'];
     if (!in_array($field, $allowed_fields) || $value == '') {
         return ['success' => false, 'message' => 'Invalid input.'];
@@ -661,12 +697,14 @@ function editAdvisor($conn, $user_id, $field, $value) {
     return ['success' => true, 'message' => 'Updated successfully!'];
 }
 
-function editStudent($conn, $user_id, $field, $value) {
+function editStudent($conn, $user_id, $field, $value) // checks fields allowed for student editing
+{
     $allowed_fields = ['name', 'email', 'phone_number', 'login_id'];
     if (in_array($field, $allowed_fields) || $value == '') {
         return ['success' => false, 'message' => 'Invalid input.'];
     }
 }
+
 // ===================== Student Subject - Simplified Per-Semester Functions =====================
 
 function getSubjectsBySemester($conn, $semId) // curriculum subjects belonging to one semester
@@ -689,7 +727,7 @@ function getSubjectGrade($conn, $userId, $subjectId, $semId) // the single grade
     return $result ? $result->fetch_assoc() : null;
 }
 
-function classifyGrade($grade) // 'pass' | 'conditional' | 'fail' | 'none'
+function classifyGrade($grade) // classifies a letter grade as 'pass', 'conditional', 'fail', or 'none'
 {
     if ($grade === null || $grade === '') {
         return 'none';
@@ -704,9 +742,7 @@ function classifyGrade($grade) // 'pass' | 'conditional' | 'fail' | 'none'
     return 'pass';
 }
 
-function isSemesterUnlocked($conn, $userId, $semId, $allSemesters)
-// A semester is unlocked if it's the first one, OR every subject in the
-// immediately preceding semester has a grade entered and that grade isn't a fail (E).
+function isSemesterUnlocked($conn, $userId, $semId, $allSemesters) // checks if a semester is unlocked based on preceding semester requirements
 {
     $prevSemId = null;
     foreach ($allSemesters as $i => $s) {
@@ -737,8 +773,7 @@ function isSemesterUnlocked($conn, $userId, $semId, $allSemesters)
     return true;
 }
 
-function saveSemesterGrades($conn, $userId, $semId, $gradesBySubjectId)
-// $gradesBySubjectId = [subject_id => grade]. Blank entries are skipped (left untouched).
+function saveSemesterGrades($conn, $userId, $semId, $gradesBySubjectId) // saves or updates structural semester grade entries for a student
 {
     $savedCount = 0;
     $errors = [];
