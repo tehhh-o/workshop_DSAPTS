@@ -159,7 +159,7 @@
         <div class="input-field">
           <h4>Muet Status</h4>
           <div class="edit-field">
-            <select name="muet_status_val" class="toggle-input" style="width: 198px; height: 38px; padding: 6px 12px; border: 1px solid #ccc; border-radius: 6px; background-color: #fff5f5; font-size: 14px; color: #333; box-sizing: border-box;" disabled>
+            <select name="muet_status_val" class="toggle-input" data-initial="<?php echo htmlspecialchars($student['muet_status'] ?? ''); ?>" style="width: 198px; height: 38px; padding: 6px 12px; border: 1px solid #ccc; border-radius: 6px; background-color: #fff5f5; font-size: 14px; color: #333; box-sizing: border-box;" disabled>
               <option value="Pass" <?php echo htmlspecialchars($student['muet_status'] ?? '') === 'Pass' ? 'selected' : '' ?>>Pass</option>
               <option value="Failed" <?php echo htmlspecialchars($student['muet_status'] ?? '') === 'Failed' ? 'selected' : '' ?>>Failed</option>
               <option value="Not Taken" <?php echo htmlspecialchars($student['muet_status'] ?? '') === 'Not Taken' ? 'selected' : '' ?>>Not Taken</option>
@@ -170,7 +170,7 @@
         <div class="input-field">
           <h4>Plan to Degree</h4>
           <div class="edit-field">
-            <select name="plan_degree_val" class="toggle-input" style="width: 198px; height: 38px; padding: 6px 12px; border: 1px solid #ccc; border-radius: 6px; background-color: #fff5f5; font-size: 14px; color: #333; box-sizing: border-box;" disabled>
+            <select name="plan_degree_val" class="toggle-input" data-initial="<?php echo htmlspecialchars($student['plan_to_degree'] ?? ''); ?>" style="width: 198px; height: 38px; padding: 6px 12px; border: 1px solid #ccc; border-radius: 6px; background-color: #fff5f5; font-size: 14px; color: #333; box-sizing: border-box;" disabled>
               <option value="Yes" <?php echo htmlspecialchars($student['plan_to_degree'] ?? '') === 'Yes' ? 'selected' : '' ?>>Yes</option>
               <option value="No" <?php echo htmlspecialchars($student['plan_to_degree'] ?? '') === 'No' ? 'selected' : '' ?>>No</option>
             </select>
@@ -180,7 +180,7 @@
         <div class="input-field">
           <h4>Preferred Degree Field</h4>
           <div class="edit-field">
-            <select name="preferred_degree_field_val" class="toggle-input" style="width: 198px; height: 38px; padding: 3px 9px; border: 1px solid #ccc; border-radius: 6px; background-color: #fff5f5; font-size: 14px; color: #333; box-sizing: border-box;" disabled>
+            <select name="preferred_degree_field_val" class="toggle-input" data-initial="<?php echo htmlspecialchars($student['preferred_degree_field'] ?? ''); ?>" style="width: 198px; height: 38px; padding: 3px 9px; border: 1px solid #ccc; border-radius: 6px; background-color: #fff5f5; font-size: 14px; color: #333; box-sizing: border-box;" disabled>
               <option value="Game Technology" <?php echo htmlspecialchars($student['preferred_degree_field'] ?? '') === 'Game Technology' ? 'selected' : '' ?>>Game Technology</option>
               <option value="Software Engineering" <?php echo htmlspecialchars($student['preferred_degree_field'] ?? '') === 'Software Engineering' ? 'selected' : '' ?>>Software Engineering</option>
               <option value="Artificial Intelligence" <?php echo htmlspecialchars($student['preferred_degree_field'] ?? '') === 'Artificial Intelligence' ? 'selected' : '' ?>>Artificial Intelligence</option>
@@ -246,6 +246,8 @@
       let fieldToSave = '';
       let valueToSave = '';
 
+      // NOTE: selectors below now correctly match <select> elements
+      // where the underlying field is rendered as a dropdown.
       const fieldMappings = [{
           key: 'phone_number',
           selector: 'input[name="phone_number_val"]'
@@ -260,7 +262,7 @@
         },
         {
           key: 'muet_status',
-          selector: 'input[name="muet_status_val"]'
+          selector: 'select[name="muet_status_val"]'
         },
         {
           key: 'plan_degree',
@@ -272,15 +274,20 @@
         }
       ];
 
-
       for (let mapping of fieldMappings) {
         let el = form.querySelector(mapping.selector);
-        if (el && el.value !== el.defaultValue) {
+        if (!el) continue;
+
+        // <select> elements have no native defaultValue, so we compare
+        // against a data-initial attribute set from the server-rendered value.
+        const originalValue = (el.tagName === 'SELECT') ? el.dataset.initial : el.defaultValue;
+
+        if (el.value !== originalValue) {
           fieldToSave = mapping.key;
           valueToSave = el.value;
+          break; // stop at the first real change so later fields can't overwrite it
         }
       }
-
 
       if (!fieldToSave) {
         fieldToSave = 'phone_number';

@@ -87,7 +87,7 @@ function refreshAlert($conn)
         }
         return "Success: " . implode(", ", $parts) . ".";
     } else {
-        if (empty($parts)) {
+        if (empty($newAlertsCount) && empty($dismissedAlertsCount)) {
             return "No changes: alerts are already up to date.";
         }
         return "Success: alerts refreshed.";
