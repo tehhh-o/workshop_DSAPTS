@@ -8,21 +8,7 @@
     <link rel="stylesheet" href="../style/layout.css">
     <link rel="stylesheet" href="../style/auth.css">
     <link rel="stylesheet" href="../style/styles.css">
-    <style>
-        /* Optional: Ensures a clean look when inputs transition from disabled to active */
-        .edit-field input:disabled {
-            background-color: #f5f5f5;
-            color: #888;
-            cursor: not-allowed;
-            border: 1px solid #ddd;
-        }
-        .edit-field input {
-            background-color: #fff;
-            color: #333;
-            border: 1px solid #ccc;
-            transition: all 0.3s ease;
-        }
-    </style>
+
 </head>
 
 <body class="page-body main-gradient-bg">
