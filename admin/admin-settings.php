@@ -54,6 +54,31 @@
         $email   = $_POST['email']        ?? '';
         $address = $_POST['address']      ?? '';
 
+        if (isset($_FILES['u_picture']) && $_FILES['u_picture']['error'] === 0) {
+            $uploadDir = '../assets/imgs/profile/';
+            $originalName = basename($_FILES['u_picture']['name']);
+            $newFileName = uniqid('img_') . '_' . $originalName;
+            $uploadPath = $uploadDir . $newFileName;
+
+            if (move_uploaded_file($_FILES['u_picture']['tmp_name'], $uploadPath)) {
+                if (!empty($admin['profile_picture']) && file_exists($admin['profile_picture'])) {
+                    unlink($admin['profile_picture']);
+                }
+
+                $safeValue = $conn->real_escape_string($newFileName);
+                $updated = $conn->query("
+            UPDATE user
+            SET profile_picture = '$uploadPath'
+            WHERE user_id = '$userId'
+        ");
+
+                $successMsg = $updated ? 'Saved successfully.' : 'Save failed.';
+                $student = getStudentByLoginId($conn, $loginId);
+            } else {
+                $errorMsg = 'Image upload failed.';
+            }
+        }
+
         if ($phone !== '' && $email !== '' && $address !== '') {
             $u1 = updateUserField($conn, $userId, 'phone_number', $phone);
             $u2 = updateUserField($conn, $userId, 'email',        $email);
@@ -98,7 +123,14 @@
                 </button>
             </div>
 
-            <form method="POST" action="admin-settings.php">
+            <form method="POST" action="admin-settings.php" enctype="multipart/form-data">
+
+                <div class="input-field">
+                    <h4>Profile Picture</h4>
+                    <div class="edit-field">
+                        <input type="file" name="u_picture" class="toggle-input" accept="image/*" value="<?php echo htmlspecialchars($student['phone_number'] ?? ''); ?>" disabled>
+                    </div>
+                </div>
 
                 <div class="input-field">
                     <h4>Phone Number</h4>

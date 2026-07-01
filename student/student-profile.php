@@ -57,8 +57,8 @@
         <h1 class="content-title">Profile</h1>
         <div class="profile-card">
             <div class="avatar-circle">
-                <?php if (!empty($advisor['profile_picture'])): ?>
-                    <img src="<?= htmlspecialchars($advisor['profile_picture']) ?>" alt="Profile Picture">
+                <?php if (!empty($student['profile_picture'])): ?>
+                    <img src="<?= htmlspecialchars($student['profile_picture']) ?>" alt="Profile Picture">
                 <?php else: ?>
                     <img src="../assets/icons/user.png" style="margin-top: 12px;">
                 <?php endif; ?>
@@ -109,11 +109,11 @@
                 <span class="value"><?php echo htmlspecialchars($student['address'] ?? '-'); ?></span>
             </div>
         </div>
-            <div class="details-box" style="margin-top: 20px;">
-                <div class="details-grid2">
-                    <h2 class="label">Academic Advisor Contact</h2>
-                </div>
-                <?php if ($advisor): ?>
+        <div class="details-box" style="margin-top: 20px;">
+            <div class="details-grid2">
+                <h2 class="label">Academic Advisor Contact</h2>
+            </div>
+            <?php if ($advisor): ?>
                 <div class="details-grid" style="margin-top: 12px;">
                     <div class="info-group">
                         <span class="label">Advisor Name</span>
@@ -136,12 +136,12 @@
                         </span>
                     </div>
                 </div>
-                <?php else: ?>
+            <?php else: ?>
                 <div style="margin-top: 12px;">
                     <span class="value">No advisor has been assigned yet. Please contact the faculty office for assistance.</span>
                 </div>
-                <?php endif; ?>
-            </div>
+            <?php endif; ?>
+        </div>
     </main>
 
 </body>

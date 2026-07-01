@@ -9,13 +9,13 @@
     <link rel="stylesheet" href="../style/auth.css">
     <link rel="stylesheet" href="../style/styles.css">
     <style>
-
         .edit-field input:disabled {
             background-color: #f5f5f5;
             color: #888;
             cursor: not-allowed;
             border: 1px solid #ddd;
         }
+
         .edit-field input {
             background-color: #fff;
             color: #333;
@@ -55,6 +55,32 @@
         $email = $_POST['email'] ?? '';
         $address = $_POST['address'] ?? '';
 
+
+        if (isset($_FILES['u_picture']) && $_FILES['u_picture']['error'] === 0) {
+            $uploadDir = '../assets/imgs/profile/';
+            $originalName = basename($_FILES['u_picture']['name']);
+            $newFileName = uniqid('img_') . '_' . $originalName;
+            $uploadPath = $uploadDir . $newFileName;
+
+            if (move_uploaded_file($_FILES['u_picture']['tmp_name'], $uploadPath)) {
+                if (!empty($advisor['profile_picture']) && file_exists($advisor['profile_picture'])) {
+                    unlink($advisor['profile_picture']);
+                }
+
+                $safeValue = $conn->real_escape_string($newFileName);
+                $updated = $conn->query("
+            UPDATE user
+            SET profile_picture = '$uploadPath'
+            WHERE user_id = '$userId'
+        ");
+
+                $successMsg = $updated ? 'Saved successfully.' : 'Save failed.';
+                $student = getStudentByLoginId($conn, $loginId);
+            } else {
+                $errorMsg = 'Image upload failed.';
+            }
+        }
+
         if ($phone !== '' && $email !== '' && $address !== '') {
             $u1 = updateUserField($conn, $userId, 'phone_number', $phone);
             $u2 = updateUserField($conn, $userId, 'email', $email);
@@ -78,11 +104,11 @@
         <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px;">
 
 
-</div>
+        </div>
         <div class="input-field" style="margin-top: 12px;">
             <h3 style="margin-right: 24px;">Advisor ID</h3>
             <input type="text" value="<?php echo htmlspecialchars($advisor['login_id']); ?>" disabled>
-                <?php if (!empty($successMsg)): ?>
+            <?php if (!empty($successMsg)): ?>
                 <span class="status-msg" style="color: #155724; background-color: #d4edda; border: 1px solid #c3e6cb; padding: 6px 12px; border-radius: 4px; font-family: sans-serif; font-size: 14px; display: inline-flex; align-items: center; gap: 5px; margin-left: 5px;">
                     ✓ <?php echo htmlspecialchars($successMsg); ?>
                 </span>
@@ -95,16 +121,16 @@
             <?php endif; ?>
         </div>
 
-            <script>
-        setTimeout(() => {
-            const messages = document.querySelectorAll('.status-msg');
-            messages.forEach(msg => {
-                msg.style.opacity = '0';
-                setTimeout(() => msg.remove(), 500);
-            });
-        }, 3000);
+        <script>
+            setTimeout(() => {
+                const messages = document.querySelectorAll('.status-msg');
+                messages.forEach(msg => {
+                    msg.style.opacity = '0';
+                    setTimeout(() => msg.remove(), 500);
+                });
+            }, 3000);
         </script>
-        
+
 
         <div class="panel">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
@@ -114,8 +140,15 @@
                 </button>
             </div>
 
-            <form method="POST" action="advisor-settings.php">
-                
+            <form method="POST" action="advisor-settings.php" enctype="multipart/form-data">
+
+                <div class="input-field">
+                    <h4>Profile Picture</h4>
+                    <div class="edit-field">
+                        <input type="file" name="u_picture" class="toggle-input" accept="image/*" value="<?php echo htmlspecialchars($student['phone_number'] ?? ''); ?>" disabled>
+                    </div>
+                </div>
+
                 <div class="input-field">
                     <h4>Phone Number</h4>
                     <div class="edit-field">
@@ -139,7 +172,7 @@
 
                 <div id="action-buttons" class="form-submit" style="margin-top: 20px; display: none;">
                     <div style="display: flex; justify-content: flex-end; width: 100%; gap: 12px;">
-                        
+
                         <button type="reset" id="cancel-btn" style="padding:10px 18px; border-radius:12px; cursor:pointer; background-color: #f0f0f0; border: 1px solid #ccc; color: #333;">
                             Clear
                         </button>

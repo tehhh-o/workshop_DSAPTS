@@ -32,8 +32,8 @@
         <h1 class="content-title">Profile</h1>
         <div class="profile-card">
             <div class="avatar-circle">
-                <?php if (!empty($advisor['profile_picture'])): ?>
-                    <img src="<?= htmlspecialchars($advisor['profile_picture']) ?>" alt="Profile Picture">
+                <?php if (!empty($user['profile_picture'])): ?>
+                    <img src="<?= htmlspecialchars($user['profile_picture']) ?>" alt="Profile Picture">
                 <?php else: ?>
                     <img src="../assets/icons/user.png" style="margin-top: 12px;">
                 <?php endif; ?>
