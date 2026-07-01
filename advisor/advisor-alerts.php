@@ -17,9 +17,15 @@
     $activePage = 'alert';
     include("components/sidebar-advisor.php");
     include("../models/functions.php");
+    include("../models/alert_model.php");
 
     $successMsg = '';
     $errorMsg = '';
+    $refreshMessage = null;
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['refresh_alerts'])) {
+        $refreshMessage = refreshAlert($conn);
+    }
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['send_alert_id'])) {
         $alertId = $_POST['send_alert_id'];
@@ -55,7 +61,15 @@
     ?>
 
     <main class="main-content main-rounded">
-        <h1 class="content-title">Alert</h1>
+        <div class="title-row">
+            <h1 class="content-title">Alert</h1>
+            <form method="POST" style="display:inline;">
+                <button type="submit" name="refresh_alerts" class="admin-btn" style="border:none; cursor:pointer;">
+                    <span class="admin-icon"><img src="../assets/icons/refresh.png" alt="" style="height: 16px;"></span>
+                    <span class="admin-text">Refresh Alerts</span>
+                </button>
+            </form>
+        </div>
 
         <main class="content">
             <?php if ($successMsg): ?>
@@ -107,7 +121,11 @@
                 </tbody>
             </table>
         </main>
-    </main>
+        <?php if ($refreshMessage !== null): ?>
+            <script>
+                alert(<?php echo json_encode($refreshMessage); ?>);
+            </script>
+        <?php endif; ?>
 </body>
 
 </html>
