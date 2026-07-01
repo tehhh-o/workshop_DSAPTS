@@ -72,20 +72,39 @@
     }
     ?>
 
-    <?php if ($successMsg): ?>
-        <script>alert("<?php echo addslashes($successMsg); ?>");</script>
-    <?php endif; ?>
-    <?php if ($errorMsg): ?>
-        <script>alert("<?php echo addslashes($errorMsg); ?>");</script>
-    <?php endif; ?>
 
     <main class="main-content main-rounded">
         <h1 class="content-title">Settings</h1>
+        <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px;">
 
+
+</div>
         <div class="input-field" style="margin-top: 12px;">
             <h3 style="margin-right: 24px;">Advisor ID</h3>
             <input type="text" value="<?php echo htmlspecialchars($advisor['login_id']); ?>" disabled>
+                <?php if (!empty($successMsg)): ?>
+                <span class="status-msg" style="color: #155724; background-color: #d4edda; border: 1px solid #c3e6cb; padding: 6px 12px; border-radius: 4px; font-family: sans-serif; font-size: 14px; display: inline-flex; align-items: center; gap: 5px; margin-left: 5px;">
+                    ✓ <?php echo htmlspecialchars($successMsg); ?>
+                </span>
+            <?php endif; ?>
+
+            <?php if (!empty($errorMsg)): ?>
+                <span class="status-msg" style="color: #721c24; background-color: #f8d7da; border: 1px solid #f5c6cb; padding: 6px 12px; border-radius: 4px; font-family: sans-serif; font-size: 14px; display: inline-flex; align-items: center; gap: 5px; margin-left: 5px;">
+                    ⚠ <?php echo htmlspecialchars($errorMsg); ?>
+                </span>
+            <?php endif; ?>
         </div>
+
+            <script>
+        setTimeout(() => {
+            const messages = document.querySelectorAll('.status-msg');
+            messages.forEach(msg => {
+                msg.style.opacity = '0';
+                setTimeout(() => msg.remove(), 500);
+            });
+        }, 3000);
+        </script>
+        
 
         <div class="panel">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">

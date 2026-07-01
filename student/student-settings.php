@@ -64,17 +64,32 @@
   <main class="main-content main-rounded">
     <h1 class="content-title">Settings</h1>
 
-    <?php if ($successMsg): ?>
-      <p style="color: green; margin-bottom: 8px;"><?php echo $successMsg; ?></p>
-    <?php endif; ?>
-    <?php if ($errorMsg): ?>
-      <p style="color: red; margin-bottom: 8px;"><?php echo $errorMsg; ?></p>
-    <?php endif; ?>
-
     <div class="input-field" style="margin-top: 12px;">
       <h3 style="margin-right: 24px;">Student ID</h3>
       <input type="text" value="<?php echo htmlspecialchars($student['login_id']); ?>" disabled>
+                      <?php if (!empty($successMsg)): ?>
+                <span class="status-msg" style="color: #155724; background-color: #d4edda; border: 1px solid #c3e6cb; padding: 6px 12px; border-radius: 4px; font-family: sans-serif; font-size: 14px; display: inline-flex; align-items: center; gap: 5px; margin-left: 5px;">
+                    ✓ <?php echo htmlspecialchars($successMsg); ?>
+                </span>
+            <?php endif; ?>
+
+            <?php if (!empty($errorMsg)): ?>
+                <span class="status-msg" style="color: #721c24; background-color: #f8d7da; border: 1px solid #f5c6cb; padding: 6px 12px; border-radius: 4px; font-family: sans-serif; font-size: 14px; display: inline-flex; align-items: center; gap: 5px; margin-left: 5px;">
+                    ⚠ <?php echo htmlspecialchars($errorMsg); ?>
+                </span>
+            <?php endif; ?>
     </div>
+
+                <script>
+        setTimeout(() => {
+            const messages = document.querySelectorAll('.status-msg');
+            messages.forEach(msg => {
+                msg.style.opacity = '0';
+                setTimeout(() => msg.remove(), 500);
+            });
+        }, 3000);
+        </script>
+        
 
     <div class="panel">
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
