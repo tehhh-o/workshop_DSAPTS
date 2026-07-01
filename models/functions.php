@@ -535,7 +535,7 @@ function getStudentFilteredRecords($conn, $userId, $keyword = '', $semester = ''
     return $data;
 }
 
-function addAdvisor($conn, $name, $email, $phone, $password, $department) // to add a new advisor user and auto-generate their login ID
+function addAdvisor($conn, $name, $email, $phone, $password, $department, $address) // to add a new advisor user and auto-generate their login ID
 {
     if (empty($name) || empty($email) || empty($phone) || empty($password) || empty($department)) {
         return ['success' => false, 'message' => 'Please fill in all fields.'];
@@ -554,8 +554,8 @@ function addAdvisor($conn, $name, $email, $phone, $password, $department) // to 
     $login_id = 'M111356' . $num;
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-    $stmt = $conn->prepare("INSERT INTO user (login_id, name, email, password, phone_number) VALUES (?, ?, ?, ?, ?)");
-    $stmt->bind_param('sssss', $login_id, $name, $email, $hashedPassword, $phone);
+    $stmt = $conn->prepare("INSERT INTO user (login_id, name, email, password, phone_number, address) VALUES (?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param('ssssss', $login_id, $name, $email, $hashedPassword, $phone, $address);
 
     if ($stmt->execute()) {
         $new_user_id = $conn->insert_id;
@@ -573,9 +573,9 @@ function addAdvisor($conn, $name, $email, $phone, $password, $department) // to 
     }
 }
 
-function addAdmin($conn, $name, $email, $phone, $password) // to add a new admin user and auto-generate their login ID
+function addAdmin($conn, $name, $email, $phone, $password, $address) // to add a new admin user and auto-generate their login ID
 {
-    if (empty($name) || empty($email) || empty($phone) || empty($password)) {
+    if (empty($name) || empty($email) || empty($phone) || empty($password) || empty($address)) {
         return ['success' => false, 'message' => 'Please fill in all fields.'];
     }
 
@@ -592,8 +592,8 @@ function addAdmin($conn, $name, $email, $phone, $password) // to add a new admin
     $login_id = 'A0324101' . str_pad($num, 1, '0', STR_PAD_LEFT);
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-    $stmt = $conn->prepare("INSERT INTO user (login_id, name, email, password, phone_number) VALUES (?, ?, ?, ?, ?)");
-    $stmt->bind_param('sssss', $login_id, $name, $email, $hashedPassword, $phone);
+    $stmt = $conn->prepare("INSERT INTO user (login_id, name, email, password, phone_number, address) VALUES (?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param('ssssss', $login_id, $name, $email, $hashedPassword, $phone, $address);
 
     if ($stmt->execute()) {
         $new_user_id = $conn->insert_id;
@@ -611,9 +611,9 @@ function addAdmin($conn, $name, $email, $phone, $password) // to add a new admin
     }
 }
 
-function addStudent($conn, $name, $email, $phone, $password, $advisor_id) // to add a new student user, assign an advisor, and auto-generate their login ID
+function addStudent($conn, $name, $email, $phone, $password, $advisor_id, $address) // to add a new student user, assign an advisor, and auto-generate their login ID
 {
-    if (empty($name) || empty($email) || empty($phone) || empty($password) || empty($advisor_id)) {
+    if (empty($name) || empty($email) || empty($phone) || empty($password) || empty($advisor_id) || empty($address)) {
         return array('success' => false, 'message' => 'Please fill in all fields.');
     }
 
@@ -630,8 +630,8 @@ function addStudent($conn, $name, $email, $phone, $password, $advisor_id) // to 
     $login_id = 'D' . $num;
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-    $stmt = $conn->prepare("INSERT INTO user (login_id, name, email, password, phone_number) VALUES (?, ?, ?, ?, ?)");
-    $stmt->bind_param('sssss', $login_id, $name, $email, $hashedPassword, $phone);
+    $stmt = $conn->prepare("INSERT INTO user (login_id, name, email, password, phone_number, address) VALUES (?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param('ssssss', $login_id, $name, $email, $hashedPassword, $phone, $address);
 
     if ($stmt->execute()) {
         $new_user_id = $conn->insert_id;
@@ -653,7 +653,7 @@ function addStudent($conn, $name, $email, $phone, $password, $advisor_id) // to 
 
 function editAdmin($conn, $user_id, $fieldsAndValues) // validates and updates specific details for an admin profile
 {
-    $allowed_fields = ['name', 'email', 'phone_number'];
+    $allowed_fields = ['name', 'email', 'phone_number', 'address'];
     $savedCount = 0;
     $errors = [];
 
@@ -687,7 +687,7 @@ function editAdmin($conn, $user_id, $fieldsAndValues) // validates and updates s
 
 function editAdvisor($conn, $user_id, $field, $value) // validates and updates specific details for an advisor profile or department
 {
-    $allowed_fields = ['name', 'email', 'phone_number', 'login_id', 'department'];
+    $allowed_fields = ['name', 'email', 'phone_number', 'login_id', 'department', 'address'];
     if (!in_array($field, $allowed_fields) || $value == '') {
         return ['success' => false, 'message' => 'Invalid input.'];
     }
@@ -704,7 +704,7 @@ function editAdvisor($conn, $user_id, $field, $value) // validates and updates s
 
 function editStudent($conn, $user_id, $field, $value) // checks fields allowed for student editing
 {
-    $allowed_fields = ['name', 'email', 'phone_number', 'login_id'];
+    $allowed_fields = ['name', 'email', 'phone_number', 'login_id', 'address'];
     if (in_array($field, $allowed_fields) || $value == '') {
         return ['success' => false, 'message' => 'Invalid input.'];
     }

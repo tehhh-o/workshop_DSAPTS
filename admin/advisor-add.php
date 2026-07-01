@@ -22,30 +22,31 @@
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $result = addAdvisor(
-            $conn,
-            $_POST['name'],
-            $_POST['email'],
-            $_POST['phone'],
-            'advisor123',
-            'Computer Science'
-        );
+                $conn,
+                $_POST['name'],
+                $_POST['email'],
+                $_POST['phone'],
+                'advisor123',
+                'Computer Science',
+                $_POST['address'],
+            );
 
-        if ($result['success']) {
-        $success = $result['message'];
-        } else {
-            $error = $result['message'];
+            if ($result['success']) {
+                $success = $result['message'];
+            } else {
+                $error = $result['message'];
+            }
         }
-    }
         ?>
 
         <main class="main-content main-rounded">
             <div class="title-row">
-            <h1 class="content-title">Add Advisor</h1>
-            <div class="back-button">
-            <button style="background: transparent; border:none;" type="button"  onclick="window.location.href='admin.php'">
-            <img src="../assets/icons/back.png" alt="" style="height: 25px;"></button>
+                <h1 class="content-title">Add Advisor</h1>
+                <div class="back-button">
+                    <button style="background: transparent; border:none;" type="button" onclick="window.location.href='advisor.php'">
+                        <img src="../assets/icons/back.png" alt="" style="height: 25px;"></button>
+                </div>
             </div>
-        </div>
 
             <div class="content">
 
@@ -76,8 +77,13 @@
                                     <span>Phone Number</span>
                                     <input class="add-design" type="text" name="phone" placeholder="e.g. 012-3456789">
                                 </div>
-                                <button class="add-submit" type="submit">Add</button>
 
+                                <div class="edit-row">
+                                    <span>Address</span>
+                                    <input class="add-design" type="text" name="address" placeholder="e.g. House Number, State">
+                                </div>
+
+                                <button class="add-submit" type="submit">Add</button>
                             </div>
                         </div>
                     </div>

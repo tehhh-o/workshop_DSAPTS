@@ -85,6 +85,11 @@
                                 <input class="edit-design" type="text" name="fields[phone_number]" value="<?= htmlspecialchars($advisor['phone_number']) ?>">
                             </div>
 
+                            <div class="edit-row">
+                                <span>Address</span>
+                                <input class="edit-design" type="text" name="fields[address]" value="<?= htmlspecialchars($advisor['address']) ?>">
+                            </div>
+
                             <div style="display: flex; justify-content: center; margin-top: 12px;">
                                 <button type="submit" class="report-buttons" class="icon-btn">Save</button>
                             </div>
