@@ -130,7 +130,7 @@
           <tbody>
             <?php if (empty($semSubjects)): ?>
               <tr>
-                <td colspan="3" style="text-align:center;">No subjects found for this semester.</td>
+                <td colspan="5" style="text-align:center;">No subjects found for this semester.</td>
               </tr>
             <?php else: ?>
               <?php foreach ($semSubjects as $subj): ?>
